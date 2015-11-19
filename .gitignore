@@ -10,5 +10,7 @@ packages
 *.js.deps
 *.js.map
 
+#Don't commit the following files created by IDE
+*.xml
 # Include when developing application packages.
 pubspec.lock
