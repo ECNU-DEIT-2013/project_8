@@ -3,6 +3,7 @@
 .pub/
 build/
 packages
+.idea/
 
 # Or the files created by dart2js.
 *.dart.js
@@ -10,7 +11,7 @@ packages
 *.js.deps
 *.js.map
 *.xml
-*.idea
+
 *.imp
 
 # Include when developing application packages.
