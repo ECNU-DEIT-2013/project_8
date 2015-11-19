@@ -7,9 +7,10 @@ body {
     margin: 15px;
 }
 #container{
-    width: 80%;
-    height: 550px;
+    width: 75%;
+    height: 1550px;
     position: relative;
+    float:left
     border: 1px dotted #888888;
     background-color: snow;
     padding-top: 20px;
