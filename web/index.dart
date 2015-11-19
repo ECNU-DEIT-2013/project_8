@@ -1,24 +1,16 @@
 import 'dart:html';
 
-void main(){
-activate();
+void main() {
+  querySelector('#login');//连接数据库
+  querySelector('#reset');//取消登录
+
 }
-void activate(){
-  var Space = new DivElement();
-  var IdInput = new  TextInputElement();
-  var KeyInput = new PasswordInputElement();
-  var ID = new LabelElement();
-  var PASSWORD = new LabelElement();
-  var LOGIN = new ButtonElement();
-  querySelector('#container')
-    ..children.add(ID)
-    ..children.add(IdInput)
-    ..children.add(Space)
-    ..children.add(PASSWORD)
-    ..children.add(KeyInput)
-    ..children.add(Space)
-    ..children.add(LOGIN);
-  ID.text='Your ID Here:';
-  LOGIN.text='Login';
-  PASSWORD.text='Your Password:';
-}
+
+/*void reverseText(MouseEvent event) {
+  var text = querySelector('#sample_text_id').text;
+  var buffer = new StringBuffer();
+  for (int i = text.length - 1; i >= 0; i--) {
+    buffer.write(text[i]);
+  }
+  querySelector('#sample_text_id').text = buffer.toString();
+}*/

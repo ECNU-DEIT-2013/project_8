@@ -1,15 +1,127 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
+
+<html>
+  <head>
+    <meta charset="utf-8">
     <title>我有话要说</title>
-    <script async type="application/dart" src="index.dart"></script>
     <link rel="stylesheet" href="index.css">
-</head>
-<center>
-<body>
-<div id="header">我有话要说</div>
-<div id = "container"></div>
-<div id ="footer">Copyright@Team8<br>版权所有||请勿侵权</div>
-</body></center>
+  </head>
+  <body>
+     <h1>我有话要说评教系统</h1>
+     <p >Hello from GROUP 8!</p>
+     <div id="sample_container_id">
+
+       <p id="sample_text_id">欢迎使用我有话要说评教系统！</p>
+       <table>
+       <tr id="userName">
+       <td >用户名：</td>
+        <td> <input  style=" WIDTH: 120px; HEIGHT: 15px; FONT-SIZE: 11px" size="22" type="text" name="username" onfocus="this.value=' '" value="请输入学号">
+       </td>
+       <tr id="passWord">
+         <td >密码：<td>
+         <td><input style=" WIDTH: 120px; HEIGHT: 15px; FONT-SIZE: 11px" size="22" type="password" name="password" ></td>
+       </tr>
+       <tr>
+         <td>
+           <button id="login" type="submit">登录</button>
+           <button id="reset" type="reset">取消</button>
+         </td>
+       </tr>
+       </table>
+     </div>
+    <!--
+    <div id="logIn">
+      <td bgcolor="#ffffff">
+        <table border="0" cellspacing="0" cellpadding="0" width="90%" height="119">
+          <tbody>
+          <tr>
+            <td height="20" width="27%">
+              <div align="right">
+                <img src="index_image/user.gif" width="47" height="16">
+              </div>
+            </td>
+            <td colspan="2">
+              <font color="white" size="3" face="Sans-serif">
+                <span style="PADDING-LEFT: 15pt; PADDING-TOP: 9pt">
+                  <input style="POSITION: relative; WIDTH: 120px; HEIGHT: 15px; FONT-SIZE: 11px" size="22" type="text" name="username">
+                </span>
+              </font>
+            </td>
+          </tr>
+          <tr>
+            <td height="27">
+              <div align="right">
+                <img src="index_image/passw.gif" width="47" height="13">
+              </div>
+              <div></div>
+            </td>
+            <td colspan="2">
+              <font color="white" size="3" face="Sans-serif">
+                <span style="PADDING-LEFT: 15pt; PADDING-TOP: 9pt">
+                  <input style="WIDTH: 120px; HEIGHT: 15px; FONT-SIZE: 11px" size="22" type="password" name="password">
+                  <input type="hidden" name="lt" value="LT_new-cas-ldap-2_-3652310-2T4HkcvvoFqECzJ9rXvJ">
+                 </span>
+              </font>
+            </td>
+          </tr>
+          <tr>
+            <!-- <td>验证码：</td>
+
+                          <td><input type="text" name="captcha" size="16" /></td>
+
+                          <td><img id="safecode" onClick="reloadcode()" alt="看不清，换一个" style="cursor:hand" height="32px" width="100px" src="Captcha.jpg"> </td>
+
+                        </tr>-->
+           <!-- <td>
+              <div align="right">
+                <img src="index_image/code.gif" width="47" height="16">
+              </div>
+            </td>
+            <td colspan="1">
+              <font color="white" size="3" face="Sans-serif">
+                <span style="PADDING-LEFT: 15pt; PADDING-TOP: 9pt">
+                  <input style="WIDTH: 45px; HEIGHT: 15px; FONT-SIZE: 11px" size="22" type="text" name="captcha">
+                </span>
+              </font>
+            </td>
+            <td colspan="1">
+              <font color="white" size="3" face="Sans-serif">
+                <img height="25" id="safecode" onclick="reloadcode()" alt="看不清，换一个" style="POSITION: relative; WIDTH: 80px; FONT-SIZE: 11px" src="Captcha.jpg">
+              </font>
+            </td>
+          </tr>
+          <script language="javascript" type="text/javascript">
+
+
+            function reloadcode()
+
+            {
+
+              document.getElementById('safecode').src = 'Captcha.jpg?' +   Math.random();
+
+            }
+          </script>
+          <tr>
+            <td style="padding-top:0pt">&nbsp;</td>
+            <td style="padding-top:2pt">
+              <input value="登录" width="62" height="15" type="submit" name="Submit">
+            </td>
+            <td style="padding-top:2pt">
+              <input value="取消" width="62" height="15" type="reset" name="reset">
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2" width="63%" align="center" height="20"></td>
+            <td width="37%">
+              <a onclick="javascript:winopen()" href="javascript:void(0)">
+                <img border="0" src="index_image/logout.gif" width="76" height="20">
+              </a>
+            </td>
+          </tr>
+
+           </div>
+    -->
+    <script type="application/dart" src="index.dart"></script>
+    <script src="packages/browser/dart.js"></script>
+  </body>
 </html>
