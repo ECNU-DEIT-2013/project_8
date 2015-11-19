@@ -9,6 +9,9 @@ packages
 *.js_
 *.js.deps
 *.js.map
+*.xml
+*.idea
+*.imp
 
 # Include when developing application packages.
 pubspec.lock
