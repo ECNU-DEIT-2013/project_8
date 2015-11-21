@@ -10,14 +10,28 @@ body {
     margin: 15px;
 }
 #container{
+    width:1024px;
+    height:615px;
+}
+#container1{
     width: 75%;
     height:600px;
-
-    background-position:left;
-    position:relative;
     float:left;
-
     background-color:#addadf;
     padding-top: 20px;
 }
+#container2{
+    width: 25%;
+    height:600px;
+    float:right;
+    background-color:#fff899;
+    padding-top: 20px;
+}
+#footer{
+    width: 1024px;
+    height:15px;
+    background-color:#153341;
+    position: absolute;
+    bottom: 20px;
 
+}
