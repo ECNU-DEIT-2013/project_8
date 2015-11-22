@@ -1,0 +1,34 @@
+1.Application package:
+应用依赖其他包来实现自己的功能
+2.Asset:
+【可利用的配置包括：dart，HTML，javascipt,css,image等等
+要使用 Dart 包中的库，你需要安装如下步骤操作：
+a.创建一个 pubspec (该文件列出了 库的依赖关系和其他元数据，例如你的包的名字等)。（即通过yaml文件来细化所使用到的一些配置的包）
+b.用 pub 获取你的应用所依赖的包。
+c.导入要使用的库。】
+name: myapp
+dependencies:
+  polymer: ^0.16.3
+transformers:
+- polymer:
+    entry_points: web/index.html
+【name: 这个应用或库的包名，所有包必须有，包括Dart应用
+version: 版本号，发布到 pub.dartlang.org 上的包必须有
+description: 简短描述，发布到 pub.dartlang.org 上的包必须有
+author/authors: 作者，可选
+homepage: 项目主页的URL，可选，如 github 上的项目网址
+dependencies: 依赖的其它库，根据情况自行配置】
+
+3.Dependency:
+【这里定义的就是你的包所依赖的包，比如：
+dependencies:
+  transmogrify: ^=1.0.0】
+
+4.source:
+包可以位于任何地方。例如，一些包可能在 GitHub ，一些可能在pub.dartlang.org。
+
+5.System cache:
+【Pub 会下载安装所有依赖的包，这些包其实都被下载缓存到了"system cache"目录下，而你包下的 packages 目录中出现的所有包其实只是"system cache"目录下的包的符号链接。在 Mac 和 Linux 下，这个目录默认是 ~/.pub-cache 目录，在 Windows 下是 AppData\Roaming\Pub\Cache 目录。
+同一个包的同一个版本只用下载一次，之后就可以反复使用，并被所有使用它的包共用。】
+pub同时还下载了应用使用的包所依赖的包。 例如，js 包依赖 unittest 包，最后，在你的应用根目录下创建一个 packages 目录，该目录连接了你应用中需要使用的包。
+
