@@ -1,19 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>我有话要说</title>
-    <script async type="application/dart" src="index.dart"></script>
-    <link rel="stylesheet" href="index.css">
+  <meta charset="utf-8">
+  <title>I have something to say!</title>
+  <link rel="stylesheet" href="index.css">
 </head>
-<center>
 <body>
 
-<div id="container">
-<div id = "container1"></div>
-<div id="container2"></div>
-    <div id="footer"></div>
+<div id="MainCon">
+  <div id="Background">
+    <div id="LeftBack"></div>
+    <div id="RightBack"></div>
+    <div id="Bottom"></div>
+  </div>
+  <div id="Form">
+    <input id="User" style="width:400px; height:40px;">
+    <input id="Password" style="width:400px; height:40px;">
+    <div id="Buttons">
+      <div id="Commit">确认</div>
+      <div id="Clear">清空</div>
+    </div>
+  </div>
 </div>
 
-</body></center>
+<script type="application/dart" src="index.dart"></script>
+<script src="packages/browser/dart.js"></script>
+</body>
 </html>

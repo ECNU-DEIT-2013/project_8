@@ -1,37 +1,154 @@
-h1,p{
+html, body {
+  height:100%;
+  margin:0px;
+}
 
+#MainCon {
+  min-height: 95%;
+  width: 100%;
+  font-weight: normal;
+  background-color: #FFFFFF;
+  height:100%;
 }
-body {
-    background-color: #fff;
-    font-family: Microsoft YaHei;
-    font-size: 14px;
-    font-weight: normal;
-    line-height: 1.2em;
-    margin: 15px;
-}
-#container{
-    width:1024px;
-    height:615px;
-}
-#container1{
-    width: 75%;
-    height:600px;
-    float:left;
-    background-color:#addadf;
-    padding-top: 20px;
-}
-#container2{
-    width: 25%;
-    height:600px;
-    float:right;
-    background-color:#fff899;
-    padding-top: 20px;
-}
-#footer{
-    width: 1024px;
-    height:15px;
-    background-color:#153341;
-    position: absolute;
-    bottom: 20px;
 
+#Background {
+  height:100%;
+}
+
+.LeftBack {
+  z-index: 1;
+  height:95%;
+  float:left;
+  width: 50%;
+  background-color: #ADDADF;
+  opacity:0.6;
+}
+
+.LeftBack1 {
+  z-index: 1;
+  height:95%;
+  float:left;
+  width: 70%;
+  background-color: #ADDADF;
+  opacity:0.6;
+}
+
+.RightBack {
+   z-index: 1;
+   height:95%;
+   float:right;
+   width: 50%;
+   background-color: #FFF899;
+   opacity:0.6;
+ }
+.RightBack1{
+  z-index: 1;
+  height:95%;
+  float:right;
+  width: 30%;
+  background-color: #FFF899;
+  opacity:0.6;
+}
+
+#Bottom {
+  z-index: 1;
+  height:5%;
+  width: 100%;
+  background-color:lightgray;
+  float:left;
+  opacity:0.6;
+}
+
+.User {
+  float: left;
+  background: #ffffff;
+  opacity: 0.6;
+  border:none;
+  font-family: SimHei;
+  font-size: 20px;
+  font-weight: bold;
+  color: #333333;
+}
+.User:hover{
+  opacity: 1;
+  border: #cccccc;
+}
+
+.User2 {
+  float: left;
+  background: #000000;
+  opacity: 0.6;
+  border:none;
+}
+
+
+#Password {
+  float: left;
+  background: #ffffff;
+  opacity: 0.6;
+  border:none;
+  margin-top: 30px;
+  color: #333333;
+  font-family: SimHei;
+  font-size: 20px;
+  font-weight: bold;
+}
+#Password:hover{
+  opacity: 1;
+  border: #cccccc;
+}
+
+
+#Form {
+  position: absolute;
+  top:35%;
+  height: 200px;
+  left:calc(50% - 200px);
+  width: 404px;
+}
+
+#Buttons {
+  float: left;
+  margin-top:20px;
+  width: 404px;
+}
+
+#Commit{
+  float: left;
+  width:160px;
+  height:40px;
+  margin-left: 20px;
+  background-color: #F8F8F8;
+  opacity: 1;
+  line-height:40px;
+  text-align: center;
+  font-family: SimHei;
+  font-size:28px;
+  font-weight: bold;
+  color: #FFF080;
+}
+#Commit:hover {
+  background-color: #ADDADF;
+  opacity: 0.8;
+  cursor:pointer;
+}
+
+#Clear{
+  float: left;
+  width:160px;
+  height:40px;
+  margin-left: 40px;
+  background-color: #F8F8F8;
+  opacity: 1;
+  line-height:40px;
+  text-align: center;
+  font-family: SimHei;
+  font-size:28px;
+  font-weight: bold;
+  color: #ADCACF;
+}
+#Clear:hover {
+  background-color: #FFF899;
+  opacity: 0.8;
+  cursor:pointer;
 }
