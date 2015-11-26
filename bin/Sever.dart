@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'package:sqljocky/sqljocky.dart';
+import 'package:rest_frame/rest_frame.dart';
+
 
 class UserList{
   var Num,Name,Phone,Key;
@@ -8,16 +10,18 @@ class UserList{
     Num=a;Name=b;Gender=c;Age=d;Phone=e;Key=f;
   }
 }
+void addCorsHeaders(HttpResponse res) {
+  res.headers.add("Access-Control-Allow-Origin", "*");
+  res.headers.add("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
+  res.headers.add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+ }
 
 main() async {
   var server = await HttpServer.bind(InternetAddress.LOOPBACK_IP_V4, 8008);
   print("Serving at ${server.address}:${server.port}");
 
   await for (var request in server) {
-    request.response.headers
-      ..add('Access-Control-Allow-Origin', '*')
-      ..add('Access-Control-Allow-Methods', 'POST, OPTIONS')
-      ..add('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    addCorsHeaders(request.response);
 
     print('Server is OK');
     request.response
