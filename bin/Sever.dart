@@ -11,6 +11,7 @@ var decoded;//用来接收client端发送的消息
 main() async{
   addMessage.post(postAddMessage, "/addmessage");
   login.get(getLogin, "/login");
+  //login.post(postLogin, "/login");
   router1.get(getStock, "/stock");
   var server = await HttpServer.bind(InternetAddress.LOOPBACK_IP_V4, 8008);
   listenForRequests(server);
@@ -21,11 +22,13 @@ String getStock() {
   //你可以在这里添加各种数据操作，然后以json返回
 }
 
-String getLogin() {
+bool getLogin() {//测试
   String a = "[rest_test ：) get login]";
-  return a;
-  //你可以在这里添加各种数据操作，然后以json返回
+  bool tag= true;
+  return tag;
+  //用get写login的话，这边可以核对好了然后传一个true，没核对传一个false，那边看看是true还是false然后决定页面跳转？？
 }
+
 
 postAddMessage( )async{//添加留言的函数
   var pool = new ConnectionPool(host: '52.8.67.180', port: 3306, user: 'dec2013stu', password: 'dec2013stu', db: 'stu_10130340245');
@@ -50,7 +53,7 @@ listenForRequests(HttpServer requests) async {
     print('accept');//测试是否接收到client端的request
 
     if (request.uri.path=="/login"){
-      handleRequest(request,login);}//调用route为login的时候的函数
+      handleRequest(request,login);}//调用route为login的时候get的函数
     else if(request.uri.path=="/stock"){
       handleRequest(request,router1);}//调用route为stock的时候的函数
     else if(request.uri.path=="/addmessage"){
