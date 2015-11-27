@@ -50,6 +50,73 @@ html, body {
   opacity:0.6;
 }
 
+.Selects{
+  position: relative;
+  top:calc(20%);
+  width:240px;
+  left:15%;
+}
+
+.Classesselecttip{
+  position: relative;
+  height:60px;
+
+  margin: 0px;
+  padding: 0px;
+  font-weight: bold;
+  font-family:SimHei;
+  font-size: 20px;
+  line-height:60px;
+}
+
+.Classesselector {
+  position: relative;
+  height:40px;
+  width: 140px;
+  font-size: 18px;
+  left:10px;
+}
+
+.Teacherselecttip{
+  position: relative;
+  width:240px;
+  height:60px;
+
+  margin: 0px;
+  padding: 0px;
+  font-weight: bold;
+  font-family:SimHei;
+  font-size: 20px;
+  line-height:60px;
+}
+
+.Teacherselector {
+  position: relative;
+  height:40px;
+  width: 140px;
+  font-size: 18px;
+  left:10px;
+}
+
+.Submitselect{
+  height:40px;
+  background-color: #FFF080;
+  opacity: 1;
+  margin-top:20px;
+  text-align: center;
+  line-height: 40px;
+  font-size: 24px;
+  font-family: SimHei;
+  font-weight: bold;
+  color: #cccccc;
+}
+
+.Submitselect:hover{
+  background-color: orange;
+  opacity: 0.8;
+  cursor:pointer;
+}
+
 #Bottom {
   z-index: 1;
   height:5%;
