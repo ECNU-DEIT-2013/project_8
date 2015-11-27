@@ -8,11 +8,9 @@ void main() {
     ..onClick.listen(ClearLog);
   querySelector('#User')
     ..placeholder='请输入用户名'
-    ..classes.add('User')
-    ..onClick.listen(UserEvent);
+    ..classes.add('User');
   querySelector('#Password')
-    ..placeholder='请输入密码'
-    ..onClick.listen(PasswordEvent);
+    ..placeholder='请输入密码';
   querySelector('#LeftBack')
     ..classes.add('LeftBack');
   querySelector('#RightBack')
@@ -37,6 +35,36 @@ void LogIn(MouseEvent event){           ///登录按钮功能
     ..classes.clear()
     ..classes.add('RightBack1');
   DivElement rightback=querySelector('#RightBack');
+
+  DivElement myclass = new DivElement();
+  myclass.id = 'Myclass';
+  myclass.classes
+    ..clear()
+    ..add('Myclass');
+  rightback.children.add(myclass);
+  DivElement myclassbt = new DivElement();
+  DivElement blank = new DivElement();
+  DivElement otherclassbt = new DivElement();
+  myclassbt.id = 'Myclassbt';
+  blank.id = 'Blank';
+  otherclassbt.id = 'Otherclassbt';
+  myclassbt.text = '我的课程';
+  otherclassbt.text = '全部课程';
+  myclassbt.classes
+    ..clear()
+    ..add('Myclassbt');
+  blank.classes
+    ..clear()
+    ..add('Blank');
+  blank.text = '↔';
+  otherclassbt.classes
+    ..clear()
+    ..add('Otherclassbt1');
+  myclass.children
+    ..add(myclassbt)
+    ..add(blank)
+    ..add(otherclassbt);
+  otherclassbt.onClick.listen(Classesshift);
 
   DivElement selects = new DivElement();
   selects.classes.add('Selects');
@@ -101,14 +129,28 @@ void LogIn(MouseEvent event){           ///登录按钮功能
   submitselect.text='查看评教';
   selects.children.add(submitselect);
 
+
+
 }
 
-void UserEvent(MouseEvent event){          ///点击用户名输入框
-  InputElement user = querySelector('#User');
-  if(user.value=='请输入用户名') user.value = '';
+void Classesshift(MouseEvent event){
+  querySelector('#Myclassbt').classes
+    ..clear()
+    ..add('Myclassbt1');
+  querySelector('#Otherclassbt').classes
+    ..clear()
+    ..add('Otherclassbt');
+  querySelector('#Myclassbt').onClick.listen(Classesshift1);
 }
 
-void PasswordEvent(MouseEvent event){
-  InputElement password = querySelector('#Password');
-  if(password.value=='请输入密码') password.value = '' ;
+void Classesshift1(MouseEvent event){
+  querySelector('#Myclassbt').classes
+    ..clear()
+    ..add('Myclassbt');
+  querySelector('#Myclassbt').onClick.listen(Classesshift1);
+  querySelector('#Otherclassbt').classes
+    ..clear()
+    ..add('Otherclassbt1');
+  querySelector('#Otherclassbt').onClick.listen(Classesshift);
 }
+
