@@ -1,0 +1,80 @@
+Glossary of Pub Terms
+The following terms are used in the documentation for the pub tool.
+Application package 应用程序包
+A package that is not intended to be used as a library. Application packages may have dependencies on other packages, but are never depended on themselves. They are usually meant to be run directly, either on the command line or in a browser. The opposite of an application package is a library package.
+它不是一个库包。应用程序包可能与其他包有依赖关系，但它们自身之间没有。它们通常都是被直接运行，或者在命令行，或者在浏览器中，与库包是相对的。
+Application packages should check their lockfiles into source control, so that everyone working on the application and every location the application is deployed has a consistent set of dependencies. Because their dependencies are constrained by the lockfile, application packages usually specify any for their dependencies’version constraints.
+应用程序包应该检查它们的源代码管理中的锁文件，使与应用程序相关的内容部署的依赖关系一致。因为它们的依赖关系被锁文件约束，应用程序包通常会列举出依赖关系的约束版本。
+Asset
+A resource—Dart, HTML, JavaScript, CSS, image, or anything else—intended to be part of a deployed package. The package can be a web app, a package used by a web app, or any other package that benefits from a build step. Tools such aspub serve and pub build take source assets (such as an HTML file, a CSS file, and several Dart files) and produce generated assets (such as the same HTML and CSS files, plus a single JavaScript file).
+配置包中的部分资源，包括Dart, HTML, JavaScript, CSS, 图像或者其他。这个包可以是一个web app，也可以是被web app所使用的包，或者是得益于此构建步骤的其他包。工具如pub serve和pub build可以获取源资产（如一个HTML文件，一个CSS文件和几个Dart文件）和产生生成资产（如相同的HTML和CSS文件，加上一个JavaScript文件）。
+Assets fall into four groups, with some overlap:
+Source asset: An actual, authored file on disk that pub build and pub servecan find and use.
+Generated asset: An asset (possibly the output of a transformer) that’s either served by pub serve or saved to disk by pub build.
+Input asset: An asset that is the input to a transformer. An input asset might be a source asset, or it might be the output of a transformer in a previous phase.
+Output asset: An asset that is created by a transformer. An output asset might be a generated asset, or it might be the input to a transformer in a later phase.
+资产分为四类，其中有些重叠：
+源资产：pub build和pub serve可以找到并使用的磁盘中的现行授权文件。
+生成资产：被pub server服务的对象或者被pub build 保存在磁盘中的资产。
+输入资产和输出资产。
+For more information, see Pub Assets and Transformers.
+Dependency
+Another package that your package relies on. If your package wants to import code from some other package, that package must be a dependency. Dependencies are specified in your package’s pubspec and described in Pub Dependencies.
+To see the dependencies used by a package, use pub deps.
+可以在yaml中添加所需要的包，然后get dependencies。
+Entrypoint
+Entrypoint is used to mean two things. In the general context of Dart, it is a Dart library that is directly invoked by a Dart implementation. When you reference a Dart library in a <script> tag or pass it as a command line argument to the standalone Dart VM, that library is the entrypoint. In other words, it’s usually the .dart file that contains main().
+通常就是包含main()函数的dart文件。
+In the context of pub, an entrypoint package or root package is the root of a dependency graph. It will usually be an application. When you run your app, it’s the entrypoint package. Every other package it depends on will not be an entrypoint in that context.
+A package can be an entrypoint in some contexts and not in others. Lets say your app uses a library package A. When you run your app, A is not the entrypoint package. However, if you go over to A and execute its tests, in that context, it is the entrypoint since your app isn’t involved.
+如果你的app使用了一个库包A。当你运行你的app时，A不是你的入口包。而当你搁置A并执行它的测试时，A就是入口包，因为你的app不参与其中。
+Entrypoint directory
+A directory inside your package that is allowed to contain Dart entrypoints.
+Pub has a whitelist of these directories: benchmark, bin, example, test, tool, andweb. Any subdirectories of those (except bin) may also contain entrypoints.
+包中的目录可以包含dart entrypoints。
+Pub有以下目录的白名单：benchmark, bin, example, test, tool, andweb。这些目录的子目录也包含入口点。
+Immediate dependency
+A dependency that your package directly uses itself. The dependencies you list in your pubspec are your package’s immediate dependencies. All other dependencies are transitive dependencies.
+包直接使用的依赖是直接依赖，其他的依赖都是传递依赖。
+Library package  库程序包
+A package that other packages will depend on. Library packages may havedependencies on other packages and may be dependencies themselves. They may also include scripts that will be run directly. The opposite of a library package is anapplication package.
+库包可能与其他包有依赖关系也可能相互之间有依赖关系。库包也可能包含直接运行的脚本。库包和应用程序包是相对的。
+Library packages should not check their lockfile into source control, since they should support a range of dependency versions. Their immediate dependencies’version constraints should be as wide as possible while still ensuring that the dependencies will be compatible with the versions that were tested against.
+库包不应该检查它们的源代码管理中的锁文件，因为它们需要支持一定范围的依赖版本。它们的直接依赖的版本约束应该尽可能地大，同时仍可保证与测试的版本一致。
+Since semantic versioning requires that libraries increment their major version numbers for any backwards incompatible changes, library packages will usually require their dependencies’ versions to be greater than or equal to the versions that were tested and less than the next major version. So if your library depended on the (fictional) transmogrify package and you tested it at version 1.2.1, your version constraint would be ^1.2.1.
+库包通常需要它们依赖的版本大于或等于测试的版本，小于主版本。
+Lockfile
+A file named pubspec.lock that specifies the concrete versions and other identifying information for every immediate and transitive dependency a package relies on.
+一个名叫pubspec.lock的文件。它指定了包中每一个依赖的具体版本和其它识别信息。
+Spec：说明书。
+Unlike the pubspec, which only lists immediate dependencies and allows version ranges, the lock file comprehensively pins down the entire dependency graph to specific versions of packages. A lockfile ensures that you can recreate the exact configuration of packages used by an application.
+The lockfile is generated automatically for you by pub when you run pub get,pub upgrade, or pub downgrade.. If your package is an application package, you will typically check this into source control. For library packages, you usually won’t.
+锁文件是当你运行pub get,pub upgrade, 或 pub downgrade时自动为你生成的。如果你的包是一个应用程序包，你可能需要在源代码管理中查看一下。如果是库包就不需要。
+SDK constraint  SDK：Software Development Kit软件开发工具包
+The declared versions of the Dart SDK itself that a package declares that it supports. An SDK constraint is specified using normal version constraint syntax, but in a special environment section in the pubspec.
+Source 源
+A kind of place that pub can get packages from. A source isn’t a specific place like pub.dartlang.org or some specific Git URL. Each source describes a general procedure for accessing a package in some way. For example, git is one source. The git source knows how to download packages given a Git URL. Several differentsupported sources are available.
+Get packages的地方。不是一个特定的地方比如pub.dartlang.org或者一些Git URL。例如git是一个source，它知道如何下载Git URL中的包，除此之外还有其他多个sources。
+System cache 系统缓存
+When pub gets a remote package, it downloads it into a single system cachedirectory maintained by pub. On Mac and Linux, this directory defaults to~/.pub-cache. On Windows, it goes in AppData\Roaming\Pub\Cache. You can specify a different location using the PUB_CACHE environment variable.
+Once packages are in the system cache, pub creates symbolic links to the real packages in the system cache. As of 1.12, pub also creates a .packages file that maps each package used by your application to the corresponding package in the cache.
+Pub获取包时，会将包下载到系统缓存目录中。
+Note: The packages directories are being phased out, to be replaced by a single.packages file. The version of pub get that creates the .packages file is new in Dart 1.12. For more information, see pub get.
+You only have to download a given version of a package once and can then reuse it in as many packages as you would like. You can delete and regenerate yourpackages directories or .packages file without having to access the network.
+Transformer 转换器
+For more information, see Pub Assets and Transformers.
+A transformer is a Dart object that converts input assets (such as Dart files or Polymer-formatted HTML) into output assets (such as JavaScript and HTML). Thepub build command puts the generated assets into files. The pub serve command, on the other hand, doesn’t produce files; its generated assets are served directly by the dev server.
+将输入资产转变成输出资产的Dart对象。
+Transitive dependency 传递依赖
+A dependency that your package indirectly uses because one of its dependencies requires it. If your package depends on A, which in turn depends on B which depends on C, then A is an immediate dependency and B and C are transitive ones.
+如果你的包依赖于A，A依赖于B，B依赖于C，那么A就是直接依赖，B和C就是传递依赖。
+Uploader 上传者
+An uploader of a package is someone who has administrative permissions for that package. They can not only upload new versions of a package, but also add and remove other uploaders for that package. The uploader of a package is often, but not necessarily, the same as the author of a package.
+包的上传者具有包的管理许可。它们不仅可以上传包的最新版本，也可以增加或移除此包的其他上传者。
+Anyone uploading a new package automatically becomes an uploader for that package. Otherwise, to become an uploader, you need to contact an existing uploader and ask them to add you as another uploader.
+上传一个新包的人自动变成此包的上传者。否则，想要成为上传者就需要联系已有的上传者并向他们获得成为上传者的许可。
+Version constraint
+A constraint placed on each dependency of a package that specifies which versions of that dependency the package is expected to work with. This can be a single version (0.3.0) or a range of versions (^1.2.1). While any is also allowed, for performance reasons we don’t recommend it.
+For more information, see Version constraints.
+Library packages should always specify version constraints for all of their dependencies, but application packages should usually allow any version of their dependencies, since they use the lockfile to manage their dependency versions.
+For more information, see Pub Versioning Philosophy.
