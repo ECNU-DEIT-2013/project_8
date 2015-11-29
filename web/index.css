@@ -1,34 +1,321 @@
-body {
-    background-color: #fff;
-    font-family: Microsoft YaHei;
-    font-size: 14px;
-    font-weight: normal;
-    line-height: 1.2em;
-    margin: 15px;
-}
-#container{
-    width: 80%;
-    height: 550px;
-    position: relative;
-    border: 1px dotted #888888;
-    background-color: snow;
-    padding-top: 20px;
-}
-#header{
-    color:white;
-    width: 100%;
-    font-weight: bold;
-    background-color: navajowhite;
-    font-size:20px;
-    height:50px;
-    margin-top: -15px;
-    line-height: 50px;
+html, body {
+  height:100%;
+  margin:0px;
 }
 
-#footer{
-    color:white;
-    width: 100%;
-    background-color: navajowhite;
-    padding-top: 10px;
-    padding-bottom: 10px;
+#MainCon {
+  min-height: 95%;
+  width: 100%;
+  font-weight: normal;
+  background-color: #FFFFFF;
+  height:100%;
+}
+
+#Background {
+  height:100%;
+}
+
+.LeftBack {
+  z-index: 1;
+  height:95%;
+  float:left;
+  width: 50%;
+  background-color: #ADDADF;
+  opacity:0.6;
+}
+
+.LeftBack1 {
+  z-index: 1;
+  height:95%;
+  float:left;
+  width: 70%;
+  background-color: #ADDADF;
+  opacity:0.6;
+}
+
+.RightBack {
+   z-index: 1;
+   height:95%;
+   float:right;
+   width: 50%;
+   background-color: #FFF899;
+   opacity:0.6;
+ }
+.RightBack1{
+  z-index: 1;
+  height:95%;
+  float:right;
+  width: 30%;
+  background-color: #FFF899;
+  opacity:0.6;
+}
+
+.Selects{
+  position: relative;
+  top:10%;
+  width:80%;
+  left:15%;
+}
+
+.Classesselecttip{
+  position: relative;
+  height:60px;
+  width: 100%;
+
+  margin: 0px;
+  padding: 0px;
+  font-weight: bold;
+  font-family:SimHei;
+  font-size: 20px;
+  line-height:60px;
+}
+
+.Classesselector {
+  position: relative;
+  height:40px;
+  width: 60%;
+  font-size: 18px;
+  left:10%;
+}
+
+.Teacherselecttip{
+  position: relative;
+  width:100%;
+  height:60px;
+
+  margin: 0px;
+  padding: 0px;
+  font-weight: bold;
+  font-family:SimHei;
+  font-size: 20px;
+  line-height:60px;
+}
+
+.Teacherselector {
+  position: relative;
+  height:40px;
+  width: 60%;
+  font-size: 18px;
+  left:10%;
+}
+
+.Submitselect{
+  height:40px;
+  background-color: #EDD788;
+  opacity: 1;
+  margin-top:20px;
+  text-align: center;
+  line-height: 40px;
+  font-size: 24px;
+  font-family: SimHei;
+  font-weight: bold;
+  color: #888888;
+}
+
+.Submitselect:hover{
+  background-color: #F1FE98;
+  opacity: 0.8;
+  cursor:pointer;
+  color: #666666;
+}
+
+.Myclass{
+  position: relative;
+  top:5%;
+  left:12%;
+  width: 80%;
+  height:40px;
+}
+
+.Myclassbt{
+  float: left;
+  width:calc(40% - 4px);
+  height: 36px;
+  background-color: #F1FE98;
+  line-height: 36px;
+  font-size: 18px;
+  color: #666666;
+  text-align: center;
+  font-family: 微软雅黑;
+  font-weight: bold;
+  border: 2px solid #DDDDDD;
+}
+
+.Myclassbt:hover{
+  cursor:pointer;
+}
+
+.Myclassbt1{
+  float: left;
+  width:40%;
+  height: 40px;
+  background-color: #EDD788;
+  left:40px;
+  line-height: 40px;
+  font-size: 18px;
+  color: #666666;
+  text-align: center;
+  font-family: 微软雅黑;
+}
+
+.Myclassbt1:hover{
+  width:calc(40% - 4px);
+  height: 36px;
+  line-height: 36px;
+  background-color: #F1FE98;
+  border: 2px solid #DDDDDD;
+  cursor:pointer;
+}
+
+.Blank{
+  float: left;
+  width:20%;
+  height: 40px;
+  font-family: SimHei;
+  font-weight: bold;
+  line-height: 40px;
+  text-align: center;
+}
+
+.Otherclassbt{
+  float: left;
+  width:calc(40% - 4px);
+  height: 36px;
+  background-color: #F1FE98;
+  line-height: 36px;
+  font-size: 18px;
+  color: #666666;
+  text-align: center;
+  font-family: 微软雅黑;
+  font-weight: bold;
+  border: 2px solid #DDDDDD;
+}
+
+.Otherclassbt:hover{
+  cursor:pointer;
+}
+
+.Otherclassbt1{
+  float: left;
+  width:40%;
+  height: 40px;
+  background-color: #EDD788;
+  left:40px;
+  line-height: 40px;
+  font-size: 18px;
+  color: #666666;
+  text-align: center;
+  font-family: 微软雅黑;
+}
+
+.Otherclassbt1:hover{
+  width:calc(40% - 4px);
+  height: 36px;
+  line-height: 36px;
+  background-color: #F1FE98;
+  border: 2px solid #DDDDDD;
+  cursor:pointer;
+}
+
+#Bottom {
+  z-index: 1;
+  height:5%;
+  width: 100%;
+  background-color:lightgray;
+  float:left;
+  opacity:0.6;
+}
+
+.User {
+  float: left;
+  background: #ffffff;
+  opacity: 0.6;
+  border:none;
+  font-family: SimHei;
+  font-size: 20px;
+  font-weight: bold;
+  color: #333333;
+}
+.User:hover{
+  opacity: 1;
+  border: #cccccc;
+}
+
+.User2 {
+  float: left;
+  background: #000000;
+  opacity: 0.6;
+  border:none;
+}
+
+
+#Password {
+  float: left;
+  background: #ffffff;
+  opacity: 0.6;
+  border:none;
+  margin-top: 30px;
+  color: #333333;
+  font-family: SimHei;
+  font-size: 20px;
+  font-weight: bold;
+}
+#Password:hover{
+  opacity: 1;
+  border: #cccccc;
+}
+
+
+#Form {
+  position: absolute;
+  top:35%;
+  height: 200px;
+  left:calc(50% - 200px);
+  width: 404px;
+}
+
+#Buttons {
+  float: left;
+  margin-top:20px;
+  width: 404px;
+}
+
+#Commit{
+  float: left;
+  width:160px;
+  height:40px;
+  margin-left: 20px;
+  background-color: #F8F8F8;
+  opacity: 1;
+  line-height:40px;
+  text-align: center;
+  font-family: SimHei;
+  font-size:28px;
+  font-weight: bold;
+  color: #FFF080;
+}
+#Commit:hover {
+  background-color: #ADDADF;
+  opacity: 0.8;
+  cursor:pointer;
+}
+
+#Clear{
+  float: left;
+  width:160px;
+  height:40px;
+  margin-left: 40px;
+  background-color: #F8F8F8;
+  opacity: 1;
+  line-height:40px;
+  text-align: center;
+  font-family: SimHei;
+  font-size:28px;
+  font-weight: bold;
+  color: #ADCACF;
+}
+#Clear:hover {
+  background-color: #FFF899;
+  opacity: 0.8;
+  cursor:pointer;
 }
