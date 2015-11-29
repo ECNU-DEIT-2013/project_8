@@ -1,5 +1,7 @@
 import 'dart:html';
 
+List myClassList = new List();
+int classsum = 0;
 
 void main() {
   querySelector('#Commit')
@@ -65,6 +67,7 @@ void LogIn(MouseEvent event){           ///登录按钮功能
     ..add(blank)
     ..add(otherclassbt);
   otherclassbt.onClick.listen(Classesshift);
+  myclassbt.onClick.listen(getMyclass); //加一个get函数
 
   DivElement selects = new DivElement();
   selects.classes.add('Selects');
@@ -80,16 +83,19 @@ void LogIn(MouseEvent event){           ///登录按钮功能
   SelectElement classesselector = new SelectElement();      ///课程选择的下拉列表
   classesselector.id='Classesselector';
   classesselectip.children.add(classesselector);
-  int classsum;
-  classsum = 10;      ///注意该数据为该学生课程总数，请用Select+Sum 语句从数据库中统计该学生选课的总数，以便加入下拉列表中
-  List<String> classes = ["Chinese","Math","English","Physics","Chemistry","Biology","History","Geography","Politics","Information Technology"];
+
+ // int classsum;
+ // classsum = 10;      ///注意该数据为该学生课程总数，请用Select+Sum 语句从数据库中统计该学生选课的总数，以便加入下拉列表中
+  //List<String> classes = ["Chinese","Math","English","Physics","Chemistry","Biology","History","Geography","Politics","Information Technology"];
   ///该List存放的是该学生选择的课程，请加入客户端向服务器端的请求和数据的接收，放入List中
-  for(int i=0;i<classsum;i++){
+  ///
+  ///
+  for(int i=0;i<classsum;i++){     //我把这里的3个classes替换成myClassList试一下
     OptionElement option = new OptionElement();
-    option.text = classes[i];
-    print(classes[i]);
+    option.text = myClassList[i];
+    print(myClassList[i]);
     classesselector.children.add(option);
-    print(classes[i]+"done");
+    print(myClassList[i]+"done");
   }
   classesselector.classes
       ..clear()
@@ -154,3 +160,22 @@ void Classesshift1(MouseEvent event){
   querySelector('#Otherclassbt').onClick.listen(Classesshift);
 }
 
+void getMyclass(Event e) {
+  var httpRequest = new HttpRequest();
+  httpRequest
+    ..onLoadEnd.listen((e) => requestComplete(httpRequest))
+    ..send('');
+}
+
+requestComplete(HttpRequest request) {
+  if (request.status == 200) {
+    List<String> portmanteaux = JSON.decode(request.responseText);
+    for (int i = 0; i < portmanteaux.length; i++) {
+       myClassList.add('${portmanteaux[0]}');
+       classsum++;
+    }
+  } else {
+      myClassList.add(new LIElement()
+      ..text = 'Request failed, status=${request.status}');
+  }
+}

@@ -5,14 +5,17 @@ import 'dart:convert';
 
 Router router1 = new Router();
 Router login = new Router();
+Router myclass = new Router();
 Router addMessage = new Router();
 var decoded;//用来接收client端发送的消息
+List myClass = new List();
 
 main() async{
   addMessage.post(postAddMessage, "/addmessage");
   login.get(getLogin, "/login");
   //login.post(postLogin, "/login");
   router1.get(getStock, "/stock");
+  myclass.get(getMyclass, "/myclass");
   var server = await HttpServer.bind(InternetAddress.LOOPBACK_IP_V4, 8008);
   listenForRequests(server);
 }
@@ -37,6 +40,14 @@ postAddMessage( )async{//添加留言的函数
   await addAdd.execute(decoded);
 }
 
+getMyclass() async{   //获取我的课程列表
+  var pool=new ConnectionPool(host: '52.8.67.180', port: 3306, user: 'dec2013stu', password: 'dec2013stu', db: 'stu_10130340245');
+  var results = await pool.query('select UserName from UserList');
+  return results.forEach((row) {
+    myClass.add('${row[0]}');
+  });
+}
+
 void handleRequest(HttpRequest request,Router routen) {
   routen.route(request);
 }
@@ -49,7 +60,8 @@ void addCorsHeaders(HttpResponse res) {
 
 listenForRequests(HttpServer requests) async {
   await for (HttpRequest request in requests){
-    addCorsHeaders(request.response);
+    var res= request.response;
+    addCorsHeaders(res);
     print('accept');//测试是否接收到client端的request
 
     if (request.uri.path=="/login"){
@@ -62,6 +74,14 @@ listenForRequests(HttpServer requests) async {
       //decoded = await request.transform(JSON.decoder).first;
       print(decoded);
       handleRequest(request,addMessage);//加留言的函数
+    }
+    else if(request.uri.path=="/myclass"){
+      handleRequest(request,myclass);
+      request.response
+        ..headers.contentType = new ContentType("application", "json", charset: "utf-8");
+      for(int j=0;j<myClass.length;j++)
+        res.write('"${myClass[j]}');
+      res.close();
     }
     else print("Can't find");}
 }
