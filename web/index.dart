@@ -1,6 +1,8 @@
 import 'dart:html';
 
 
+bool myorall;
+
 void main() {
   querySelector('#Commit')
     ..onClick.listen(LogIn);
@@ -26,6 +28,7 @@ void ClearLog(MouseEvent event){      ///清空按钮功能
 
 
 void LogIn(MouseEvent event){           ///登录按钮功能
+  myorall = true;
   DivElement form = querySelector('#Form');
   form.remove();
   querySelector('#LeftBack')
@@ -129,11 +132,19 @@ void LogIn(MouseEvent event){           ///登录按钮功能
   submitselect.text='查看评教';
   selects.children.add(submitselect);
 
-
+  DivElement saymywords = new DivElement();
+  saymywords.id = 'Saymywords';
+  saymywords.text = '我要评教';
+  saymywords.classes
+    ..clear()
+    ..add('Saymywords');
+  rightback.children.add(saymywords);
 
 }
 
-void Classesshift(MouseEvent event){
+void Classesshift(MouseEvent event){      ///切换至全部课程
+  myorall = false;
+  querySelector('#RightBack').children.remove(querySelector('#Saymywords'));
   querySelector('#Myclassbt').classes
     ..clear()
     ..add('Myclassbt1');
@@ -143,7 +154,7 @@ void Classesshift(MouseEvent event){
   querySelector('#Myclassbt').onClick.listen(Classesshift1);
 }
 
-void Classesshift1(MouseEvent event){
+void Classesshift1(MouseEvent event){     ///切换至我的课程
   querySelector('#Myclassbt').classes
     ..clear()
     ..add('Myclassbt');
@@ -152,5 +163,15 @@ void Classesshift1(MouseEvent event){
     ..clear()
     ..add('Otherclassbt1');
   querySelector('#Otherclassbt').onClick.listen(Classesshift);
+  DivElement rightback = querySelector('#RightBack');
+  if(myorall == false) {
+    DivElement saymywords = new DivElement();
+    saymywords.id = 'Saymywords';
+    saymywords.text = '我要评教';
+    saymywords.classes
+      ..clear()
+      ..add('Saymywords');
+    rightback.children.add(saymywords);
+  }
 }
 
