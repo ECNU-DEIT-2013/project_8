@@ -54,7 +54,7 @@ html, body {
   position: relative;
   top:10%;
   width:80%;
-  left:15%;
+  left:10%;
 }
 
 .Classesselecttip{
@@ -122,7 +122,7 @@ html, body {
 .Myclass{
   position: relative;
   top:5%;
-  left:12%;
+  left:10%;
   width: 80%;
   height:40px;
 }
@@ -212,6 +212,37 @@ html, body {
   width:calc(40% - 4px);
   height: 36px;
   line-height: 36px;
+  background-color: #F1FE98;
+  border: 2px solid #DDDDDD;
+  cursor:pointer;
+}
+
+.Saymywords{
+  position: relative;
+  top:45%;
+  left:calc(50% - 75px);
+  width: 150px;
+  height: 150px;
+  -webkit-border-radius: 75px;
+  -moz-border-radius: 75px;
+  border-radius: 75px;
+  background-color:  #EDD788;
+  font-size: 24px;
+  font-weight: bold;
+  font-family: SimHei;
+  line-height: 150px;
+  text-align: center;
+    color: #666666;
+
+}
+
+.Saymywords:hover{
+  width: 146px;
+  height:146px;
+  line-height: 146px;;
+  -webkit-border-radius: 73px;
+  -moz-border-radius: 73px;
+  border-radius: 73px;
   background-color: #F1FE98;
   border: 2px solid #DDDDDD;
   cursor:pointer;
