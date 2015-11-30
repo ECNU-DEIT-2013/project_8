@@ -1,4 +1,8 @@
 import 'dart:html';
+import 'dart:convert';
+import 'package:messagebox/messagebox.dart';
+
+
 
 
 bool myorall;
@@ -17,6 +21,19 @@ void main() {
     ..classes.add('LeftBack');
   querySelector('#RightBack')
     ..classes.add('RightBack');
+}
+
+void addComments(Event e){
+  querySelector('#Saymywords').text='Trying';
+  window.alert();
+  var awesome = new MessageBoxModule();
+  awesome.install();
+ // List message = ['1',"不断尝试"];
+  //var path = 'http://127.0.0.1:8008/addmessage';
+  //var httpRequest = new HttpRequest();
+ // httpRequest
+   // ..open('POST', path)
+   // ..send(JSON.encode(message));
 }
 
 void ClearLog(MouseEvent event){      ///清空按钮功能
@@ -139,7 +156,7 @@ void LogIn(MouseEvent event){           ///登录按钮功能
     ..clear()
     ..add('Saymywords');
   rightback.children.add(saymywords);
-
+  querySelector('#Saymywords').onClick.listen(addComments);
 }
 
 void Classesshift(MouseEvent event){      ///切换至全部课程
@@ -172,6 +189,7 @@ void Classesshift1(MouseEvent event){     ///切换至我的课程
       ..clear()
       ..add('Saymywords');
     rightback.children.add(saymywords);
+    querySelector('#Saymywords').onClick.listen(addComments);
   }
 }
 
