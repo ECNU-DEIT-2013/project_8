@@ -1,5 +1,11 @@
 import 'dart:html';
+import 'dart:convert';
+import 'package:dialog/dialog.dart';
+import "package:dialog/src/dialog_class.dart";
+import "dart:async";
 
+
+bool myorall;
 
 void main() {
   querySelector('#Commit')
@@ -16,6 +22,53 @@ void main() {
   querySelector('#RightBack')
     ..classes.add('RightBack');
 }
+Future<String> addMessageDialog([String message = "", String value = ""]) async {
+  Completer c = new Completer();
+  LabelElement label = new LabelElement()
+    ..classes.add("control-label")
+    ..htmlFor = "dialogInput"
+    ..text = message;
+  BRElement br = new BRElement();
+  InputElement input = new InputElement(type: "text")
+    ..classes.add("form-control")
+    ..id = "dialogInput"
+    ..value = value;
+  Dialog addMessageDialog = new Dialog([label, br, input], "添加新留言", true);
+  addMessageDialog.showDialog();
+  input.focus();
+  addMessageDialog.dialogBackdrop.onClick.first.then((_) {
+    c.complete(null);addMessageDialog.closeDialog();
+  });
+  querySelectorAll(".modal button").forEach((ButtonElement buttons) {
+    buttons.onClick.first.then((e) {
+      if (e.target == addMessageDialog.okButton) {
+        c.complete(input.value);
+      } else {        c.complete(null);      }
+      addMessageDialog.closeDialog();
+    });
+    buttons.onKeyDown.listen((e) {
+      if (e.keyCode == KeyCode.ESC) {   c.complete(null);addMessageDialog.closeDialog();      }
+    });
+  });
+  input.onKeyDown.listen((e) {
+    if (e.keyCode == KeyCode.ENTER) {      e.preventDefault(); c.complete(input.value);  addMessageDialog.closeDialog();    }
+    else if (e.keyCode == KeyCode.ESC) {      c.complete(null);addMessageDialog.closeDialog();    }
+  });
+  return c.future;
+}//重新写了一个dialog类，代码来源是prompt，添加留言就会调用它
+
+ addComments(Event e) async{
+  var myMessage = await addMessageDialog("请在这里输入你的留言", "");
+  if(myMessage != null){
+      alert(myMessage.toString()+'\n留言添加成功！');
+       List message = ['5',myMessage];
+      var path = 'http://127.0.0.1:8008/addmessage';
+      var httpRequest = new HttpRequest();
+      httpRequest
+        ..open('POST', path)
+        ..send(JSON.encode(message));
+      }
+}//添加留言的函数
 
 void ClearLog(MouseEvent event){      ///清空按钮功能
   InputElement user = querySelector('#User');
@@ -26,6 +79,7 @@ void ClearLog(MouseEvent event){      ///清空按钮功能
 
 
 void LogIn(MouseEvent event){           ///登录按钮功能
+  myorall = true;
   DivElement form = querySelector('#Form');
   form.remove();
   querySelector('#LeftBack')
@@ -129,11 +183,19 @@ void LogIn(MouseEvent event){           ///登录按钮功能
   submitselect.text='查看评教';
   selects.children.add(submitselect);
 
-
-
+  DivElement saymywords = new DivElement();
+  saymywords.id = 'Saymywords';
+  saymywords.text = '我要评教';
+  saymywords.classes
+    ..clear()
+    ..add('Saymywords');
+  rightback.children.add(saymywords);
+  querySelector('#Saymywords').onClick.listen(addComments);
 }
 
-void Classesshift(MouseEvent event){
+void Classesshift(MouseEvent event){      ///切换至全部课程
+  myorall = false;
+  querySelector('#RightBack').children.remove(querySelector('#Saymywords'));
   querySelector('#Myclassbt').classes
     ..clear()
     ..add('Myclassbt1');
@@ -143,7 +205,7 @@ void Classesshift(MouseEvent event){
   querySelector('#Myclassbt').onClick.listen(Classesshift1);
 }
 
-void Classesshift1(MouseEvent event){
+void Classesshift1(MouseEvent event){     ///切换至我的课程
   querySelector('#Myclassbt').classes
     ..clear()
     ..add('Myclassbt');
@@ -152,5 +214,16 @@ void Classesshift1(MouseEvent event){
     ..clear()
     ..add('Otherclassbt1');
   querySelector('#Otherclassbt').onClick.listen(Classesshift);
+  DivElement rightback = querySelector('#RightBack');
+  if(myorall == false) {
+    DivElement saymywords = new DivElement();
+    saymywords.id = 'Saymywords';
+    saymywords.text = '我要评教';
+    saymywords.classes
+      ..clear()
+      ..add('Saymywords');
+    rightback.children.add(saymywords);
+    querySelector('#Saymywords').onClick.listen(addComments);
+  }
 }
 
