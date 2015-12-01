@@ -29,11 +29,12 @@ Future<String> addMessageDialog([String message = "", String value = ""]) async 
     ..htmlFor = "dialogInput"
     ..text = message;
   BRElement br = new BRElement();
-  InputElement input = new InputElement(type: "text")
+  BRElement br2 = new BRElement();
+  TextAreaElement input = new TextAreaElement()
     ..classes.add("form-control")
     ..id = "dialogInput"
     ..value = value;
-  Dialog addMessageDialog = new Dialog([label, br, input], "添加新留言", true);
+  Dialog addMessageDialog = new Dialog([label, br,br2, input], "添加新留言", true);
   addMessageDialog.showDialog();
   input.focus();
   addMessageDialog.dialogBackdrop.onClick.first.then((_) {
