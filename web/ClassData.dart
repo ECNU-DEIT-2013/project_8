@@ -2,6 +2,36 @@ import 'package:dialog/dialog.dart';
 import "package:dialog/src/dialog_class.dart";
 import "dart:async";
 import "dart:html";
+import 'dart:convert';
+
+class UserElement{
+  String UserId;
+  String UserName;
+  String UserSex;
+  int UserMessages;
+  }
+
+class TeacherElement {
+  String TeacherId;
+  String TeacherName;
+}
+
+class CourseElement{
+  String CourseId;
+  String CourseName;
+  int CourseAverage;
+}
+
+class MessageElement{
+  String Message;
+  String CourseId;
+  String TeacherId;
+  String UserId;
+  int CourseStar;
+  int Zan;
+  String color;
+}
+
 
 Future<String> addMessageDialog([String message = "", String value = ""]) async {
   Completer c = new Completer();
@@ -15,7 +45,7 @@ Future<String> addMessageDialog([String message = "", String value = ""]) async 
     ..classes.add("form-control")
     ..id = "dialogInput"
     ..value = value;
-  Dialog addMessageDialog = new Dialog([label, br,br2, input], "Ìí¼ÓĞÂÁôÑÔ", true);
+  Dialog addMessageDialog = new Dialog([label, br,br2, input], "æ·»åŠ æ–°ç•™è¨€", true);
   addMessageDialog.showDialog();
   input.focus();
   addMessageDialog.dialogBackdrop.onClick.first.then((_) {
@@ -37,6 +67,6 @@ Future<String> addMessageDialog([String message = "", String value = ""]) async 
     else if (e.keyCode == KeyCode.ESC) {      c.complete(null);addMessageDialog.closeDialog();    }
   });
   return c.future;
-}//ÖØĞÂĞ´ÁËÒ»¸ödialogÀà£¬´úÂëÀ´Ô´ÊÇprompt£¬Ìí¼ÓÁôÑÔ¾Í»áµ÷ÓÃËü
+}//é‡æ–°å†™äº†ä¸€ä¸ªdialogç±»ï¼Œä»£ç æ¥æºæ˜¯promptï¼Œæ·»åŠ ç•™è¨€å°±ä¼šè°ƒç”¨å®ƒ
 
 
