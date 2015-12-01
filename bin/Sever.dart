@@ -40,16 +40,19 @@ postAddMessage( )async{//添加留言的函数
   await addAdd.execute(decoded);
 }
 
-getMyclass() async{   //获取我的课程列表
+getMyclass(HttpRequest request) async{   //获取我的课程列表
   var pool=new ConnectionPool(host: '52.8.67.180', port: 3306, user: 'dec2013stu', password: 'dec2013stu', db: 'stu_10130340245');
   var results = await pool.query('select UserName from UserList');
-  return results.forEach((row) {
+  print('connect!');
+  await results.forEach((row) {
     myClass.add('${row[0]}');
+    print(myClass);
   });
 }
 
 void handleRequest(HttpRequest request,Router routen) {
   routen.route(request);
+  print('handle!');
 }
 
 void addCorsHeaders(HttpResponse res) {
@@ -74,15 +77,21 @@ listenForRequests(HttpServer requests) async {
       //decoded = await request.transform(JSON.decoder).first;
       print(decoded);
       handleRequest(request,addMessage);//加留言的函数
-    }
-    else if(request.uri.path=="/myclass"){
+    } else if(request.uri.path=="/myclass") {
+      print('myclass!~!~!!');
       handleRequest(request,myclass);
-      request.response
-        ..headers.contentType = new ContentType("application", "json", charset: "utf-8");
-      for(int j=0;j<myClass.length;j++)
-        res.write('"${myClass[j]}');
-      res.close();
+      res.write('shabi');
+      //request.response
+       // ..headers.contentType = new ContentType("application", "json", charset: "utf-8");
+       //    for(int j=0;j<myClass.length;j++) res.write('"${myClass[j]}"');
+       //      res.close();
     }
-    else print("Can't find");}
+    else print("Can't find");
+
+
+    }
+
+
+
 }
 
