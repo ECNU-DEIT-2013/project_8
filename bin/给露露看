@@ -1,0 +1,4 @@
+露露你最好理解一下Sever端的route相关的函数
+我搭了addMessage，给login写了空函数，
+你写登录部分，就是把用户名和密码从main.dart（客户端）通过[用户名，密码]这种格式用httpRequest发送到sever端，（request请求的url为：http://127.0.0.1:8008/login）
+然后你在sever端的login函数里面链接数据库，对比，写登录部分
