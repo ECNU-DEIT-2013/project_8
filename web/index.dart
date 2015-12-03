@@ -39,6 +39,13 @@ void LogIn(MouseEvent event){           ///登录按钮功能
     ..classes.add('RightBack1');
   DivElement rightback=querySelector('#RightBack');
 
+  var path = 'http://127.0.0.1:8008/myclass';
+  var httpRequest = new HttpRequest();
+  httpRequest
+    ..open('GET', path)
+    ..onLoadEnd.listen((e) => requestComplete(httpRequest))
+    ..send('');
+
   DivElement myclass = new DivElement();
   myclass.id = 'Myclass';
   myclass.classes
@@ -84,19 +91,12 @@ void LogIn(MouseEvent event){           ///登录按钮功能
   classesselector.id='Classesselector';
   classesselectip.children.add(classesselector);
 
-  var path = 'http://127.0.0.1:8008/myclass';
-  var httpRequest = new HttpRequest();
-  httpRequest
-    ..open('GET', path)
-    ..onLoadEnd.listen((e) => requestComplete(httpRequest))
-    ..send('');
-
-  int classsum;
-  classsum = 10;      ///注意该数据为该学生课程总数，请用Select+Sum 语句从数据库中统计该学生选课的总数，以便加入下拉列表中
-  List<String> classes = ["Chinese","Math","English","Physics","Chemistry","Biology","History","Geography","Politics","Information Technology"];
+  //int classsum;
+  //classsum = 10;      ///注意该数据为该学生课程总数，请用Select+Sum 语句从数据库中统计该学生选课的总数，以便加入下拉列表中
+ // List<String> classes = ["Chinese","Math","English","Physics","Chemistry","Biology","History","Geography","Politics","Information Technology"];
   ///该List存放的是该学生选择的课程，请加入客户端向服务器端的请求和数据的接收，放入List中
 
-  for(int i=0;i<classsum;i++){    //把classes替换成myClassList
+  for(int i=0;i<myClassList.length;i++){    //把classes替换成myClassList
     OptionElement option = new OptionElement();
     option.text = myClassList[i];
     print(myClassList[i]);
@@ -169,6 +169,9 @@ void Classesshift1(MouseEvent event) {
 
 requestComplete(HttpRequest request) {
   if (request.status == 200) {
+    querySelector('#Myclassbt').text='myclass';
     List<String> myClassList = JSON.decode(request.responseText);
+  } else {
+    querySelector('#Myclassbt').text='nanguo';
   }
-  }
+}

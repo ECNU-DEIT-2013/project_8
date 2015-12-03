@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:sqljocky/sqljocky.dart';
 import 'package:rest_frame/rest_frame.dart';
 import 'dart:convert';
+import'dart:async';
 
 Router router1 = new Router();
 Router login = new Router();
@@ -40,14 +41,16 @@ postAddMessage( )async{//添加留言的函数
   await addAdd.execute(decoded);
 }
 
-getMyclass(HttpRequest request) async{   //获取我的课程列表
+
+ getMyclass(HttpRequest request) async{   //获取我的课程列表
   var pool=new ConnectionPool(host: '52.8.67.180', port: 3306, user: 'dec2013stu', password: 'dec2013stu', db: 'stu_10130340245');
   var results = await pool.query('select UserName from UserList');
   print('connect!');
   await results.forEach((row) {
-    myClass.add('${row[0]}');
+    myClass.add('"${row[0]}"');
     print(myClass);
   });
+
 }
 
 void handleRequest(HttpRequest request,Router routen) {
@@ -79,19 +82,14 @@ listenForRequests(HttpServer requests) async {
       handleRequest(request,addMessage);//加留言的函数
     } else if(request.uri.path=="/myclass") {
       print('myclass!~!~!!');
-      handleRequest(request,myclass);
-      res.write('shabi');
-      //request.response
-       // ..headers.contentType = new ContentType("application", "json", charset: "utf-8");
-       //    for(int j=0;j<myClass.length;j++) res.write('"${myClass[j]}"');
-       //      res.close();
+      await getMyclass(request);
+      await request.response
+      ..headers.add(HttpHeaders.CONTENT_TYPE, "application/json");
+      res.write(myClass);
+      res.close();
+      myClass = [];
     }
     else print("Can't find");
-
-
     }
-
-
-
 }
 
