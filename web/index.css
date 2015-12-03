@@ -219,7 +219,7 @@ html, body {
 
 .Saymywords{
   position: relative;
-  top:45%;
+  top:30%;
   left:calc(50% - 75px);
   width: 150px;
   height: 150px;

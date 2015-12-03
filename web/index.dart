@@ -4,14 +4,14 @@ import 'dart:html';
 bool myorall;
 
 void main() {
-  querySelector('#Commit')
-    ..onClick.listen(LogIn);
-  querySelector('#Clear')
-    ..onClick.listen(ClearLog);
-  querySelector('#User')
+  querySelector('#Commit')              ///Commit为确认登录按钮
+    ..onClick.listen(LogIn);            ///logIn()为按下确认键登录进入主页面的子函数
+  querySelector('#Clear')               ///Clear()为清空按钮
+    ..onClick.listen(ClearLog);         ///ClearLog()为清空登录页面的函数
+  querySelector('#User')                ///User为用户名输入框
     ..placeholder='请输入用户名'
     ..classes.add('User');
-  querySelector('#Password')
+  querySelector('#Password')            ///Password为密码输入框
     ..placeholder='请输入密码';
   querySelector('#LeftBack')
     ..classes.add('LeftBack');
