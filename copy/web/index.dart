@@ -38,20 +38,27 @@ void ClearLog(MouseEvent event){      ///清空按钮功能
 }
 
 
-void LogIn(MouseEvent event){           ///登录按钮功能
-  var Username= document.getElementById('User').value;
-  var Password= document.getElementById('Password').value;
-  List a = ['1','2'];
- /* if(Username== ''){window.alert('用户名为空！');}
+void LogIn(MouseEvent event) {
+  ///登录按钮功能
+  var Username = document.getElementById('User').value;
+  var Password = document.getElementById('Password').value;
+  List a = ['101', '123321'];
+  List a2 = ['', ''];
+  a2[0] = Username;
+  a2[1] = Password;
+  /* if(Username== ''){window.alert('用户名为空！');}
   else if(Password==''){window.alert('密码为空！');}
   else {*/
-   var url = 'http://127.0.0.1:8008/login';
-    var request = new HttpRequest();
-    //..onReadyStateChange.listen(onData)
-    request
-      ..open('GET', url)
-      ..send(JSON.encode(a));
-
+  var url = 'http://127.0.0.1:8008/login';
+  var request = new HttpRequest();
+  //..onReadyStateChange.listen(onData)
+  request
+    ..open('GET', url)
+    ..send(JSON.encode(a2));
+  //var mmm = ;
+  print(JSON.decode(request.responseText));
+  //print();
+  if (mmm=='true') {
     DivElement form = querySelector('#Form');
     form.remove();
     querySelector('#LeftBack')
@@ -156,7 +163,8 @@ void LogIn(MouseEvent event){           ///登录按钮功能
     selects.children.add(submitselect);
 
 
- // }k                       kskskskskssssssssssssssssssssssssssssssssssssssssss
+    // }k                       kskskskskssssssssssssssssssssssssssssssssssssssssss
+  }
 }
 
 void Classesshift(MouseEvent event){
