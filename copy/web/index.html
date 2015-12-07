@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>I have something to say!</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+<div id="MainCon">
+  <div id="Background">
+    <div id="LeftBack"></div>
+    <div id="RightBack"></div>
+    <div id="Bottom"></div>
+  </div>
+  <div id="Form" action="http://localhost:8080" method="GET">
+    <input id="User" style="width:400px; height:40px;">
+    <input id="Password" style="width:400px; height:40px;" type="password">
+    <div id="Buttons">
+      <div id="Commit" >确认</div>
+      <div id="Clear" >清空</div>
+    </div>
+  </div>
+</div>
+
+<script type="application/dart" src="index.dart"></script>
+<script src="packages/browser/dart.js"></script>
+</body>
+</html>

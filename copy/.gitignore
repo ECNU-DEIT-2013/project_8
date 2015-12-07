@@ -1,0 +1,19 @@
+﻿.buildlog
+.pub/
+build/
+.idea/
+packages
+
+# Or the files created by dart2js.
+*.dart.js
+*.js.deps
+*.js.map
+*.xml
+*.imp
+*.iml
+*.name
+
+# Include when developing application packages.
+pubspec.lock
+.idea/workspace.xml
+*.xml
