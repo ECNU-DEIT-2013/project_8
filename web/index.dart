@@ -26,15 +26,20 @@ void main() {
 
  addComments(Event e) async{
   var myMessage = await addMessageDialog("请在这里输入你的留言", "");
-  if(myMessage != null){
+  if(myMessage != null&&mystarcount!=0){
       alert(myMessage.toString()+'\n留言添加成功！');
-       List message = ['5',myMessage];
+       List message = ['5',myMessage,mystarcount];
       var path = 'http://127.0.0.1:8008/addmessage';
       var httpRequest = new HttpRequest();
       httpRequest
         ..open('POST', path)
         ..send(JSON.encode(message));
-      }
+      }else if(myMessage==null){
+    window.alert("请输入留言哦！");
+      }else if (mystarcount==0){
+    window.alert("你还没有打分哦！");
+  }
+
 }//添加留言的函数
 
 void ClearLog(MouseEvent event){      ///清空按钮功能
