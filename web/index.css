@@ -16,6 +16,7 @@ html, body {
 }
 
 .LeftBack {
+  overflow-y:scroll;
   z-index: 1;
   height:95%;
   float:left;
@@ -423,4 +424,16 @@ html, body {
   background-color: #FFF899;
   opacity: 0.8;
   cursor:pointer;
+}
+
+.Commentcon{
+  position: relative;
+  float: left;
+  width:40%;
+  background-color: #13baee;
+  border-radius: 10px;
+  height:100px;
+  margin-top: 5%;
+  margin-left: 5%;
+  opacity: 0.6;
 }

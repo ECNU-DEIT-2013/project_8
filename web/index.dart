@@ -148,6 +148,7 @@ void LogIn(MouseEvent event){           ///登录按钮功能
     ..add('Submitselect');
   submitselect.text='查看评教';
   selects.children.add(submitselect);
+  submitselect.onClick.listen(Checkclass);        ///点击查看评教按钮向左边容器中加入评教内容
 
   mystarcount = 0;    ///这个整形为个人对某课程的评分，初始未评分为0
   Loadmystar(mystarcount);           ///此处加载的是个人的评分星数
@@ -174,9 +175,14 @@ void Classesshift(MouseEvent event){      ///切换至全部课程
     ..add('Otherclassbt');
   querySelector('#Myclassbt').onClick.listen(Classesshift1);
   querySelector('#Stars').remove();
+
+  mystarcount=3;        ///此整形存放全部课程中某一课程的总评分
+  Loadmystar(mystarcount);
+  querySelector('#Starstext').text='全部评分';
 }
 
 void Classesshift1(MouseEvent event){     ///切换至我的课程
+                                          ///每次切换
   querySelector('#Myclassbt').classes
     ..clear()
     ..add('Myclassbt');
@@ -187,12 +193,12 @@ void Classesshift1(MouseEvent event){     ///切换至我的课程
   querySelector('#Otherclassbt').onClick.listen(Classesshift);
   DivElement rightback = querySelector('#RightBack');
 
-  Loadmystar(mystarcount);       ///加载个人评星数
+  querySelector('#Stars').remove();
+  querySelector('#RightBack').children.remove(querySelector('#Saymywords'));
 
-  if(myorall == false) {
+    Loadmystar(mystarcount);
+    myorall=true;
     Loadsaymywords();
-
-  }
 
 
 }
@@ -266,6 +272,7 @@ void Loadmystar(int mystarcount){
   if(mystarcount==0){                 ///这里用评分数来判断是否完成评分
                               ///如果未完成，则有鼠标经过的特效，如已评分，则将加载的评分数（1~5）
                               ///比如评了4分，则调用Star4()；
+    Star0();
     star1.onMouseEnter.listen(Starin1);
     star2.onMouseEnter.listen(Starin2);
     star3.onMouseEnter.listen(Starin3);
@@ -281,6 +288,7 @@ void Loadmystar(int mystarcount){
     star3.onClick.listen(Clickstar3);
     star4.onClick.listen(Clickstar4);
     star5.onClick.listen(Clickstar5);
+
 
   }else if(mystarcount==1){
     Star1();
@@ -505,4 +513,21 @@ void Clickstar5(MouseEvent event){
   querySelector('#RightBack').children.remove(querySelector('#Saymywords'));
   Loadmystar(mystarcount);
   Loadsaymywords();
+}
+
+void Checkclass(MouseEvent event){
+  int commentcount;     ///该整形用于存放某课程的评价总数
+  commentcount=20;      ///以而是条为例
+  for(int i=1;i<=commentcount;i++){
+    LoadComments(i);
+  }
+}
+
+void LoadComments(int i){
+  DivElement commentcon=new DivElement();
+  commentcon.id = 'Comment'+i.toString();
+  commentcon.classes
+    ..clear()
+    ..add('Commentcon');
+  querySelector('#LeftBack').children.add(commentcon);
 }
