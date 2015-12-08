@@ -8,8 +8,10 @@ Router router1 = new Router();
 Router login = new Router();
 Router myclass = new Router();
 Router addMessage = new Router();
+Router allclass = new Router();
 var decoded;//用来接收client端发送的消息
 List myClass = new List();
+List allClass = new List();
 
 main() async{
   addMessage.post(postAddMessage, "/addmessage");
@@ -17,6 +19,7 @@ main() async{
   //login.post(postLogin, "/login");
   router1.get(getStock, "/stock");
   myclass.get(getMyclass, "/myclass");
+  allclass.get(getAllclass,"/allclass");
   var server = await HttpServer.bind(InternetAddress.LOOPBACK_IP_V4, 8008);
   listenForRequests(server);
 }
@@ -43,14 +46,23 @@ postAddMessage( )async{//添加留言的函数
 
 
  getMyclass(HttpRequest request) async{   //获取我的课程列表
-  var pool=new ConnectionPool(host: '52.8.67.180', port: 3306, user: 'dec2013stu', password: 'dec2013stu', db: 'stu_10130340245');
-  var results = await pool.query('select UserName from UserList');
+  var pool=new ConnectionPool(host: '52.8.67.180', port: 3306, user: 'dec2013stu', password: 'dec2013stu', db: 'stu_10130340211');
+  var results = await pool.query('select curriculumname from curriculum');
   print('connect!');
   await results.forEach((row) {
     myClass.add('"${row[0]}"');
     print(myClass);
   });
+}
 
+getAllclass(HttpRequest request) async{   //获取所有课程列表
+  var pool=new ConnectionPool(host: '52.8.67.180', port: 3306, user: 'dec2013stu', password: 'dec2013stu', db: 'stu_10130340211');
+  var results = await pool.query('select curriculumname from curriculum where curriculumID in (select curriculumID from xuanke where studentID = 101)');
+  print('connect2!');
+  await results.forEach((row) {
+    allClass.add('"${row[0]}"');
+    print(allClass);
+  });
 }
 
 void handleRequest(HttpRequest request,Router routen) {
@@ -80,7 +92,8 @@ listenForRequests(HttpServer requests) async {
       //decoded = await request.transform(JSON.decoder).first;
       print(decoded);
       handleRequest(request,addMessage);//加留言的函数
-    } else if(request.uri.path=="/myclass") {
+    }
+    else if(request.uri.path=="/myclass") {
       print('myclass!~!~!!');
       await getMyclass(request);
       await request.response
@@ -88,6 +101,15 @@ listenForRequests(HttpServer requests) async {
       res.write(myClass);
       res.close();
       myClass = [];
+    }
+    else if(request.uri.path=="/allclass") {
+      print('allclass!!!!~~~!!~~~');
+      await getAllclass(request);
+      await request.response
+        ..headers.add(HttpHeaders.CONTENT_TYPE, "application/json");
+      res.write(allClass);
+      res.close();
+      allClass = [];
     }
     else print("Can't find");
     }
