@@ -10,8 +10,8 @@ Router myclass = new Router();
 Router addMessage = new Router();
 Router allclass = new Router();
 var decoded;//用来接收client端发送的消息
-List myClass = new List();
-List allClass = new List();
+List classList = new List();
+List teacherList = new List();
 
 main() async{
   addMessage.post(postAddMessage, "/addmessage");
@@ -45,23 +45,33 @@ postAddMessage( )async{//添加留言的函数
 }
 
 
- getMyclass(HttpRequest request) async{   //获取我的课程列表
+getMyclass(HttpRequest request) async{   //获取我的课程列表
   var pool=new ConnectionPool(host: '52.8.67.180', port: 3306, user: 'dec2013stu', password: 'dec2013stu', db: 'stu_10130340211');
-  var results = await pool.query('select curriculumname from curriculum');
-  print('connect!');
+  var results = await pool.query('select curriculumname from curriculum where curriculumID in (select curriculumID from xuanke where studentID = 101)');
+  var tearesults = await pool.query('select teachername from teacher where teacherID in(select teacherID from curriculum where curriculumID in (select curriculumID from xuanke where studentID = 101))');
+  //需把登陆页面获得的学号替换掉select里的101
   await results.forEach((row) {
-    myClass.add('"${row[0]}"');
-    print(myClass);
+    classList.add('"${row[0]}"');
+    print(classList);
+  });
+  await tearesults.forEach((row) {
+    teacherList.add('"${row[0]}"');
+    print(teacherList);
   });
 }
 
 getAllclass(HttpRequest request) async{   //获取所有课程列表
   var pool=new ConnectionPool(host: '52.8.67.180', port: 3306, user: 'dec2013stu', password: 'dec2013stu', db: 'stu_10130340211');
-  var results = await pool.query('select curriculumname from curriculum where curriculumID in (select curriculumID from xuanke where studentID = 101)');
+  var results = await pool.query('select curriculumname from curriculum');
+  var tearesults = await pool.query('select teachername from teacher where teacherID in(select teacherID from curriculum)');
   print('connect2!');
   await results.forEach((row) {
-    allClass.add('"${row[0]}"');
-    print(allClass);
+    classList.add('"${row[0]}"');
+    print(classList);
+  });
+  await tearesults.forEach((row) {
+    teacherList.add('"${row[0]}"');
+    print(teacherList);
   });
 }
 
@@ -97,19 +107,23 @@ listenForRequests(HttpServer requests) async {
       print('myclass!~!~!!');
       await getMyclass(request);
       await request.response
-      ..headers.add(HttpHeaders.CONTENT_TYPE, "application/json");
-      res.write(myClass);
+      //..headers.add(HttpHeaders.CONTENT_TYPE, "application/json");
+      ..headers.contentType = new ContentType("application", "json", charset: "utf-8");
+      res.write(classList);
       res.close();
-      myClass = [];
+      classList = [];
+      teacherList = [];
     }
     else if(request.uri.path=="/allclass") {
       print('allclass!!!!~~~!!~~~');
       await getAllclass(request);
       await request.response
-        ..headers.add(HttpHeaders.CONTENT_TYPE, "application/json");
-      res.write(allClass);
+        //..headers.add(HttpHeaders.CONTENT_TYPE, "application/json");
+        ..headers.contentType = new ContentType("application", "json", charset: "utf-8");
+      res.write(classList);
       res.close();
-      allClass = [];
+      classList = [];
+      teacherList = [];
     }
     else print("Can't find");
     }
