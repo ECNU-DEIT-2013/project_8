@@ -16,7 +16,7 @@ html, body {
 }
 
 .LeftBack {
-  overflow-y:scroll;
+
   z-index: 1;
   height:95%;
   float:left;
@@ -26,6 +26,7 @@ html, body {
 }
 
 .LeftBack1 {
+  overflow-y:scroll;
   z-index: 1;
   height:95%;
   float:left;
