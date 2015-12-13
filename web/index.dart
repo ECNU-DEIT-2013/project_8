@@ -586,7 +586,7 @@ void Checkclass(MouseEvent event){
   commentcount=5;                              ///以而是条为例
   String thelatesttime='2015-12-01 20:24:15';///这个字符串存放最后评论的时间（要先转换成字符串！！）
   String theearliesttime='2015-11-25 13:40:15';///这个字符串存放最早评论的时间（要先转换成字符串！！）
-  List<String> comments = ["2015-12-01 20:24:15","The class is good!","15","2015-11-28 21:12:08","The teacher is fun!","8","2015-11-28 20:12:08","The teacher is nice!","5","2015-11-25 22:12:08","The teacher is cute!","6","2015-11-25 13:40:15","The lesson is great!","3"];
+  List<String> comments = ["2015-12-01 20:24:15","The class is very good!","15","2015-11-28 21:12:08","The teacher is fun!","8","2015-11-28 20:12:08","The teacher is nice!","5","2015-11-25 22:12:08","The teacher is cute!","6","2015-11-25 13:40:15","The lesson is great!","3"];
   ///comments这个LIST存放的是某个课程的评论数据，格式是时间+评论内容+赞数
   if(timeortag==true){///
     DivElement latesttime=new DivElement();     ///latesttime顾名思义为存放最后一条评论的时间，作为时间轴的头
