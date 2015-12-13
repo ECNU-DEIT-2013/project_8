@@ -5,8 +5,9 @@ import "package:dialog/src/dialog_class.dart";
 import "dart:async";
 import "ClassData.dart";
 
-bool myorall;
-int mystarcount;
+bool myorall;             ///该变量true为我的课程，false为全部课程
+int mystarcount;          ///该变量存放某门课程的评分数
+bool timeortag;           ///该变量true为时间轴，false为标签模式
 
 void main() {
   querySelector('#Commit')              ///Commit为确认登录按钮
@@ -35,6 +36,7 @@ void main() {
         ..open('POST', path)
         ..send(JSON.encode(message));
       }
+
 }//添加留言的函数
 
 void ClearLog(MouseEvent event){      ///清空按钮功能
@@ -45,7 +47,45 @@ void ClearLog(MouseEvent event){      ///清空按钮功能
 }
 
 void LogIn(MouseEvent event){           ///登录按钮功能
-  myorall = true;
+  myorall = true;                     ///登录后默认为我的课程
+  timeortag = true;                   ///登录后默认时间轴模式
+
+  addButtons();                        ///加入右边栏的部件
+
+
+  DivElement lefttop= new DivElement();
+  lefttop.id = 'Lefttop';
+  lefttop.classes
+    ..clear()
+    ..add('Lefttop');
+  querySelector('#LeftBack').children.add(lefttop);
+
+  DivElement leftmain= new DivElement();
+  leftmain.id = 'Leftmain';
+  leftmain.classes
+    ..clear()
+    ..add('Leftmain');
+  querySelector('#LeftBack').children.add(leftmain);
+
+  DivElement tagtime = new DivElement();
+  tagtime.id = 'Tagtime';
+  tagtime.text='时间顺序';
+  tagtime.classes
+    ..clear()
+    ..add('Tagtime');
+  querySelector('#Lefttop').children.add(tagtime);
+
+  DivElement tagtag = new DivElement();
+  tagtag.id = 'Tagtag';
+  tagtag.text='标签模式';
+  tagtag.classes
+    ..clear()
+    ..add('Tagtag1');
+  querySelector('#Lefttop').children.add(tagtag);
+  tagtag.onClick.listen(Modeshift);
+}
+
+void addButtons(){
   DivElement form = querySelector('#Form');
   form.remove();
   querySelector('#LeftBack')
@@ -93,8 +133,8 @@ void LogIn(MouseEvent event){           ///登录按钮功能
   classesselectip.id = 'Classesselectip';
   classesselectip.text = '选择课程';
   classesselectip.classes
-      ..clear()
-      ..add('Classesselecttip');
+    ..clear()
+    ..add('Classesselecttip');
   selects.children.add(classesselectip);
 
   SelectElement classesselector = new SelectElement();      ///课程选择的下拉列表
@@ -112,8 +152,8 @@ void LogIn(MouseEvent event){           ///登录按钮功能
     print(classes[i]+"done");
   }
   classesselector.classes
-      ..clear()
-      ..add('Classesselector');
+    ..clear()
+    ..add('Classesselector');
 
   DivElement teacherselecttip = new DivElement();
   teacherselecttip.id = 'Teacherselecttip';
@@ -153,7 +193,6 @@ void LogIn(MouseEvent event){           ///登录按钮功能
   mystarcount = 0;    ///这个整形为个人对某课程的评分，初始未评分为0
   Loadmystar(mystarcount);           ///此处加载的是个人的评分星数
 
-
   DivElement saymywords = new DivElement();
   saymywords.id = 'Saymywords';
   saymywords.text = '我要评教';
@@ -161,7 +200,8 @@ void LogIn(MouseEvent event){           ///登录按钮功能
     ..clear()
     ..add('Saymywords');
   rightback.children.add(saymywords);
-  querySelector('#Saymywords').onClick.listen(addComments);
+  querySelector('#Saymywords').onClick.listen(addComments);///
+
 }
 
 void Classesshift(MouseEvent event){      ///切换至全部课程
@@ -182,7 +222,7 @@ void Classesshift(MouseEvent event){      ///切换至全部课程
 }
 
 void Classesshift1(MouseEvent event){     ///切换至我的课程
-                                          ///每次切换
+                                          ///每次切换需传输我的某课程的评分
   querySelector('#Myclassbt').classes
     ..clear()
     ..add('Myclassbt');
@@ -196,11 +236,36 @@ void Classesshift1(MouseEvent event){     ///切换至我的课程
   querySelector('#Stars').remove();
   querySelector('#RightBack').children.remove(querySelector('#Saymywords'));
 
+    mystarcount=0;              ///每次切换需传输我的某课程的评分,初始为0
     Loadmystar(mystarcount);
     myorall=true;
     Loadsaymywords();
+}
 
+void Modeshift(MouseEvent event){               ///转换到标签模式
+  timeortag=false;
+  DivElement tagtime=querySelector('#Tagtime');
+  tagtime.classes
+    ..clear()
+    ..add('Tagtime1');
+  DivElement tagtag=querySelector('#Tagtag');
+  tagtag.classes
+    ..clear()
+    ..add('Tagtag');
+  querySelector('#Tagtime').onClick.listen(Modeshift1);
+}
 
+void Modeshift1(MouseEvent event){              ///转换到时间轴
+  timeortag=true;
+  DivElement tagtime=querySelector('#Tagtime');
+  tagtime.classes
+    ..clear()
+    ..add('Tagtime');
+  DivElement tagtag=querySelector('#Tagtag');
+  tagtag.classes
+    ..clear()
+    ..add('Tagtag1');
+  querySelector('#Tagtag').onClick.listen(Modeshift);
 }
 
 void Loadsaymywords(){
@@ -516,18 +581,101 @@ void Clickstar5(MouseEvent event){
 }
 
 void Checkclass(MouseEvent event){
-  int commentcount;     ///该整形用于存放某课程的评价总数
-  commentcount=20;      ///以而是条为例
-  for(int i=1;i<=commentcount;i++){
-    LoadComments(i);
+  querySelector('#Leftmain').children.clear();
+  int commentcount;                             ///该整形用于存放某课程的评价总数,从数据库获取
+  commentcount=5;                              ///以而是条为例
+  String thelatesttime='2015-12-01 20:24:15';///这个字符串存放最后评论的时间（要先转换成字符串！！）
+  String theearliesttime='2015-11-25 13:40:15';///这个字符串存放最早评论的时间（要先转换成字符串！！）
+  List<String> comments = ["2015-12-01 20:24:15","The class is good!","15","2015-11-28 21:12:08","The teacher is fun!","8","2015-11-28 20:12:08","The teacher is nice!","5","2015-11-25 22:12:08","The teacher is cute!","6","2015-11-25 13:40:15","The lesson is great!","3"];
+  ///comments这个LIST存放的是某个课程的评论数据，格式是时间+评论内容+赞数
+  if(timeortag==true){///
+    DivElement latesttime=new DivElement();     ///latesttime顾名思义为存放最后一条评论的时间，作为时间轴的头
+    latesttime.id='Latesttime';
+    latesttime.text=thelatesttime;
+    latesttime.classes
+      ..clear()
+      ..add('Latesttime');
+    querySelector('#Leftmain').children.add(latesttime);
+
+
+    for(int i=1;i<=commentcount;i++){         ///该循环向时间轴上加入各个节点
+      DivElement commentcon=new DivElement();     ///每个节点的底容器
+      commentcon.id = 'Commentcon'+i.toString();
+      commentcon.classes
+        ..clear()
+        ..add('CommentconTime');
+      querySelector('#Leftmain').children.add(commentcon);
+
+      DivElement timeline=new DivElement();       ///timeline为时间轴线，是一截截加进去的，不用理这个，只是一根线
+      timeline.id = 'Timeline'+i.toString();
+      timeline.classes
+        ..clear()
+        ..add('Timeline');
+      querySelector('#Commentcon'+i.toString()).children.add(timeline);
+
+      DivElement timepoint=new DivElement();      ///timepoint是时间轴图案上的节点图案，同样不用理它~
+      timepoint.id='Timepoint'+i.toString();
+      timepoint.classes
+        ..clear()
+        ..add('Timepoint');
+      querySelector('#Commentcon'+i.toString()).children.add(timepoint);
+
+      DivElement thecommentborder = new DivElement();   ///装饰用，不用管
+      thecommentborder.id='Commentborder'+i.toString();
+      if(i%2==1){
+        thecommentborder.classes
+          ..clear()
+          ..add('CommentBDA');
+      }else{
+        thecommentborder.classes
+          ..clear()
+          ..add('CommentBDB');
+      }
+      querySelector('#Commentcon'+i.toString()).children.add(thecommentborder);
+
+      DivElement thecomment=new DivElement();     ///每条评论的最终容器，终于写到这了,激动！
+      thecomment.id='Comment'+i.toString();
+      if(i%2==1){
+        thecomment.classes
+          ..clear()
+          ..add('CommentA');
+      }else{
+        thecomment.classes
+          ..clear()
+          ..add('CommentB');
+      }
+      querySelector('#Commentcon'+i.toString()).children.add(thecomment);
+
+      DivElement commenttext=new DivElement();                  ///此处将评论数据LIST里的评论文字放入评论框中！
+      commenttext.id='Commenttext'+i.toString();
+      commenttext.text=comments[(i-1)*3+1];                    ///(i-1)*3+1即comments那个LIST中相应的评论文字
+      commenttext.classes
+        ..clear()
+        ..add('Commenttext');
+      thecomment.children.add(commenttext);
+
+
+    }
+    DivElement earliesttime=new DivElement();     ///latesttime顾名思义为存放最后一条评论的时间，作为时间轴的头
+    earliesttime.id='Earliesttime';
+    earliesttime.text=theearliesttime;
+    earliesttime.classes
+      ..clear()
+      ..add('Latesttime');
+    querySelector('#Leftmain').children.add(earliesttime);
+  }else {
+    for (int j = 1; j <= commentcount; j++) {
+      LoadCommentsTag(j);
+    }
   }
 }
 
-void LoadComments(int i){
-  DivElement commentcon=new DivElement();
-  commentcon.id = 'Comment'+i.toString();
+
+void LoadCommentsTag(int j) {
+  DivElement commentcon = new DivElement();
+  commentcon.id = 'Comment'+j.toString();
   commentcon.classes
     ..clear()
-    ..add('Commentcon');
-  querySelector('#LeftBack').children.add(commentcon);
+    ..add('CommentconTag');
+  querySelector('#Leftmain').children.add(commentcon);
 }
