@@ -12,6 +12,7 @@ Router allclass = new Router();
 var decoded;//用来接收client端发送的消息
 List classList = new List();
 List teacherList = new List();
+List twoList = new List();
 
 main() async{
   addMessage.post(postAddMessage, "/addmessage");
@@ -109,7 +110,9 @@ listenForRequests(HttpServer requests) async {
       await request.response
       //..headers.add(HttpHeaders.CONTENT_TYPE, "application/json");
       ..headers.contentType = new ContentType("application", "json", charset: "utf-8");
-      res.write(classList);
+      twoList = [classList,teacherList];
+      print(twoList);
+      res.write(twoList);
       res.close();
       classList = [];
       teacherList = [];
@@ -120,7 +123,9 @@ listenForRequests(HttpServer requests) async {
       await request.response
         //..headers.add(HttpHeaders.CONTENT_TYPE, "application/json");
         ..headers.contentType = new ContentType("application", "json", charset: "utf-8");
-      res.write(classList);
+      twoList = [classList,teacherList];
+      print(twoList);
+      res.write(twoList);
       res.close();
       classList = [];
       teacherList = [];

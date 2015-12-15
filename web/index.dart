@@ -3,6 +3,7 @@ import 'dart:convert';
 
 List classList = new List();
 List teacherList = new List();
+List twoList = new List();
 SelectElement classesselector = new SelectElement();
 SelectElement teacherselector = new SelectElement();
 
@@ -20,6 +21,7 @@ void main() {
     ..classes.add('LeftBack');
   querySelector('#RightBack')
     ..classes.add('RightBack');
+  querySelector('#Classesselector').onChange.listen(ChangeTeachername);  //这是一条测试测试测试
 }
 
 void ClearLog(MouseEvent event){      ///清空按钮功能
@@ -28,7 +30,6 @@ void ClearLog(MouseEvent event){      ///清空按钮功能
   InputElement password = querySelector('#Password');
   password.value='';
 }
-
 
 void LogIn(MouseEvent event){           ///登录按钮功能
 
@@ -93,7 +94,6 @@ void LogIn(MouseEvent event){           ///登录按钮功能
   //SelectElement classesselector = new SelectElement();      ///课程选择的下拉列表
   classesselector.id='Classesselector';
   classesselectip.children.add(classesselector);
-
   classesselector.classes
       ..clear()
       ..add('Classesselector');
@@ -109,17 +109,6 @@ void LogIn(MouseEvent event){           ///登录按钮功能
  // SelectElement teacherselector = new SelectElement();      ///课程选择的下拉列表
   teacherselector.id='Teacherselector';
   teacherselecttip.children.add(teacherselector);
-  int teachersum;
-  teachersum = 10;      ///注意该数据为教师总数，请用Select+Sum 语句从数据库中统计教师的总数，以便加入下拉列表中
-  List<String> teachers = ["Chinese","Math","English","Physics","Chemistry","Biology","History","Geography","Politics","Information Technology"];
-  ///该List存放的是教师的名称，请加入客户端向服务器端的请求和数据的接收，放入List中
-  for(int j=0;j<teachersum;j++){
-    OptionElement option1 = new OptionElement();
-    option1.text = teachers[j];
-    print(teachers[j]);
-    teacherselector.children.add(option1);
-    print(teachers[j]+"done");
-  }
   teacherselector.classes
     ..clear()
     ..add('Teacherselector');
@@ -144,6 +133,7 @@ void Classesshift(MouseEvent event){
   querySelector('#Myclassbt').onClick.listen(Classesshift1);
 
   classesselector.children.clear();
+  teacherselector.children.clear();
   var path = 'http://127.0.0.1:8008/allclass';
   var httpRequest = new HttpRequest();
   httpRequest
@@ -163,6 +153,7 @@ void Classesshift1(MouseEvent event) {
   querySelector('#Otherclassbt').onClick.listen(Classesshift);
 
   classesselector.children.clear();
+  teacherselector.children.clear();
   var path = 'http://127.0.0.1:8008/myclass';
   var httpRequest = new HttpRequest();
   httpRequest
@@ -171,18 +162,38 @@ void Classesshift1(MouseEvent event) {
     ..send('');
 }
 
-
 requestComplete(HttpRequest request) {
   if (request.status == 200) {
     List<String> classList = JSON.decode(request.responseText);
-    for(int i=0;i<classList.length;i++){
+    for(int i=0;i<classList[0].length;i++){
       OptionElement option = new OptionElement();
-      option.text = classList[i];
-      print(classList[i]);
+      option.text = classList[0][i];
+      print(classList[0][i]);
       classesselector.children.add(option);
-      print(classList[i]+"done");
+      print(classList[0][i]+"done");
+    }
+    for(int j=0;j<classList[1].length;j++){
+      OptionElement option1 = new OptionElement();
+      option1.text = classList[1][j];
+      print(classList[1][j]);
+      teacherselector.children.add(option1);
+      print(classList[1][j]+"done");
     }
   } else {
     querySelector('#Myclassbt').text='nanguo';
+  }
+}
+
+void ChangeTeachername(Event e){
+  //var xuanze = document.getElementById('Classesselector').value;
+  //var xuanze = querySelector('#Classesselector').text;
+  var xuanze = classesselector.getElementsByClassName(SelectElement);
+  //windows.alert(xuanze);
+  querySelector('#Myclassbt').text= xuanze;
+  for(int i=0;i<classList[0].length;i++) {
+    if(xuanze==classList[0][i]){
+      //teacherselector.value = classList[1][i];
+      teacherselector.options.text = 'hahhah';
+    }
   }
 }
