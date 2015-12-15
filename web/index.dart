@@ -21,7 +21,7 @@ void main() {
     ..classes.add('LeftBack');
   querySelector('#RightBack')
     ..classes.add('RightBack');
-  querySelector('#Classesselector').onChange.listen(ChangeTeachername);  //这是一条测试测试测试
+  classesselector.onChange.listen(ChangeTeachername);  //这是一条测试测试测试
 }
 
 void ClearLog(MouseEvent event){      ///清空按钮功能
@@ -185,9 +185,9 @@ requestComplete(HttpRequest request) {
 }
 
 void ChangeTeachername(Event e){
-  //var xuanze = document.getElementById('Classesselector').value;
+  var xuanze = document.getElementById('Classesselector').value;
   //var xuanze = querySelector('#Classesselector').text;
-  var xuanze = classesselector.getElementsByClassName(SelectElement);
+  //var xuanze = classesselector.getElementsByClassName(SelectElement);
   //windows.alert(xuanze);
   querySelector('#Myclassbt').text= xuanze;
   for(int i=0;i<classList[0].length;i++) {
