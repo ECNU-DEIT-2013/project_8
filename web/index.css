@@ -16,6 +16,7 @@ html, body {
 }
 
 .LeftBack {
+
   z-index: 1;
   height:95%;
   float:left;
@@ -25,6 +26,7 @@ html, body {
 }
 
 .LeftBack1 {
+
   z-index: 1;
   height:95%;
   float:left;
@@ -33,14 +35,106 @@ html, body {
   opacity:0.6;
 }
 
+.Lefttop{
+  float: left;
+  height: 60px;
+  width: 100%;
+  background-color: #DDDDDD;
+  opacity: 0.6;
+}
+
+.Tagtime{
+  float: left;
+  height: 54px;
+  width: calc(50% - 6px);
+  background-color: #13baee;
+  border: 3px solid #13baee;
+  font-family: 微软雅黑;
+  color: rgba(0, 0, 0, 0.74);
+  font-size: 30px;
+  text-align: center;
+  line-height:54px;
+}
+
+.Tagtime:hover{
+  cursor:pointer;
+}
+
+.Tagtime1{
+  float: left;
+  height:54px;
+  width: calc(50% - 6px);
+  border: 3px;
+  font-family: 微软雅黑;
+  color: rgba(0, 0, 0, 0.74);
+  font-size: 30px;
+  text-align: center;
+  line-height:54px;
+}
+
+.Tagtime1:hover{
+  float: left;
+  height:54px;
+  width: calc(50% - 6px);
+  background-color: #13baee;
+  border: 3px solid #00eeb1;
+  cursor:pointer;
+
+}
+
+.Tagtag{
+  float: left;
+  height:54px;
+  width: calc(50% - 6px);
+  background-color: #13baee;
+  border: 3px solid #13baee;
+  font-family: 微软雅黑;
+  color: rgba(0, 0, 0, 0.74);
+  font-size: 30px;
+  text-align: center;
+  line-height:54px;
+}
+
+.Tagtag:hover{
+  cursor:pointer;
+}
+
+.Tagtag1{
+  float: left;
+  height:54px;
+  width: calc(50% - 6px);
+  font-family: 微软雅黑;
+  color: rgba(0, 0, 0, 0.74);
+  font-size: 30px;
+  text-align: center;
+  line-height:54px;
+  border: 3px;
+}
+
+.Tagtag1:hover{
+  float: left;
+  height:54px;
+  width: calc(50% - 6px);
+  background-color: #13baee;
+  border: 3px solid #00eeb1;
+  cursor:pointer;
+}
+
+.Leftmain{
+  overflow-y:scroll;
+  float: left;
+  height:calc(100% - 60px);
+  width: 100%;
+}
+
 .RightBack {
-   z-index: 1;
-   height:95%;
-   float:right;
-   width: 50%;
-   background-color: #FFF899;
-   opacity:0.6;
- }
+  z-index: 1;
+  height:95%;
+  float:right;
+  width: 50%;
+  background-color: #FFF899;
+  opacity:0.6;
+}
 .RightBack1{
   z-index: 1;
   height:95%;
@@ -306,7 +400,7 @@ html, body {
   font-family: SimHei;
   line-height: 150px;
   text-align: center;
-    color: #666666;
+  color: #666666;
 
 }
 
@@ -423,4 +517,102 @@ html, body {
   background-color: #FFF899;
   opacity: 0.8;
   cursor:pointer;
+}
+
+.CommentconTag{
+  position: relative;
+  float: left;
+  width:40%;
+  background-color: #13baee;
+  border-radius: 10px;
+  height:100px;
+  margin-top: 5%;
+  margin-left: 5%;
+  opacity: 0.6;
+}
+
+.CommentconTime{
+  position: relative;
+  float: left;
+  width:100%;
+  height: 150px;
+}
+
+.Timeline{
+  width: 8px;
+  background-color: #6cbfee;
+  left:calc(50% - 4px);
+  height:100%;
+  position: relative;
+}
+
+.Timepoint{
+  border-radius: 12px;
+  background-color: #6cbfee;
+  left:calc(50% - 12px);
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  top:calc(50% - 12px);
+
+}
+
+.Latesttime{
+  height: 40px;
+  width: 100%;
+  color: #959795;
+  font-size: 26px;
+  line-height: 40px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.CommentA{
+  width:calc(50% - 40px);
+  left:calc(50% + 40px);
+  background-color: #6cbfee;
+  border-radius: 18px;
+  height: 100%;
+  position: absolute;
+  top:0px;
+}
+
+.CommentBDA{
+  height: 8px;
+  width: 30px;
+  position: absolute;
+  top:calc(50% - 4px);
+  left:calc(50% + 10px);
+  background-color: #6cbfee;
+
+}
+
+.CommentB{
+  width:calc(50% - 40px);
+  left: 0px;
+  background-color: #6cbfee;
+  border-radius: 18px;
+  height: 100%;
+  position: absolute;
+  top:0px;
+}
+
+.CommentBDB{
+  height: 8px;
+  width: 30px;
+  position: absolute;
+  top:calc(50% - 4px);
+  left:calc(50% - 40px);
+  background-color: #6cbfee;
+
+}
+
+.Commenttext{
+  position: relative;
+  top:18px;
+  left:18px;
+  font-size: 14px;
+  color: #333333;
+  font-family: 微软雅黑;
+  width: calc(100% - 36px);
 }
