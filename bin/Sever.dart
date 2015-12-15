@@ -35,8 +35,8 @@ bool getLogin() {//测试
 postAddMessage( )async{//添加留言的函数
   var pool = new ConnectionPool(host: '52.8.67.180', port: 3306, user: 'dec2013stu', password: 'dec2013stu', db: 'stu_10130340245');
   print('adding...');
-  var addAdd = await pool.prepare('Insert into MessageList (UserNum,Message) values (?,?)');
-  await addAdd.execute(decoded);
+  var addAdd = await pool.prepare('Insert into MessageList (UserNum,Message,Star) values (?,?,?)');
+  await addAdd.execute([decoded[0],decoded[1],decoded[2]]);
 }
 
 void handleRequest(HttpRequest request,Router routen) {
