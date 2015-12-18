@@ -21,7 +21,8 @@ void main() {
     ..classes.add('LeftBack');
   querySelector('#RightBack')
     ..classes.add('RightBack');
-  classesselector.onChange.listen(ChangeTeachername);  //这是一条测试测试测试
+  classesselector..onChange.listen(ChangeTeachername);
+  teacherselector..onChange.listen(ChangeClassname);
 }
 
 void ClearLog(MouseEvent event){      ///清空按钮功能
@@ -91,7 +92,6 @@ void LogIn(MouseEvent event){           ///登录按钮功能
       ..add('Classesselecttip');
   selects.children.add(classesselectip);
 
-  //SelectElement classesselector = new SelectElement();      ///课程选择的下拉列表
   classesselector.id='Classesselector';
   classesselectip.children.add(classesselector);
   classesselector.classes
@@ -106,7 +106,6 @@ void LogIn(MouseEvent event){           ///登录按钮功能
     ..add('Teacherselecttip');
   selects.children.add(teacherselecttip);
 
- // SelectElement teacherselector = new SelectElement();      ///课程选择的下拉列表
   teacherselector.id='Teacherselector';
   teacherselecttip.children.add(teacherselector);
   teacherselector.classes
@@ -120,7 +119,6 @@ void LogIn(MouseEvent event){           ///登录按钮功能
     ..add('Submitselect');
   submitselect.text='查看评教';
   selects.children.add(submitselect);
-
 }
 
 void Classesshift(MouseEvent event){
@@ -185,15 +183,12 @@ requestComplete(HttpRequest request) {
 }
 
 void ChangeTeachername(Event e){
-  var xuanze = document.getElementById('Classesselector').value;
-  //var xuanze = querySelector('#Classesselector').text;
-  //var xuanze = classesselector.getElementsByClassName(SelectElement);
-  //windows.alert(xuanze);
-  querySelector('#Myclassbt').text= xuanze;
-  for(int i=0;i<classList[0].length;i++) {
-    if(xuanze==classList[0][i]){
-      //teacherselector.value = classList[1][i];
-      teacherselector.options.text = 'hahhah';
-    }
-  }
+  var index = classesselector.selectedIndex;
+  teacherselector.options[index].selected = true;
+  //var chooseclass = classesselector.options[index].firstChild.nodeValue;  //这条语句可以获取到option的值，获取到两个option的值之后传到服务器写入/调出课程评价
+}
+
+void ChangeClassname(Event e){
+  var index = teacherselector.selectedIndex;
+  classesselector.options[index].selected = true;
 }
