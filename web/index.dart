@@ -4,6 +4,8 @@ import 'package:dialog/dialog.dart';
 import "package:dialog/src/dialog_class.dart";
 import "dart:async";
 import "ClassData.dart";
+import 'dart:math';
+import 'dart:math' show Random;
 
 bool myorall;             ///该变量true为我的课程，false为全部课程
 int mystarcount;          ///该变量存放某门课程的评分数
@@ -14,11 +16,12 @@ void main() {
     ..onClick.listen(LogIn);            ///logIn()为按下确认键登录进入主页面的子函数
   querySelector('#Clear')               ///Clear()为清空按钮
     ..onClick.listen(ClearLog);         ///ClearLog()为清空登录页面的函数
-  querySelector('#User')                ///User为用户名输入框
+  InputElement user = querySelector('#User');                ///User为用户名输入框
+    user
     ..placeholder='请输入用户名'
     ..classes.add('User');
-  querySelector('#Password')            ///Password为密码输入框
-    ..placeholder='请输入密码';
+  InputElement password = querySelector('#Password');       ///Password为密码输入框
+  password.placeholder='请输入密码';
   querySelector('#LeftBack')
     ..classes.add('LeftBack');
   querySelector('#RightBack')
@@ -588,6 +591,8 @@ void Checkclass(MouseEvent event){
   String theearliesttime='2015-11-25 13:40:15';///这个字符串存放最早评论的时间（要先转换成字符串！！）
   List<String> comments = ["2015-12-01 20:24:15","The class is very good!","15","2015-11-28 21:12:08","The teacher is fun!","8","2015-11-28 20:12:08","The teacher is nice!","5","2015-11-25 22:12:08","The teacher is cute!","6","2015-11-25 13:40:15","The lesson is great!","3"];
   ///comments这个LIST存放的是某个课程的评论数据，格式是时间+评论内容+赞数
+  List<String> colors=["#6CBFEE","#00EEB1","#FF9BA1","#FFF9A4"];
+
   if(timeortag==true){///
     DivElement latesttime=new DivElement();     ///latesttime顾名思义为存放最后一条评论的时间，作为时间轴的头
     latesttime.id='Latesttime';
@@ -654,7 +659,21 @@ void Checkclass(MouseEvent event){
         ..add('Commenttext');
       thecomment.children.add(commenttext);
 
-
+      DivElement timeofcomment= new DivElement();
+      timeofcomment.id='Timeofcomment';
+      timeofcomment.text=comments[(i-1)*3];
+      timeofcomment.classes
+        ..clear()
+        ..add('Timeofcomment');
+      thecomment.children.add(timeofcomment);
+      DivElement zan= new DivElement();
+      zan.id='Zan'+i.toString();
+      zan.text='赞（'+comments[(i-1)*3+2]+')';
+      zan.classes
+        ..clear()
+        ..add('zan');
+      thecomment.children.add(zan);
+      zan.onClick.listen((MouseEvent e)=>Dianzan(i,e));
     }
     DivElement earliesttime=new DivElement();     ///latesttime顾名思义为存放最后一条评论的时间，作为时间轴的头
     earliesttime.id='Earliesttime';
@@ -665,7 +684,13 @@ void Checkclass(MouseEvent event){
     querySelector('#Leftmain').children.add(earliesttime);
   }else {
     for (int j = 1; j <= commentcount; j++) {
-      LoadCommentsTag(j);
+      String commenttext=comments[(j-1)*3+1];
+      int zan=int.parse(comments[(j-1)*3+2]);
+      Random random = new Random();
+      var msgcolorID = random.nextInt(4);
+      String msgcolor=colors[msgcolorID];
+      Message msg=new Message(commenttext,zan,j,msgcolor,'Leftmain');
+      ///querySelector('#Leftmain').children.add(msg.MesContain);
     }
   }
 }
@@ -678,4 +703,8 @@ void LoadCommentsTag(int j) {
     ..clear()
     ..add('CommentconTag');
   querySelector('#Leftmain').children.add(commentcon);
+}
+
+void Dianzan(int i,e){
+
 }
