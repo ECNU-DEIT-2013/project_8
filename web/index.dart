@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:dialog/dialog.dart';
 import "package:dialog/src/dialog_class.dart";
 import "dart:async";
-import "ClassData.dart";
+//import "ClassData.dart";
 
 bool myorall;             ///该变量true为我的课程，false为全部课程
 int mystarcount;          ///该变量存放某门课程的评分数
@@ -50,7 +50,33 @@ void ClearLog(MouseEvent event){      ///清空按钮功能
   password.value='';
 }
 
-void LogIn(MouseEvent event){           ///登录按钮功能
+Future LogIn(MouseEvent event) async {
+  ///登录按钮功能
+  var Username = document.getElementById('User').value;
+  var Password = document.getElementById('Password').value;
+  //List a = ['101', '123321'];
+  List a2 = ['', ''];
+  a2[0] = Username;
+  a2[1] = Password;
+  if (Username == '') {
+    window.alert('用户名为空！');
+  }
+  else if (Password == '') {
+    window.alert('密码为空！');
+  }
+  else {
+    var url = 'http://127.0.0.1:8008/login';
+    var request = new HttpRequest();
+    //var check = new HttpRequest().responseText;
+    request
+      ..open('POST', url)
+      ..send(JSON.encode(a2))//对输入的信息进行编码
+      ..onLoadEnd.listen((event) => requestComplete(request));}//获取相应以及后续的操作
+}
+
+void requestComplete(request){           ///登录判断
+  var check =JSON.decode(request.responseText);//获取相应的内容
+  if (check=='1' ) {//判断信息是哦福正确了
   myorall = true;                     ///登录后默认为我的课程
   timeortag = true;                   ///登录后默认时间轴模式
   addButtons();                        ///加入右边栏的部件
@@ -85,6 +111,8 @@ void LogIn(MouseEvent event){           ///登录按钮功能
     ..add('Tagtag1');
   querySelector('#Lefttop').children.add(tagtag);
   tagtag.onClick.listen(Modeshift);
+}
+  else window.alert('用户名或密码错误！');
 }
 
 void addButtons(){
