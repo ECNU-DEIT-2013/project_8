@@ -20,7 +20,6 @@ List twoList = new List();
 main() async{
   addMessage.post(postAddMessage, "/addmessage");
   login.post(getLogin, "/login");
-  //login.post(postLogin, "/login");
   router1.get(getStock, "/stock");
   var server = await HttpServer.bind(InternetAddress.LOOPBACK_IP_V4, 8008);
   print("Serving at ${server.address}:${server.port}");

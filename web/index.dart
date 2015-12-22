@@ -11,6 +11,11 @@ import 'dart:math' show Random;
 bool myorall;             ///该变量true为我的课程，false为全部课程
 int mystarcount;          ///该变量存放某门课程的评分数
 bool timeortag;           ///该变量true为时间轴，false为标签模式
+List classList = new List();
+List teacherList = new List();
+List twoList = new List();
+SelectElement classesselector = new SelectElement();
+SelectElement teacherselector = new SelectElement();
 
 void main() {
   querySelector('#Commit')              ///Commit为确认登录按钮
@@ -27,6 +32,9 @@ void main() {
     ..classes.add('LeftBack');
   querySelector('#RightBack')
     ..classes.add('RightBack');
+
+  classesselector.onChange.listen(ChangeTeachername);
+  teacherselector.onChange.listen(ChangeClassname);
 }
 
  addComments(Event e) async{
@@ -172,20 +180,8 @@ void addButtons(){
     ..add('Classesselecttip');
   selects.children.add(classesselectip);
 
-  SelectElement classesselector = new SelectElement();      ///课程选择的下拉列表
   classesselector.id='Classesselector';
   classesselectip.children.add(classesselector);
-  int classsum;
-  classsum = 10;      ///注意该数据为该学生课程总数，请用Select+Sum 语句从数据库中统计该学生选课的总数，以便加入下拉列表中
-  List<String> classes = ["Chinese","Math","English","Physics","Chemistry","Biology","History","Geography","Politics","Information Technology"];
-  ///该List存放的是该学生选择的课程，请加入客户端向服务器端的请求和数据的接收，放入List中
-  for(int i=0;i<classsum;i++){
-    OptionElement option = new OptionElement();
-    option.text = classes[i];
-    print(classes[i]);
-    classesselector.children.add(option);
-    print(classes[i]+"done");
-  }
   classesselector.classes
     ..clear()
     ..add('Classesselector');
@@ -198,20 +194,8 @@ void addButtons(){
     ..add('Teacherselecttip');
   selects.children.add(teacherselecttip);
 
-  SelectElement teacherselector = new SelectElement();      ///课程选择的下拉列表
   teacherselector.id='Teacherselector';
   teacherselecttip.children.add(teacherselector);
-  int teachersum;
-  teachersum = 10;      ///注意该数据为教师总数，请用Select+Sum 语句从数据库中统计教师的总数，以便加入下拉列表中
-  List<String> teachers = ["Chinese","Math","English","Physics","Chemistry","Biology","History","Geography","Politics","Information Technology"];
-  ///该List存放的是教师的名称，请加入客户端向服务器端的请求和数据的接收，放入List中
-  for(int j=0;j<teachersum;j++){
-    OptionElement option1 = new OptionElement();
-    option1.text = teachers[j];
-    print(teachers[j]);
-    teacherselector.children.add(option1);
-    print(teachers[j]+"done");
-  }
   teacherselector.classes
     ..clear()
     ..add('Teacherselector');
@@ -250,10 +234,19 @@ void Classesshift(MouseEvent event){      ///切换至全部课程
     ..add('Otherclassbt');
   querySelector('#Myclassbt').onClick.listen(Classesshift1);
   querySelector('#Stars').remove();
-
   mystarcount=3;        ///此整形存放全部课程中某一课程的总评分
   Loadmystar(mystarcount);
   querySelector('#Starstext').text='全部评分';
+
+  classesselector.children.clear();
+  teacherselector.children.clear();
+  var path = 'http://127.0.0.1:8008/allclass';
+  var httpRequest = new HttpRequest();
+  httpRequest
+    ..open('GET', path)
+    ..onLoadEnd.listen((e) => requestComplete2(httpRequest))
+    ..send('');
+
 }
 
 void Classesshift1(MouseEvent event){     ///切换至我的课程
@@ -275,6 +268,47 @@ void Classesshift1(MouseEvent event){     ///切换至我的课程
     Loadmystar(mystarcount);
     myorall=true;
     Loadsaymywords();
+
+  classesselector.children.clear();
+  teacherselector.children.clear();
+  var path = 'http://127.0.0.1:8008/myclass';
+  var httpRequest = new HttpRequest();
+  httpRequest
+    ..open('GET', path)
+    ..onLoadEnd.listen((e) => requestComplete2(httpRequest))
+    ..send('');
+}
+requestComplete2 (HttpRequest request) {
+  if (request.status == 200) {
+    List<String> classList = JSON.decode(request.responseText);
+    for(int i=0;i<classList[0].length;i++){
+      OptionElement option = new OptionElement();
+      option.text = classList[0][i];
+      print(classList[0][i]);
+      classesselector.children.add(option);
+      print(classList[0][i]+"done");
+    }
+    for(int j=0;j<classList[1].length;j++){
+      OptionElement option1 = new OptionElement();
+      option1.text = classList[1][j];
+      print(classList[1][j]);
+      teacherselector.children.add(option1);
+      print(classList[1][j]+"done");
+    }
+  } else {
+    querySelector('#Myclassbt').text='nanguo';
+  }
+}
+
+void ChangeTeachername(Event e){
+  var index = classesselector.selectedIndex;
+  teacherselector.options[index].selected = true;
+//var chooseclass = classesselector.options[index].firstChild.nodeValue;  //这条语句可以获取到option的值，获取到两个option的值之后传到服务器写入/调出课程评价
+}
+
+void ChangeClassname(Event e){
+  var index = teacherselector.selectedIndex;
+  classesselector.options[index].selected = true;
 }
 
 void Modeshift(MouseEvent event){               ///转换到标签模式
