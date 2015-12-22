@@ -659,6 +659,16 @@ void Checkclass(MouseEvent event){
         ..add('Commenttext');
       thecomment.children.add(commenttext);
 
+      DivElement zan= new DivElement();
+      zan.id='Zan'+i.toString();
+      zan.text='赞（'+comments[(i-1)*3+2]+'）';
+      int zanint=int.parse(comments[(i-1)*3+2]);
+      zan.classes
+        ..clear()
+        ..add('zan');
+      thecomment.children.add(zan);
+      zan.onClick.listen((MouseEvent e)=>Dianzan(i,zanint,e));
+
       DivElement timeofcomment= new DivElement();
       timeofcomment.id='Timeofcomment';
       timeofcomment.text=comments[(i-1)*3];
@@ -666,14 +676,16 @@ void Checkclass(MouseEvent event){
         ..clear()
         ..add('Timeofcomment');
       thecomment.children.add(timeofcomment);
-      DivElement zan= new DivElement();
-      zan.id='Zan'+i.toString();
-      zan.text='赞（'+comments[(i-1)*3+2]+')';
-      zan.classes
+
+      DivElement jubao= new DivElement();
+      jubao.id='Jubao'+i.toString();
+      jubao.text='举报！';
+      jubao.classes
         ..clear()
-        ..add('zan');
-      thecomment.children.add(zan);
-      zan.onClick.listen((MouseEvent e)=>Dianzan(i,e));
+        ..add('Jubao');
+      thecomment.children.add(jubao);
+      jubao.onClick.listen((MouseEvent e)=>Jubao(i,e));
+
     }
     DivElement earliesttime=new DivElement();     ///latesttime顾名思义为存放最后一条评论的时间，作为时间轴的头
     earliesttime.id='Earliesttime';
@@ -705,6 +717,11 @@ void LoadCommentsTag(int j) {
   querySelector('#Leftmain').children.add(commentcon);
 }
 
-void Dianzan(int i,e){
+void Dianzan(int i,int zanint,e){
+  DivElement zan=querySelector('#Zan'+i.toString());
+  zan.text='赞（'+(zanint+1).toString()+'）';
+}
+
+void Jubao(int i,e){
 
 }
