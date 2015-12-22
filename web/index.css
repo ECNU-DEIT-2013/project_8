@@ -16,6 +16,7 @@ html, body {
 }
 
 .LeftBack {
+
   z-index: 1;
   height:95%;
   float:left;
@@ -25,6 +26,7 @@ html, body {
 }
 
 .LeftBack1 {
+
   z-index: 1;
   height:95%;
   float:left;
@@ -33,14 +35,106 @@ html, body {
   opacity:0.6;
 }
 
+.Lefttop{
+  float: left;
+  height: 60px;
+  width: 100%;
+  background-color: #DDDDDD;
+  opacity: 0.6;
+}
+
+.Tagtime{
+  float: left;
+  height: 54px;
+  width: calc(50% - 6px);
+  background-color: #13baee;
+  border: 3px solid #13baee;
+  font-family: 微软雅黑;
+  color: rgba(0, 0, 0, 0.74);
+  font-size: 30px;
+  text-align: center;
+  line-height:54px;
+}
+
+.Tagtime:hover{
+  cursor:pointer;
+}
+
+.Tagtime1{
+  float: left;
+  height:54px;
+  width: calc(50% - 6px);
+  border: 3px;
+  font-family: 微软雅黑;
+  color: rgba(0, 0, 0, 0.74);
+  font-size: 30px;
+  text-align: center;
+  line-height:54px;
+}
+
+.Tagtime1:hover{
+  float: left;
+  height:54px;
+  width: calc(50% - 6px);
+  background-color: #13baee;
+  border: 3px solid #00eeb1;
+  cursor:pointer;
+
+}
+
+.Tagtag{
+  float: left;
+  height:54px;
+  width: calc(50% - 6px);
+  background-color: #13baee;
+  border: 3px solid #13baee;
+  font-family: 微软雅黑;
+  color: rgba(0, 0, 0, 0.74);
+  font-size: 30px;
+  text-align: center;
+  line-height:54px;
+}
+
+.Tagtag:hover{
+  cursor:pointer;
+}
+
+.Tagtag1{
+  float: left;
+  height:54px;
+  width: calc(50% - 6px);
+  font-family: 微软雅黑;
+  color: rgba(0, 0, 0, 0.74);
+  font-size: 30px;
+  text-align: center;
+  line-height:54px;
+  border: 3px;
+}
+
+.Tagtag1:hover{
+  float: left;
+  height:54px;
+  width: calc(50% - 6px);
+  background-color: #13baee;
+  border: 3px solid #00eeb1;
+  cursor:pointer;
+}
+
+.Leftmain{
+  overflow-y:scroll;
+  float: left;
+  height:calc(100% - 60px);
+  width: 100%;
+}
+
 .RightBack {
-   z-index: 1;
-   height:95%;
-   float:right;
-   width: 50%;
-   background-color: #FFF899;
-   opacity:0.6;
- }
+  z-index: 1;
+  height:95%;
+  float:right;
+  width: 50%;
+  background-color: #FFF899;
+  opacity:0.6;
+}
 .RightBack1{
   z-index: 1;
   height:95%;
@@ -54,7 +148,7 @@ html, body {
   position: relative;
   top:10%;
   width:80%;
-  left:15%;
+  left:10%;
 }
 
 .Classesselecttip{
@@ -122,7 +216,7 @@ html, body {
 .Myclass{
   position: relative;
   top:5%;
-  left:12%;
+  left:10%;
   width: 80%;
   height:40px;
 }
@@ -212,6 +306,111 @@ html, body {
   width:calc(40% - 4px);
   height: 36px;
   line-height: 36px;
+  background-color: #F1FE98;
+  border: 2px solid #DDDDDD;
+  cursor:pointer;
+}
+
+.Stars{
+  position: relative;
+  top:17%;
+  left:10%;
+  width:80%;
+  height:80px;
+}
+
+.Starstext{
+  position: relative;
+  width:100%;
+  height:30px;
+  font-size: 22px;
+  line-height: 30px;
+  text-align: center;
+  color: #333333;
+  font-family: 微软雅黑;
+
+}
+
+.Starscon{
+  position: relative;
+  top:5px;
+  width:240px;
+  height:45px;
+  left:calc(50% - 120px) ;
+}
+
+.StarA{
+  float: left;
+  display: inline-block;
+  width: 34px;
+  height: 34px;
+  border-style: solid;
+  border-color: #cccccc;
+  border-radius: 10px;
+  color: white;
+  font-size: 22px;
+  background: #cccccc;
+  font-style: normal;
+  line-height: 34px;
+  text-align: center;
+  text-shadow: 4px 0 4px #b3b3b3;
+}
+
+.StarA:hover{
+  cursor:pointer;
+}
+
+.StarB{
+  float: left;
+  display: inline-block;
+  width: 34px;
+  height: 34px;
+  border-style: solid;
+  border-color: #FF4422;
+  border-radius: 10px;
+  color: white;
+  font-size: 22px;
+  background: #FF4422;
+  font-style: normal;
+  line-height: 34px;
+  text-align: center;
+}
+.StarB:hover{
+  cursor:pointer;
+}
+
+.Space{
+  float: left;
+  width:10px;
+  height:50px;
+}
+
+.Saymywords{
+  position: relative;
+  top:20%;
+  left:calc(50% - 75px);
+  width: 150px;
+  height: 150px;
+  -webkit-border-radius: 75px;
+  -moz-border-radius: 75px;
+  border-radius: 75px;
+  background-color:  #EDD788;
+  font-size: 24px;
+  font-weight: bold;
+  font-family: SimHei;
+  line-height: 150px;
+  text-align: center;
+  color: #666666;
+
+}
+
+.Saymywords:hover{
+  width: 146px;
+  height:146px;
+  line-height: 146px;;
+  -webkit-border-radius: 73px;
+  -moz-border-radius: 73px;
+  border-radius: 73px;
   background-color: #F1FE98;
   border: 2px solid #DDDDDD;
   cursor:pointer;
@@ -318,4 +517,102 @@ html, body {
   background-color: #FFF899;
   opacity: 0.8;
   cursor:pointer;
+}
+
+.CommentconTag{
+  position: relative;
+  float: left;
+  width:40%;
+  background-color: #13baee;
+  border-radius: 10px;
+  height:100px;
+  margin-top: 5%;
+  margin-left: 5%;
+  opacity: 0.6;
+}
+
+.CommentconTime{
+  position: relative;
+  float: left;
+  width:100%;
+  height: 150px;
+}
+
+.Timeline{
+  width: 8px;
+  background-color: #6cbfee;
+  left:calc(50% - 4px);
+  height:100%;
+  position: relative;
+}
+
+.Timepoint{
+  border-radius: 12px;
+  background-color: #6cbfee;
+  left:calc(50% - 12px);
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  top:calc(50% - 12px);
+
+}
+
+.Latesttime{
+  height: 40px;
+  width: 100%;
+  color: #959795;
+  font-size: 26px;
+  line-height: 40px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.CommentA{
+  width:calc(50% - 40px);
+  left:calc(50% + 40px);
+  background-color: #6cbfee;
+  border-radius: 18px;
+  height: 100%;
+  position: absolute;
+  top:0px;
+}
+
+.CommentBDA{
+  height: 8px;
+  width: 30px;
+  position: absolute;
+  top:calc(50% - 4px);
+  left:calc(50% + 10px);
+  background-color: #6cbfee;
+
+}
+
+.CommentB{
+  width:calc(50% - 40px);
+  left: 0px;
+  background-color: #6cbfee;
+  border-radius: 18px;
+  height: 100%;
+  position: absolute;
+  top:0px;
+}
+
+.CommentBDB{
+  height: 8px;
+  width: 30px;
+  position: absolute;
+  top:calc(50% - 4px);
+  left:calc(50% - 40px);
+  background-color: #6cbfee;
+
+}
+
+.Commenttext{
+  position: relative;
+  top:18px;
+  left:18px;
+  font-size: 14px;
+  color: #333333;
+  font-family: 微软雅黑;
+  width: calc(100% - 36px);
 }
