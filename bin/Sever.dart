@@ -32,8 +32,7 @@ String getStock() {
 }
 
 Future<String> getLogin() async{//登录实现，连接数据库
-  //String a = "[rest_test ：) get Login]";
-  print("you,diao,yong,o");
+  //print("you,diao,yong,o");
   var tag = 'false';
   List b = JSON.decode(decoded);//对客户端传过来的信息解码
   var Username = b[0];
@@ -45,7 +44,8 @@ Future<String> getLogin() async{//登录实现，连接数据库
     tag = 'true';
   });
   if (tag=='true') {
-    print('oktologin');}
+   // print('oktologin');
+   }
   else {print ('error');}
   return tag;
   //用get写login的话，这边可以核对好了然后传一个true，没核对传一个false，那边看看是true还是false然后决定发回什么响应
@@ -53,10 +53,17 @@ Future<String> getLogin() async{//登录实现，连接数据库
 
 
 postAddMessage( )async{//添加留言的函数
-  var pool = new ConnectionPool(host: '52.8.67.180', port: 3306, user: 'dec2013stu', password: 'dec2013stu', db: 'stu_10130340245');
-  print('adding...');
-  var addAdd = await pool.prepare('Insert into MessageList (UserNum,Message,Star) values (?,?,?)');
-  await addAdd.execute([decoded[0],decoded[1],decoded[2]]);
+  var pool = new ConnectionPool(host: '52.8.67.180', port: 3306, user: 'dec2013stu', password: 'dec2013stu', db: 'stu_10130340211');
+  //print('adding...');
+  var curriculumID;
+  print(decoded[3]);
+  var resultCourse = await pool.query('select curriculumID from curriculum where curriculumname = "${decoded[3]}" ');//查找匹配输入的用户信息
+  await resultCourse.forEach((row) {
+    print('${row[0]}');
+    curriculumID ='${row[0]}';
+  });
+  var addAdd = await pool.prepare('Insert into comment (studentID,comment,supportnumber,star,curriculumID) values (?,?,?,?,?)');
+  await addAdd.execute([decoded[0],decoded[1],0,decoded[2],curriculumID]);
 }
 
 void handleRequest(HttpRequest request,Router routen) {
@@ -73,7 +80,7 @@ listenForRequests(HttpServer requests) async {
   await for (HttpRequest request in requests){
     var res= request.response;
     addCorsHeaders(request.response);
-    print('accept');//测试是否接收到client端的request
+   // print('accept');//测试是否接收到client端的request
 
     if (request.uri.path=="/login"){//登录功能的实现
       decoded = await request.transform(UTF8.decoder).join();//获取客户端传来的数据
@@ -85,7 +92,7 @@ listenForRequests(HttpServer requests) async {
        await request.response.write(JSON.encode('1'));//告诉客户端信息匹配成功
        request
         ..response.close();
-       print('gottagggggggg')  ;
+      // print('gottagggggggg')  ;
       }
       else
       {await request.response
@@ -99,30 +106,30 @@ listenForRequests(HttpServer requests) async {
       handleRequest(request,router1);}//调用route为stock的时候的函数
     else if(request.uri.path=="/addmessage"){
       decoded = await request.transform(UTF8.decoder.fuse(JSON.decoder)).first;//解码client端send过来的一个List;
-      print(decoded);
+      //print(decoded);
       handleRequest(request,addMessage);//加留言的函数
     }
     else if(request.uri.path=="/myclass") {
-      print('myclass!~!~!!');
+      //print('myclass!~!~!!');
       await getMyclass(request);
       await request.response
       //..headers.add(HttpHeaders.CONTENT_TYPE, "application/json");
         ..headers.contentType = new ContentType("application", "json", charset: "utf-8");
       twoList = [classList,teacherList];
-      print(twoList);
+      //print(twoList);
       res.write(twoList);
       res.close();
       classList = [];
       teacherList = [];
     }
     else if(request.uri.path=="/allclass") {
-      print('allclass!!!!~~~!!~~~');
+      //print('allclass!!!!~~~!!~~~');
       await getAllclass(request);
       await request.response
       //..headers.add(HttpHeaders.CONTENT_TYPE, "application/json");
         ..headers.contentType = new ContentType("application", "json", charset: "utf-8");
       twoList = [classList,teacherList];
-      print(twoList);
+      //print(twoList);
       res.write(twoList);
       res.close();
       classList = [];
@@ -138,11 +145,11 @@ getMyclass(HttpRequest request) async{   //获取我的课程列表
   //需把登陆页面获得的学号替换掉select里的101
   await results.forEach((row) {
     classList.add('"${row[0]}"');
-    print(classList);
+    //print(classList);
   });
   await tearesults.forEach((row) {
     teacherList.add('"${row[0]}"');
-    print(teacherList);
+    //print(teacherList);
   });
 }
 
@@ -150,13 +157,13 @@ getAllclass(HttpRequest request) async{   //获取所有课程列表
   var pool=new ConnectionPool(host: '52.8.67.180', port: 3306, user: 'dec2013stu', password: 'dec2013stu', db: 'stu_10130340211');
   var results = await pool.query('select curriculumname from curriculum');
   var tearesults = await pool.query('select teachername from teacher where teacherID in(select teacherID from curriculum)');
-  print('connect2!');
+  //print('connect2!');
   await results.forEach((row) {
     classList.add('"${row[0]}"');
-    print(classList);
+    //print(classList);
   });
   await tearesults.forEach((row) {
     teacherList.add('"${row[0]}"');
-    print(teacherList);
+    //print(teacherList);
   });
 }

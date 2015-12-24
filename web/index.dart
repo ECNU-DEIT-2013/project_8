@@ -11,6 +11,8 @@ import 'dart:math' show Random;
 bool myorall;             ///该变量true为我的课程，false为全部课程
 int mystarcount;          ///该变量存放某门课程的评分数
 bool timeortag;           ///该变量true为时间轴，false为标签模式
+String USERID;             //用于记录用户名（一直可以使用）
+var chooseclassTeacher,chooseclassCourse;           //用于记录选择的
 List classList = new List();
 List teacherList = new List();
 List twoList = new List();
@@ -41,7 +43,7 @@ void main() {
   var myMessage = await addMessageDialog("请在这里输入你的留言", "");
   if(myMessage != null&&mystarcount!=0){
     alert(myMessage.toString()+'\n留言添加成功！');
-    List message = ['5',myMessage,mystarcount];
+    List message = [USERID,myMessage,mystarcount,chooseclassCourse,chooseclassTeacher.toString()];
     var path = 'http://127.0.0.1:8008/addmessage';
     var httpRequest = new HttpRequest();
     httpRequest
@@ -62,10 +64,9 @@ void ClearLog(MouseEvent event){      ///清空按钮功能
 }
 
 Future LogIn(MouseEvent event) async {
-  ///登录按钮功能
   var Username = document.getElementById('User').value;
+  USERID = Username;
   var Password = document.getElementById('Password').value;
-  //List a = ['101', '123321'];
   List a2 = ['', ''];
   a2[0] = Username;
   a2[1] = Password;
@@ -90,7 +91,6 @@ void requestComplete(request){           ///登录判断
   if (check=='1' ) {//判断信息是哦福正确了
   myorall = true;                     ///登录后默认为我的课程
   timeortag = true;                   ///登录后默认时间轴模式
-
   addButtons();                        ///加入右边栏的部件
 
 
@@ -303,12 +303,15 @@ requestComplete2 (HttpRequest request) {
 void ChangeTeachername(Event e){
   var index = classesselector.selectedIndex;
   teacherselector.options[index].selected = true;
-//var chooseclass = classesselector.options[index].firstChild.nodeValue;  //这条语句可以获取到option的值，获取到两个option的值之后传到服务器写入/调出课程评价
+  chooseclassCourse = classesselector.options[index].firstChild.nodeValue;  //这条语句可以获取到option的值，获取到两个option的值之后传到服务器写入/调出课程评价
+  querySelector('#Myclassbt').text = chooseclassCourse;
 }
 
 void ChangeClassname(Event e){
   var index = teacherselector.selectedIndex;
   classesselector.options[index].selected = true;
+  chooseclassTeacher = classesselector.options[index].firstChild.nodeValue;
+
 }
 
 void Modeshift(MouseEvent event){               ///转换到标签模式
