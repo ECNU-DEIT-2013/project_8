@@ -9,22 +9,27 @@ import'dart:async';
 Router router1 = new Router();
 Router login = new Router();
 Router addMessage = new Router();
-var decoded;//用来接收client端发送的消息
+Router showmes = new Router();
 Router myclass = new Router();
 Router allclass = new Router();
+var decoded;//用来接收client端发送的消息
 List classList = new List();
 List teacherList = new List();
 List twoList = new List();
+List<String> messageList = new List();
 
 
 main() async{
   addMessage.post(postAddMessage, "/addmessage");
   login.post(getLogin, "/login");
   router1.get(getStock, "/stock");
+ // showmes.get(getShowMes,"/showmes");
   var server = await HttpServer.bind(InternetAddress.LOOPBACK_IP_V4, 8008);
   print("Serving at ${server.address}:${server.port}");
   listenForRequests(server);
 }
+
+
 
 String getStock() {
   return "[rest_test ：) get stock]";
@@ -62,8 +67,9 @@ postAddMessage( )async{//添加留言的函数
     print('${row[0]}');
     curriculumID ='${row[0]}';
   });
-  var addAdd = await pool.prepare('Insert into comment (studentID,comment,supportnumber,star,curriculumID) values (?,?,?,?,?)');
-  await addAdd.execute([decoded[0],decoded[1],0,decoded[2],curriculumID]);
+  var addAdd = await pool.prepare('Insert into comment (studentID,comment,supportnumber,star,curriculumID,time) values (?,?,?,?,?,?)');
+  await addAdd.execute([decoded[0],decoded[1],0,decoded[2],curriculumID,decoded[5]]);
+
 }
 
 void handleRequest(HttpRequest request,Router routen) {
@@ -110,7 +116,7 @@ listenForRequests(HttpServer requests) async {
       handleRequest(request,addMessage);//加留言的函数
     }
     else if(request.uri.path=="/myclass") {
-      //print('myclass!~!~!!');
+      print('myclass!~!~!!');
       await getMyclass(request);
       await request.response
       //..headers.add(HttpHeaders.CONTENT_TYPE, "application/json");
@@ -123,7 +129,7 @@ listenForRequests(HttpServer requests) async {
       teacherList = [];
     }
     else if(request.uri.path=="/allclass") {
-      //print('allclass!!!!~~~!!~~~');
+      print('allclass!!!!~~~!!~~~');
       await getAllclass(request);
       await request.response
       //..headers.add(HttpHeaders.CONTENT_TYPE, "application/json");
@@ -134,6 +140,16 @@ listenForRequests(HttpServer requests) async {
       res.close();
       classList = [];
       teacherList = [];
+    }
+    else if(request.uri.path=="/showmes"){
+      print('ShowMes');
+      await getMessage(request);
+      await request.response
+      ..headers.contentType = new ContentType("application", "json", charset: "utf-8")
+      ..write(messageList)
+      ..close();
+      messageList = [];
+
     }
     else print("Can't find");}
 }
@@ -152,15 +168,26 @@ getMyclass(HttpRequest request) async{   //获取我的课程列表
     //print(teacherList);
   });
 }
+getMessage(HttpRequest request) async {//获取所有留言
 
+  var pool=new ConnectionPool(host: '52.8.67.180', port: 3306, user: 'dec2013stu', password: 'dec2013stu', db: 'stu_10130340211');
+  var resultsMes = await pool.query('select time,comment,supportnumber,commentID from comment order by commentID desc');
+  await resultsMes.forEach((row) {
+    messageList.add('"${row[0]}"');
+    messageList.add('"${row[1]}"');
+    messageList.add('"${row[2]}"');
+   // print(messageList);
+  });
+
+}
 getAllclass(HttpRequest request) async{   //获取所有课程列表
   var pool=new ConnectionPool(host: '52.8.67.180', port: 3306, user: 'dec2013stu', password: 'dec2013stu', db: 'stu_10130340211');
   var results = await pool.query('select curriculumname from curriculum');
   var tearesults = await pool.query('select teachername from teacher where teacherID in(select teacherID from curriculum)');
-  //print('connect2!');
+  print('connect2!');
   await results.forEach((row) {
     classList.add('"${row[0]}"');
-    //print(classList);
+    print(classList);
   });
   await tearesults.forEach((row) {
     teacherList.add('"${row[0]}"');
