@@ -17,6 +17,7 @@ List classList = new List();
 List teacherList = new List();
 List twoList = new List();
 List<String> messageList = new List();
+var time = new DateTime.now();
 
 
 main() async{
@@ -68,7 +69,7 @@ postAddMessage( )async{//添加留言的函数
     curriculumID ='${row[0]}';
   });
   var addAdd = await pool.prepare('Insert into comment (studentID,comment,supportnumber,star,curriculumID,time) values (?,?,?,?,?,?)');
-  await addAdd.execute([decoded[0],decoded[1],0,decoded[2],curriculumID,decoded[5]]);
+  await addAdd.execute([decoded[0],decoded[1],0,decoded[2],curriculumID,time]);
 
 }
 

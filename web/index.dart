@@ -222,6 +222,13 @@ void addButtons(){
   rightback.children.add(saymywords);
   querySelector('#Saymywords').onClick.listen(addComments);///
 
+  var path = 'http://127.0.0.1:8008/myclass';  //登陆之后默认显示我的课程
+  var httpRequest = new HttpRequest();
+  httpRequest
+  ..open('GET', path)
+  ..onLoadEnd.listen((e) => requestComplete2(httpRequest))
+  ..send('');
+
 }
 
 void Classesshift(MouseEvent event){      ///切换至全部课程
