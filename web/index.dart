@@ -405,6 +405,7 @@ requestMesComplete(HttpRequest request){
 requestComplete2 (HttpRequest request) {
   if (request.status == 200) {
     List<String> classList = JSON.decode(request.responseText);
+    chooseclassCourse = classList[0][0];  //给chooseclassCourse赋个值，否则不点下拉列表直接点查看评教就会是空
     for(int i=0;i<classList[0].length;i++){
       OptionElement option = new OptionElement();
       option.text = classList[0][i];
