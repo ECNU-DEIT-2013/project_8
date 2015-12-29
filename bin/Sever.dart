@@ -18,6 +18,7 @@ List teacherList = new List();
 List twoList = new List();
 List<String> messageList = new List();
 var time = new DateTime.now();
+var stuID = 0;
 
 
 main() async{
@@ -51,6 +52,7 @@ Future<String> getLogin() async{//登录实现，连接数据库
   });
   if (tag=='true') {
    // print('oktologin');
+    stuID = Username;
    }
   else {print ('error');}
   return tag;
@@ -157,8 +159,8 @@ listenForRequests(HttpServer requests) async {
 
 getMyclass(HttpRequest request) async{   //获取我的课程列表
   var pool=new ConnectionPool(host: '52.8.67.180', port: 3306, user: 'dec2013stu', password: 'dec2013stu', db: 'stu_10130340211');
-  var results = await pool.query('select curriculumname from curriculum where curriculumID in (select curriculumID from xuanke where studentID = 101)');
-  var tearesults = await pool.query('select teachername from teacher where teacherID in(select teacherID from curriculum where curriculumID in (select curriculumID from xuanke where studentID = 101))');
+  var results = await pool.query('select curriculumname from curriculum where curriculumID in (select curriculumID from xuanke where studentID = "${stuID}")');
+  var tearesults = await pool.query('select teachername from teacher where teacherID in(select teacherID from curriculum where curriculumID in (select curriculumID from xuanke where studentID = "${stuID}"))');
   //需把登陆页面获得的学号替换掉select里的101
   await results.forEach((row) {
     classList.add('"${row[0]}"');
