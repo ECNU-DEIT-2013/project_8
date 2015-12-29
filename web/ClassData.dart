@@ -4,6 +4,7 @@ import "dart:async";
 import "dart:html";
 import 'dart:convert';
 import 'package:dnd/dnd.dart';
+import 'dart:math';
 
 
 class UserElement{
@@ -43,6 +44,7 @@ class Message{
     this.zan = zan;
     container = querySelector('#'+containerID);
 
+
     LoadClose();
     LoadLabel();
     LoadZan();
@@ -50,19 +52,28 @@ class Message{
     LoadMesContain(id,color);
 
     MesContain.onDrag.listen(DragMesContain);
+    MesContain.style.border = '1px solid silver';
+
     print("Finish loading");
   }//构造函数
   DragMesContain(Event e){
 
   }
   LoadMesContain(String id,String color){
+    Random random = new Random();
+    var positionX = random.nextInt(42);
+    var positionY = random.nextInt(29);
+
     MesContain
       ..classes.add("MesDiv")
       ..id = id;
     MesContain.style
       ..backgroundColor=color
       ..width="300px"
-      ..height= "200px";
+      ..height= "200px"
+      ..position = 'absolute'
+      ..marginLeft = positionX.toString()+'%'
+      ..marginTop = positionY.toString()+'%' ;
     container.children.add(MesContain);
     Draggable draggable = new Draggable(querySelector('#'+MesContain.id),
     avatarHandler: new AvatarHandler.original());
