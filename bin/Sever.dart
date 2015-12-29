@@ -19,12 +19,14 @@ List twoList = new List();
 List<String> messageList = new List();
 var time = new DateTime.now();
 var stuID = 0;
+var curriID = 201;
 
 
 main() async{
   addMessage.post(postAddMessage, "/addmessage");
   login.post(getLogin, "/login");
   router1.get(getStock, "/stock");
+  showmes.post(getMessage,"/showmes");
  // showmes.get(getShowMes,"/showmes");
   var server = await HttpServer.bind(InternetAddress.LOOPBACK_IP_V4, 8008);
   print("Serving at ${server.address}:${server.port}");
@@ -145,6 +147,7 @@ listenForRequests(HttpServer requests) async {
       teacherList = [];
     }
     else if(request.uri.path=="/showmes"){
+      decoded = await request.transform(UTF8.decoder).join();
       print('ShowMes');
       await getMessage(request);
       await request.response
@@ -171,17 +174,19 @@ getMyclass(HttpRequest request) async{   //获取我的课程列表
     //print(teacherList);
   });
 }
-getMessage(HttpRequest request) async {//获取所有留言
 
+getMessage(HttpRequest request) async {//获取所有留言
+  var curriName = JSON.decode(decoded);//对客户端传过来的信息解码
+  print(curriName);
   var pool=new ConnectionPool(host: '52.8.67.180', port: 3306, user: 'dec2013stu', password: 'dec2013stu', db: 'stu_10130340211');
-  var resultsMes = await pool.query('select time,comment,supportnumber,commentID from comment order by commentID desc');
+  //var resultsMes = await pool.query('select time,comment,supportnumber,commentID from comment order by commentID desc where curriculumID = "${curriID}")');
+  var resultsMes = await pool.query('select time,comment,supportnumber,commentID from comment where curriculumID in(select curriculumID from curriculum where curriculumname = "${curriName}") order by commentID desc');
   await resultsMes.forEach((row) {
     messageList.add('"${row[0]}"');
     messageList.add('"${row[1]}"');
     messageList.add('"${row[2]}"');
    // print(messageList);
   });
-
 }
 getAllclass(HttpRequest request) async{   //获取所有课程列表
   var pool=new ConnectionPool(host: '52.8.67.180', port: 3306, user: 'dec2013stu', password: 'dec2013stu', db: 'stu_10130340211');

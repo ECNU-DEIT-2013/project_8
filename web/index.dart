@@ -782,9 +782,9 @@ void Checkclass(Event event){
   var path = 'http://127.0.0.1:8008/showmes';
   var httpRequest = new HttpRequest();
   httpRequest
-    ..open('GET', path)
-    ..onLoadEnd.listen((e) => requestMesComplete(httpRequest))
-    ..send('');
+    ..open('POST', path)
+    ..send(JSON.encode(chooseclassCourse))
+    ..onLoadEnd.listen((e) => requestMesComplete(httpRequest));
 }
 
 
