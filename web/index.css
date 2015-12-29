@@ -36,12 +36,12 @@ html, body {
 }
 
 .Lefttop{
-  float: left;
+   float: left;
   height: 60px;
-  width: 100%;
+   width: 100%;
   background-color: #DDDDDD;
   opacity: 0.6;
-}
+ }
 
 .Tagtime{
   float: left;
@@ -128,13 +128,13 @@ html, body {
 }
 
 .RightBack {
-  z-index: 1;
-  height:95%;
-  float:right;
-  width: 50%;
-  background-color: #FFF899;
-  opacity:0.6;
-}
+   z-index: 1;
+   height:95%;
+   float:right;
+   width: 50%;
+   background-color: #FFF899;
+   opacity:0.6;
+ }
 .RightBack1{
   z-index: 1;
   height:95%;
@@ -400,7 +400,7 @@ html, body {
   font-family: SimHei;
   line-height: 150px;
   text-align: center;
-  color: #666666;
+    color: #666666;
 
 }
 
@@ -615,4 +615,20 @@ html, body {
   color: #333333;
   font-family: 微软雅黑;
   width: calc(100% - 36px);
+}
+
+.Timeofcomment{
+  top: 70%;
+  font-family: 微软雅黑;
+  font-size: 12px;
+  color: #333333;
+  left:40%;
+  position: relative;
+  width: 30%;
+}
+
+.zan{
+  font-size: 14px;
+  color: #333333;
+
 }

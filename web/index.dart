@@ -3,34 +3,47 @@ import 'dart:convert';
 import 'package:dialog/dialog.dart';
 import "package:dialog/src/dialog_class.dart";
 import "dart:async";
-//import "ClassData.dart";
+import "ClassData.dart";
+import 'dart:math';
+import 'dart:math' show Random;
+
 
 bool myorall;             ///该变量true为我的课程，false为全部课程
 int mystarcount;          ///该变量存放某门课程的评分数
 bool timeortag;           ///该变量true为时间轴，false为标签模式
-
+String USERID;             //用于记录用户名（一直可以使用）
+var chooseclassTeacher,chooseclassCourse;           //用于记录选择的
+List classList = new List();
+List teacherList = new List();
+List twoList = new List();
+SelectElement classesselector = new SelectElement();
+SelectElement teacherselector = new SelectElement();
 
 void main() {
   querySelector('#Commit')              ///Commit为确认登录按钮
     ..onClick.listen(LogIn);            ///logIn()为按下确认键登录进入主页面的子函数
   querySelector('#Clear')               ///Clear()为清空按钮
     ..onClick.listen(ClearLog);         ///ClearLog()为清空登录页面的函数
-  querySelector('#User')                ///User为用户名输入框
+  InputElement user = querySelector('#User');                ///User为用户名输入框
+    user
     ..placeholder='请输入用户名'
     ..classes.add('User');
-  querySelector('#Password')            ///Password为密码输入框
-    ..placeholder='请输入密码';
+  InputElement password = querySelector('#Password');       ///Password为密码输入框
+  password.placeholder='请输入密码';
   querySelector('#LeftBack')
     ..classes.add('LeftBack');
   querySelector('#RightBack')
     ..classes.add('RightBack');
+
+  classesselector.onChange.listen(ChangeTeachername);
+  teacherselector.onChange.listen(ChangeClassname);
 }
 
-addComments(Event e) async{
+ addComments(Event e) async{
   var myMessage = await addMessageDialog("请在这里输入你的留言", "");
   if(myMessage != null&&mystarcount!=0){
     alert(myMessage.toString()+'\n留言添加成功！');
-    List message = ['5',myMessage,mystarcount];
+    List message = [USERID,myMessage,mystarcount,chooseclassCourse,chooseclassTeacher,'sometime'];
     var path = 'http://127.0.0.1:8008/addmessage';
     var httpRequest = new HttpRequest();
     httpRequest
@@ -41,6 +54,7 @@ addComments(Event e) async{
   }else if (mystarcount==0){
     window.alert("你还没有打分哦！");
   }
+
 }//添加留言的函数
 
 void ClearLog(MouseEvent event){      ///清空按钮功能
@@ -51,10 +65,9 @@ void ClearLog(MouseEvent event){      ///清空按钮功能
 }
 
 Future LogIn(MouseEvent event) async {
-  ///登录按钮功能
   var Username = document.getElementById('User').value;
+  USERID = Username;
   var Password = document.getElementById('Password').value;
-  //List a = ['101', '123321'];
   List a2 = ['', ''];
   a2[0] = Username;
   a2[1] = Password;
@@ -80,6 +93,7 @@ void requestComplete(request){           ///登录判断
   myorall = true;                     ///登录后默认为我的课程
   timeortag = true;                   ///登录后默认时间轴模式
   addButtons();                        ///加入右边栏的部件
+
 
   DivElement lefttop= new DivElement();
   lefttop.id = 'Lefttop';
@@ -167,20 +181,8 @@ void addButtons(){
     ..add('Classesselecttip');
   selects.children.add(classesselectip);
 
-  SelectElement classesselector = new SelectElement();      ///课程选择的下拉列表
   classesselector.id='Classesselector';
   classesselectip.children.add(classesselector);
-  int classsum;
-  classsum = 10;      ///注意该数据为该学生课程总数，请用Select+Sum 语句从数据库中统计该学生选课的总数，以便加入下拉列表中
-  List<String> classes = ["Chinese","Math","English","Physics","Chemistry","Biology","History","Geography","Politics","Information Technology"];
-  ///该List存放的是该学生选择的课程，请加入客户端向服务器端的请求和数据的接收，放入List中
-  for(int i=0;i<classsum;i++){
-    OptionElement option = new OptionElement();
-    option.text = classes[i];
-    print(classes[i]);
-    classesselector.children.add(option);
-    print(classes[i]+"done");
-  }
   classesselector.classes
     ..clear()
     ..add('Classesselector');
@@ -193,20 +195,8 @@ void addButtons(){
     ..add('Teacherselecttip');
   selects.children.add(teacherselecttip);
 
-  SelectElement teacherselector = new SelectElement();      ///课程选择的下拉列表
   teacherselector.id='Teacherselector';
   teacherselecttip.children.add(teacherselector);
-  int teachersum;
-  teachersum = 10;      ///注意该数据为教师总数，请用Select+Sum 语句从数据库中统计教师的总数，以便加入下拉列表中
-  List<String> teachers = ["Chinese","Math","English","Physics","Chemistry","Biology","History","Geography","Politics","Information Technology"];
-  ///该List存放的是教师的名称，请加入客户端向服务器端的请求和数据的接收，放入List中
-  for(int j=0;j<teachersum;j++){
-    OptionElement option1 = new OptionElement();
-    option1.text = teachers[j];
-    print(teachers[j]);
-    teacherselector.children.add(option1);
-    print(teachers[j]+"done");
-  }
   teacherselector.classes
     ..clear()
     ..add('Teacherselector');
@@ -223,10 +213,6 @@ void addButtons(){
   mystarcount = 0;    ///这个整形为个人对某课程的评分，初始未评分为0
   Loadmystar(mystarcount);           ///此处加载的是个人的评分星数
 
-  mystarcount = 0;    ///这个整形为个人对某课程的评分，初始未评分为0
-  Loadmystar(mystarcount);           ///此处加载的是个人的评分星数
-
-
   DivElement saymywords = new DivElement();
   saymywords.id = 'Saymywords';
   saymywords.text = '我要评教';
@@ -235,6 +221,13 @@ void addButtons(){
     ..add('Saymywords');
   rightback.children.add(saymywords);
   querySelector('#Saymywords').onClick.listen(addComments);///
+
+  var path = 'http://127.0.0.1:8008/myclass';  //登陆之后默认显示我的课程
+  var httpRequest = new HttpRequest();
+  httpRequest
+  ..open('GET', path)
+  ..onLoadEnd.listen((e) => requestComplete2(httpRequest))
+  ..send('');
 
 }
 
@@ -252,9 +245,20 @@ void Classesshift(MouseEvent event){      ///切换至全部课程
   mystarcount=3;        ///此整形存放全部课程中某一课程的总评分
   Loadmystar(mystarcount);
   querySelector('#Starstext').text='全部评分';
+
+  classesselector.children.clear();
+  teacherselector.children.clear();
+
+  var path = 'http://127.0.0.1:8008/allclass';
+  var httpRequest = new HttpRequest();
+  httpRequest
+    ..open('GET', path)
+    ..onLoadEnd.listen((e) => requestComplete2(httpRequest))
+    ..send('');
 }
 
-void Classesshift1(MouseEvent event){     ///切换至我的课程,每次切换需传输我的某课程的评分
+void Classesshift1(MouseEvent event){     ///切换至我的课程
+                                          ///每次切换需传输我的某课程的评分
   querySelector('#Myclassbt').classes
     ..clear()
     ..add('Myclassbt');
@@ -264,20 +268,176 @@ void Classesshift1(MouseEvent event){     ///切换至我的课程,每次切换�
     ..add('Otherclassbt1');
   querySelector('#Otherclassbt').onClick.listen(Classesshift);
   DivElement rightback = querySelector('#RightBack');
-  Loadmystar(mystarcount);       ///加载个人评星数
-
-  if(myorall == false) {
-    Loadsaymywords();
-
-  }
 
   querySelector('#Stars').remove();
   querySelector('#RightBack').children.remove(querySelector('#Saymywords'));
 
-  mystarcount=0;              ///每次切换需传输我的某课程的评分,初始为0
-  Loadmystar(mystarcount);
-  myorall=true;
-  Loadsaymywords();
+    mystarcount=0;              ///每次切换需传输我的某课程的评分,初始为0
+    Loadmystar(mystarcount);
+    myorall=true;
+    Loadsaymywords();
+
+  classesselector.children.clear();
+  teacherselector.children.clear();
+  var path = 'http://127.0.0.1:8008/myclass';
+  var httpRequest = new HttpRequest();
+  httpRequest
+    ..open('GET', path)
+    ..onLoadEnd.listen((e) => requestComplete2(httpRequest))
+    ..send('');
+}
+requestMesComplete(HttpRequest request){
+  if (request.status == 200) {
+    List<String> decoded = JSON.decode(request.responseText);
+    querySelector('#Leftmain').children.clear();
+    int commentcount;                             ///该整形用于存放某课程的评价总数,从数据库获取
+    commentcount=30;                              ///以而是条为例
+   // String thelatesttime='2015-12-01 20:24:15';///这个字符串存放最后评论的时间（要先转换成字符串！！）
+    //String theearliesttime='2015-11-25 13:40:15';///这个字符串存放最早评论的时间（要先转换成字符串！！）
+    String thelatesttime='2015-12-01 20:24:15';
+    String theearliesttime=decoded[0];
+    // List<String> comments = ["2015-12-01 20:24:15","The class is very good!","15","2015-11-28 21:12:08","The teacher is fun!","8","2015-11-28 20:12:08","The teacher is nice!","5","2015-11-25 22:12:08","The teacher is cute!","6","2015-11-25 13:40:15","The lesson is great!","3"];
+    List<String> comments = decoded;
+
+    ///comments这个LIST存放的是某个课程的评论数据，格式是时间+评论内容+赞数
+    List<String> colors=["#6CBFEE","#00EEB1","#FF9BA1","#FFF9A4"];
+
+    if(timeortag==true){
+      DivElement latesttime=new DivElement();     ///latesttime顾名思义为存放最后一条评论的时间，作为时间轴的头
+      latesttime.id='Latesttime';
+      latesttime.text=thelatesttime;
+      latesttime.classes
+        ..clear()
+        ..add('Latesttime');
+      querySelector('#Leftmain').children.add(latesttime);
+
+
+      for(int i=1;i<=commentcount;i++){         ///该循环向时间轴上加入各个节点
+        DivElement commentcon=new DivElement();     ///每个节点的底容器
+        commentcon.id = 'Commentcon'+i.toString();
+        commentcon.classes
+          ..clear()
+          ..add('CommentconTime');
+        querySelector('#Leftmain').children.add(commentcon);
+
+        DivElement timeline=new DivElement();       ///timeline为时间轴线，是一截截加进去的，不用理这个，只是一根线
+        timeline.id = 'Timeline'+i.toString();
+        timeline.classes
+          ..clear()
+          ..add('Timeline');
+        querySelector('#Commentcon'+i.toString()).children.add(timeline);
+
+        DivElement timepoint=new DivElement();      ///timepoint是时间轴图案上的节点图案，同样不用理它~
+        timepoint.id='Timepoint'+i.toString();
+        timepoint.classes
+          ..clear()
+          ..add('Timepoint');
+        querySelector('#Commentcon'+i.toString()).children.add(timepoint);
+
+        DivElement thecommentborder = new DivElement();   ///装饰用，不用管
+        thecommentborder.id='Commentborder'+i.toString();
+        if(i%2==1){
+          thecommentborder.classes
+            ..clear()
+            ..add('CommentBDA');
+        }else{
+          thecommentborder.classes
+            ..clear()
+            ..add('CommentBDB');
+        }
+        querySelector('#Commentcon'+i.toString()).children.add(thecommentborder);
+
+        DivElement thecomment=new DivElement();     ///每条评论的最终容器，终于写到这了,激动！
+        thecomment.id='Comment'+i.toString();
+        if(i%2==1){
+          thecomment.classes
+            ..clear()
+            ..add('CommentA');
+        }else{
+          thecomment.classes
+            ..clear()
+            ..add('CommentB');
+        }
+        querySelector('#Commentcon'+i.toString()).children.add(thecomment);
+
+        DivElement commenttext=new DivElement();                  ///此处将评论数据LIST里的评论文字放入评论框中！
+        commenttext.id='Commenttext'+i.toString();
+        commenttext.text=comments[(i-1)*3+1];                    ///(i-1)*3+1即comments那个LIST中相应的评论文字
+        commenttext.classes
+          ..clear()
+          ..add('Commenttext');
+        thecomment.children.add(commenttext);
+
+        DivElement timeofcomment= new DivElement();
+        timeofcomment.id='Timeofcomment';
+        timeofcomment.text=comments[(i-1)*3];
+        timeofcomment.classes
+          ..clear()
+          ..add('Timeofcomment');
+        thecomment.children.add(timeofcomment);
+        DivElement zan= new DivElement();
+        zan.id='Zan'+i.toString();
+        zan.text='赞（'+comments[(i-1)*3+2]+')';
+        zan.classes
+          ..clear()
+          ..add('zan');
+        thecomment.children.add(zan);
+        zan.onClick.listen((MouseEvent e)=>Dianzan(i,e));
+      }
+      DivElement earliesttime=new DivElement();     ///latesttime顾名思义为存放最后一条评论的时间，作为时间轴的头
+      earliesttime.id='Earliesttime';
+      earliesttime.text=theearliesttime;
+      earliesttime.classes
+        ..clear()
+        ..add('Latesttime');
+      querySelector('#Leftmain').children.add(earliesttime);
+    }else {
+      for (int j = 1; j <= commentcount; j++) {
+        String commenttext=comments[(j-1)*3+1];
+        int zan=int.parse(comments[(j-1)*3+2]);
+        Random random = new Random();
+        var msgcolorID = random.nextInt(4);
+        String msgcolor=colors[msgcolorID];
+        Message msg=new Message(commenttext,zan,j,msgcolor,'Leftmain');
+        ///querySelector('#Leftmain').children.add(msg.MesContain);
+      }
+    }
+  }
+}
+requestComplete2 (HttpRequest request) {
+  if (request.status == 200) {
+    List<String> classList = JSON.decode(request.responseText);
+    for(int i=0;i<classList[0].length;i++){
+      OptionElement option = new OptionElement();
+      option.text = classList[0][i];
+      print(classList[0][i]);
+      classesselector.children.add(option);
+      print(classList[0][i]+"done");
+    }
+    for(int j=0;j<classList[1].length;j++){
+      OptionElement option1 = new OptionElement();
+      option1.text = classList[1][j];
+      print(classList[1][j]);
+      teacherselector.children.add(option1);
+      print(classList[1][j]+"done");
+    }
+  } else {
+    querySelector('#Myclassbt').text='nanguo';
+  }
+}
+
+void ChangeTeachername(Event e){
+  var index = classesselector.selectedIndex;
+  teacherselector.options[index].selected = true;
+  chooseclassCourse = classesselector.options[index].firstChild.nodeValue;  //这条语句可以获取到option的值，获取到两个option的值之后传到服务器写入/调出课程评价
+  //querySelector('#Myclassbt').text = chooseclassCourse;
+}
+
+void ChangeClassname(Event e){
+  var index = teacherselector.selectedIndex;
+  classesselector.options[index].selected = true;
+  chooseclassTeacher = classesselector.options[index].firstChild.nodeValue;
+
 }
 
 void Modeshift(MouseEvent event){               ///转换到标签模式
@@ -371,11 +531,10 @@ void Loadmystar(int mystarcount){
   starscon.children.add(star5);
 
 
-  ///此处将数据库传到服务器传到客户端的评分数据赋给mystarcount变量，会自动调整评分的五角星
+                            ///此处将数据库传到服务器传到客户端的评分数据赋给mystarcount变量，会自动调整评分的五角星
   if(mystarcount==0){                 ///这里用评分数来判断是否完成评分
-    ///如果未完成，则有鼠标经过的特效，如已评分，则将加载的评分数（1~5）
-    ///比如评了4分，则调用Star4()；
-
+                              ///如果未完成，则有鼠标经过的特效，如已评分，则将加载的评分数（1~5）
+                              ///比如评了4分，则调用Star4()；
     Star0();
     star1.onMouseEnter.listen(Starin1);
     star2.onMouseEnter.listen(Starin2);
@@ -392,6 +551,8 @@ void Loadmystar(int mystarcount){
     star3.onClick.listen(Clickstar3);
     star4.onClick.listen(Clickstar4);
     star5.onClick.listen(Clickstar5);
+
+
   }else if(mystarcount==1){
     Star1();
   }else if(mystarcount==2){
@@ -617,95 +778,13 @@ void Clickstar5(MouseEvent event){
   Loadsaymywords();
 }
 
-
-void Checkclass(MouseEvent event){
-  querySelector('#Leftmain').children.clear();
-  int commentcount;                             ///该整形用于存放某课程的评价总数,从数据库获取
-  commentcount=5;                              ///以而是条为例
-  String thelatesttime='2015-12-01 20:24:15';///这个字符串存放最后评论的时间（要先转换成字符串！！）
-  String theearliesttime='2015-11-25 13:40:15';///这个字符串存放最早评论的时间（要先转换成字符串！！）
-  List<String> comments = ["2015-12-01 20:24:15","The class is very good!","15","2015-11-28 21:12:08","The teacher is fun!","8","2015-11-28 20:12:08","The teacher is nice!","5","2015-11-25 22:12:08","The teacher is cute!","6","2015-11-25 13:40:15","The lesson is great!","3"];
-  ///comments这个LIST存放的是某个课程的评论数据，格式是时间+评论内容+赞数
-  if(timeortag==true){///
-    DivElement latesttime=new DivElement();     ///latesttime顾名思义为存放最后一条评论的时间，作为时间轴的头
-    latesttime.id='Latesttime';
-    latesttime.text=thelatesttime;
-    latesttime.classes
-      ..clear()
-      ..add('Latesttime');
-    querySelector('#Leftmain').children.add(latesttime);
-
-
-    for(int i=1;i<=commentcount;i++){         ///该循环向时间轴上加入各个节点
-      DivElement commentcon=new DivElement();     ///每个节点的底容器
-      commentcon.id = 'Commentcon'+i.toString();
-      commentcon.classes
-        ..clear()
-        ..add('CommentconTime');
-      querySelector('#Leftmain').children.add(commentcon);
-
-      DivElement timeline=new DivElement();       ///timeline为时间轴线，是一截截加进去的，不用理这个，只是一根线
-      timeline.id = 'Timeline'+i.toString();
-      timeline.classes
-        ..clear()
-        ..add('Timeline');
-      querySelector('#Commentcon'+i.toString()).children.add(timeline);
-
-      DivElement timepoint=new DivElement();      ///timepoint是时间轴图案上的节点图案，同样不用理它~
-      timepoint.id='Timepoint'+i.toString();
-      timepoint.classes
-        ..clear()
-        ..add('Timepoint');
-      querySelector('#Commentcon'+i.toString()).children.add(timepoint);
-
-      DivElement thecommentborder = new DivElement();   ///装饰用，不用管
-      thecommentborder.id='Commentborder'+i.toString();
-      if(i%2==1){
-        thecommentborder.classes
-          ..clear()
-          ..add('CommentBDA');
-      }else{
-        thecommentborder.classes
-          ..clear()
-          ..add('CommentBDB');
-      }
-      querySelector('#Commentcon'+i.toString()).children.add(thecommentborder);
-
-      DivElement thecomment=new DivElement();     ///每条评论的最终容器，终于写到这了,激动！
-      thecomment.id='Comment'+i.toString();
-      if(i%2==1){
-        thecomment.classes
-          ..clear()
-          ..add('CommentA');
-      }else{
-        thecomment.classes
-          ..clear()
-          ..add('CommentB');
-      }
-      querySelector('#Commentcon'+i.toString()).children.add(thecomment);
-
-      DivElement commenttext=new DivElement();                  ///此处将评论数据LIST里的评论文字放入评论框中！
-      commenttext.id='Commenttext'+i.toString();
-      commenttext.text=comments[(i-1)*3+1];                    ///(i-1)*3+1即comments那个LIST中相应的评论文字
-      commenttext.classes
-        ..clear()
-        ..add('Commenttext');
-      thecomment.children.add(commenttext);
-
-
-    }
-    DivElement earliesttime=new DivElement();     ///latesttime顾名思义为存放最后一条评论的时间，作为时间轴的头
-    earliesttime.id='Earliesttime';
-    earliesttime.text=theearliesttime;
-    earliesttime.classes
-      ..clear()
-      ..add('Latesttime');
-    querySelector('#Leftmain').children.add(earliesttime);
-  }else {
-    for (int j = 1; j <= commentcount; j++) {
-      LoadCommentsTag(j);
-    }
-  }
+void Checkclass(Event event){
+  var path = 'http://127.0.0.1:8008/showmes';
+  var httpRequest = new HttpRequest();
+  httpRequest
+    ..open('GET', path)
+    ..onLoadEnd.listen((e) => requestMesComplete(httpRequest))
+    ..send('');
 }
 
 
@@ -716,4 +795,8 @@ void LoadCommentsTag(int j) {
     ..clear()
     ..add('CommentconTag');
   querySelector('#Leftmain').children.add(commentcon);
+}
+
+void Dianzan(int i,e){
+
 }

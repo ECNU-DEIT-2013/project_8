@@ -27,7 +27,6 @@ class CourseElement{
 class Message{
   String message;
   int zan;
-  int star;
   int mesNum;
 
   DivElement container = new DivElement();//整个容器
@@ -37,7 +36,7 @@ class Message{
   DivElement zanButton = new DivElement();//点赞的按钮
   DivElement alarmButton = new DivElement();//举报的按钮
 
-  Message( String message,int zan,int star,int mesNum,String color,String containerID){
+  Message( String message,int zan,int mesNum,String color,String containerID){
     String id = "MesDiv"+mesNum.toString();
     this.message = message;
     this.mesNum = mesNum;
@@ -61,7 +60,7 @@ class Message{
       ..classes.add("MesDiv")
       ..id = id;
     MesContain.style
-    // ..backgroundColor=color
+      ..backgroundColor=color
       ..width="300px"
       ..height= "200px";
     container.children.add(MesContain);
@@ -75,7 +74,7 @@ class Message{
       ..style.fontFamily = "SimHei"
       ..style.padding = "10px"
       ..style.float = "right"
-      ..style.color = "white"
+      ..style.color = "#333333"
       ..text = 'x';
     MesContain.children.add(closeButton);
     closeButton.onClick.listen(ClickClose);
@@ -90,24 +89,24 @@ class Message{
       ..marginRight = "20px"
       ..fontFamily="SimHei"
       ..fontSize = "14px"
-      ..color= 'white';
+      ..color= '#333333';
     MesContain.children.add(label);
   }//加载标签上的留言
   LoadZan(){
     zanButton.style
-      ..color = "white"
+      ..color = "#333333"
       ..fontFamily = "SimHei"
       ..marginLeft = "10%"
       ..fontSize = "13px"
       ..float = "left";
     zanButton
       ..id = "Zan"+mesNum.toString()
-      ..text = "❤"+zan.toString();
+      ..text = "❤("+zan.toString()+')';
     MesContain.children.add(zanButton);
   }//加载标签上的赞
   LoadAlarm(){
     alarmButton.style
-      ..color = "white"
+      ..color = "#333333"
       ..fontFamily = "SimHei"
       ..marginRight = "10%"
       ..fontSize = "13px"
