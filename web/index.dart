@@ -89,7 +89,7 @@ Future LogIn(MouseEvent event) async {
 
 void requestComplete(request){           ///登录判断
   var check =JSON.decode(request.responseText);//获取相应的内容
-  if (check=='1' ) {//判断信息是哦福正确了
+  if (check=='1' ) {//判断信息是否正确了
   myorall = true;                     ///登录后默认为我的课程
   timeortag = true;                   ///登录后默认时间轴模式
   addButtons();                        ///加入右边栏的部件
@@ -126,7 +126,8 @@ void requestComplete(request){           ///登录判断
   querySelector('#Lefttop').children.add(tagtag);
   tagtag.onClick.listen(Modeshift);
 }
-  else window.alert('用户名或密码错误！');
+  else if(check==null) window.alert('连接错误，请检查网络或联系管理员检查数据库！');//错误提示1
+  else window.alert('用户名或密码错误！');// 错误提示2
 }
 
 void addButtons(){
