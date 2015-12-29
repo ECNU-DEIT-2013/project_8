@@ -632,3 +632,61 @@ html, body {
   color: #333333;
 
 }
+#Loading {
+  width:30%;
+  background-position:50% 50%;
+  text-align: center;
+  font-size: medium;
+  position:relative;
+  display:none;
+  margin:0 auto
+}
+#info {
+  background:#545965;
+  color:#fff;
+  padding:5px;
+  float:left;
+  font-family: SimHei, serif positionrelative;
+  position:relative;
+  -webkit-border-top-left-radius:5px;
+  -webkit-border-bottom-left-radius:5px;
+  -moz-border-radius-topleft:5px;
+  -moz-border-radius-bottomleft:5px;
+  border-radius:5px
+}
+#bar-unfill {
+  height:15px;
+  display:block;
+  background:#fff;
+  width:100%;
+  border-radius:8px
+}
+#bar-fill {
+  height:15px;
+  display:block;
+  background:#00eeb1;
+  width:0;
+  border-radius:8px;
+  -webkit-transition:width .8s ease;
+  -moz-transition:width .8s ease;
+  transition:width .8s ease;
+  -webkit-animation:progressbar 7s infinite;
+  animation:progressbar 7s infinite
+}
+@-webkit-keyframes progressbar {
+  from {
+    width:0
+  }
+  to {
+    width:100%
+  }
+}
+/* Standard syntax */
+@keyframes progressbar {
+  from {
+    width:0
+  }
+  to {
+    width:100%
+  }
+}

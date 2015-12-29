@@ -79,6 +79,7 @@ Future LogIn(MouseEvent event) async {
     var url = 'http://127.0.0.1:8008/login';
     var request = new HttpRequest();
     //var check = new HttpRequest().responseText;
+    LoadingShow();//进度条显示
     request
       ..open('POST', url)
       ..send(JSON.encode(a2))//对输入的信息进行编码
@@ -87,11 +88,14 @@ Future LogIn(MouseEvent event) async {
 
 void requestComplete(request){           ///登录判断
   var check =JSON.decode(request.responseText);//获取相应的内容
-  if (check=='1' ) {//判断信息是哦福正确了
+  if (check=='1' ) {//判断信息是否正确了
+  LoadingHide();//进度条消失
   myorall = true;                     ///登录后默认为我的课程
   timeortag = true;                   ///登录后默认时间轴模式
   addButtons();                        ///加入右边栏的部件
-
+  DivElement Loading= new DivElement();
+  Loading.id ='Loading';
+  Loading.style.display = 'none';
 
   DivElement lefttop= new DivElement();
   lefttop.id = 'Lefttop';
@@ -124,7 +128,12 @@ void requestComplete(request){           ///登录判断
   querySelector('#Lefttop').children.add(tagtag);
   tagtag.onClick.listen(Modeshift);
 }
-  else window.alert('用户名或密码错误！');
+  else if(check==null){
+    LoadingHide();
+    window.alert('连接错误，请检查网络或联系管理员检查数据库！');}//错误提示1
+  else {
+    LoadingHide();
+    window.alert('用户名或密码错误！');}// 错误提示2
 }
 
 void addButtons(){
@@ -401,6 +410,7 @@ requestMesComplete(HttpRequest request){
       }
     }
   }
+  //LoadingHide();
 }
 requestComplete2 (HttpRequest request) {
   if (request.status == 200) {
@@ -427,7 +437,7 @@ requestComplete2 (HttpRequest request) {
       ..open('POST', path)
       ..send(JSON.encode(classList[0][0]))
       ..onLoadEnd.listen((e) => requestMesComplete(httpRequest));
-
+    //querySelector('#Myclassbt').text=chooseclassCourse;
   } else {
     querySelector('#Myclassbt').text='nanguo';
   }
@@ -785,6 +795,7 @@ void Clickstar5(MouseEvent event){
 }
 
 void Checkclass(Event event){
+ // LoadingShow();
   var path = 'http://127.0.0.1:8008/showmes';
   var httpRequest = new HttpRequest();
   httpRequest
@@ -805,4 +816,10 @@ void LoadCommentsTag(int j) {
 
 void Dianzan(int i,e){
 
+}
+void LoadingShow(){//进度条在CSS里的初始设置为不可见，如需显示进度条就要调用此函数
+  querySelector('#Loading').style.display='block';
+}
+void LoadingHide(){//完成相关操作之后，进度条就隐藏了
+  querySelector('#Loading').style.display='none';
 }
