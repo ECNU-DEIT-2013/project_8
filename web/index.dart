@@ -14,8 +14,6 @@ bool timeortag;           ///该变量true为时间轴，false为标签模式
 String USERID;             //用于记录用户名（一直可以使用）
 var chooseclassTeacher,chooseclassCourse;           //用于记录选择的
 List classList = new List();
-List teacherList = new List();
-List twoList = new List();
 SelectElement classesselector = new SelectElement();
 SelectElement teacherselector = new SelectElement();
 
@@ -421,6 +419,14 @@ requestComplete2 (HttpRequest request) {
       teacherselector.children.add(option1);
       print(classList[1][j]+"done");
     }
+
+    var path = 'http://127.0.0.1:8008/showmes';  //默认显示classList中第一个课程名的comments内容
+    var httpRequest = new HttpRequest();
+    httpRequest
+      ..open('POST', path)
+      ..send(JSON.encode(classList[0][0]))
+      ..onLoadEnd.listen((e) => requestMesComplete(httpRequest));
+
   } else {
     querySelector('#Myclassbt').text='nanguo';
   }
@@ -437,7 +443,6 @@ void ChangeClassname(Event e){
   var index = teacherselector.selectedIndex;
   classesselector.options[index].selected = true;
   chooseclassTeacher = classesselector.options[index].firstChild.nodeValue;
-
 }
 
 void Modeshift(MouseEvent event){               ///转换到标签模式
