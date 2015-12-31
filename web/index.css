@@ -21,7 +21,7 @@ html, body {
   height:95%;
   float:left;
   width: 50%;
-  background-color: #ADDADF;
+  background-color: #e8e8e8;
   opacity:0.6;
 }
 
@@ -31,7 +31,7 @@ html, body {
   height:95%;
   float:left;
   width: 70%;
-  background-color: #ADDADF;
+  background-color: #e8e8e8;
   opacity:0.6;
 }
 
@@ -50,7 +50,7 @@ html, body {
   background-color: #13baee;
   border: 3px solid #13baee;
   font-family: 微软雅黑;
-  color: rgba(0, 0, 0, 0.74);
+  color: rgb(23, 23, 23);
   font-size: 30px;
   text-align: center;
   line-height:54px;
@@ -132,7 +132,7 @@ html, body {
    height:95%;
    float:right;
    width: 50%;
-   background-color: #FFF899;
+  background-color: #e8e8e8;
    opacity:0.6;
  }
 .RightBack1{
@@ -140,7 +140,7 @@ html, body {
   height:95%;
   float:right;
   width: 30%;
-  background-color: #FFF899;
+  background-color: #e8e8e8;
   opacity:0.6;
 }
 
@@ -193,26 +193,6 @@ html, body {
   left:10%;
 }
 
-.Submitselect{
-  height:40px;
-  background-color: #EDD788;
-  opacity: 1;
-  margin-top:20px;
-  text-align: center;
-  line-height: 40px;
-  font-size: 24px;
-  font-family: SimHei;
-  font-weight: bold;
-  color: #888888;
-}
-
-.Submitselect:hover{
-  background-color: #F1FE98;
-  opacity: 0.8;
-  cursor:pointer;
-  color: #666666;
-}
-
 .Myclass{
   position: relative;
   top:5%;
@@ -228,7 +208,7 @@ html, body {
   background-color: #F1FE98;
   line-height: 36px;
   font-size: 18px;
-  color: #666666;
+  color: #464646;
   text-align: center;
   font-family: 微软雅黑;
   font-weight: bold;
@@ -243,11 +223,11 @@ html, body {
   float: left;
   width:40%;
   height: 40px;
-  background-color: #EDD788;
+  background-color: #ffcc66;
   left:40px;
   line-height: 40px;
   font-size: 18px;
-  color: #666666;
+  color: #464646;
   text-align: center;
   font-family: 微软雅黑;
 }
@@ -278,7 +258,7 @@ html, body {
   background-color: #F1FE98;
   line-height: 36px;
   font-size: 18px;
-  color: #666666;
+  color: #464646;
   text-align: center;
   font-family: 微软雅黑;
   font-weight: bold;
@@ -293,11 +273,11 @@ html, body {
   float: left;
   width:40%;
   height: 40px;
-  background-color: #EDD788;
+  background-color: #ffcc66;
   left:40px;
   line-height: 40px;
   font-size: 18px;
-  color: #666666;
+  color: #464646;
   text-align: center;
   font-family: 微软雅黑;
 }
@@ -345,11 +325,11 @@ html, body {
   width: 34px;
   height: 34px;
   border-style: solid;
-  border-color: #cccccc;
+  border-color: #999999;
   border-radius: 10px;
   color: white;
   font-size: 22px;
-  background: #cccccc;
+  background: #8f8f8f;
   font-style: normal;
   line-height: 34px;
   text-align: center;
@@ -385,6 +365,7 @@ html, body {
   height:50px;
 }
 
+
 .Saymywords{
   position: relative;
   top:20%;
@@ -394,14 +375,14 @@ html, body {
   -webkit-border-radius: 75px;
   -moz-border-radius: 75px;
   border-radius: 75px;
-  background-color:  #EDD788;
+  background-color:  #ffcc66;
   font-size: 24px;
   font-weight: bold;
   font-family: SimHei;
   line-height: 150px;
   text-align: center;
-    color: #666666;
-
+  color: #2f2f2f;
+//box-shadow: ;
 }
 
 .Saymywords:hover{
@@ -540,7 +521,7 @@ html, body {
 
 .Timeline{
   width: 8px;
-  background-color: #6cbfee;
+  background-color: #959795;
   left:calc(50% - 4px);
   height:100%;
   position: relative;
@@ -549,6 +530,17 @@ html, body {
 .Timepoint{
   border-radius: 12px;
   background-color: #6cbfee;
+  left:calc(50% - 12px);
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  top:calc(50% - 12px);
+
+}
+
+.Timepoint1{
+  border-radius: 12px;
+  background-color: #ffcc66;
   left:calc(50% - 12px);
   width: 24px;
   height: 24px;
@@ -590,7 +582,7 @@ html, body {
 .CommentB{
   width:calc(50% - 40px);
   left: 0px;
-  background-color: #6cbfee;
+  background-color: #ffcc66;
   border-radius: 18px;
   height: 100%;
   position: absolute;
@@ -603,7 +595,7 @@ html, body {
   position: absolute;
   top:calc(50% - 4px);
   left:calc(50% - 40px);
-  background-color: #6cbfee;
+  background-color: #ffcc66;
 
 }
 
@@ -622,15 +614,48 @@ html, body {
   font-family: 微软雅黑;
   font-size: 12px;
   color: #333333;
-  left:40%;
+  left:25%;
   position: relative;
   width: 30%;
+  float: left;
 }
 
 .zan{
-  font-size: 14px;
+  top: 70%;
+  font-family: 微软雅黑;
+  font-size: 12px;
   color: #333333;
+  left:5%;
+  position: relative;
+  width: 20%;
+  float: left;
+}
+.zan:hover{
+  cursor: pointer;
+}
 
+.Jubao{
+  top: 70%;
+  font-family: 微软雅黑;
+  font-size: 12px;
+  color: #333333;
+  left:35%;
+  position: relative;
+  width: 20%;
+  float: left;
+}
+.Jubao:hover{
+  cursor:pointer;
+}
+
+.Zan1In{
+  cursor:pointer;
+  color: #000000;
+}
+
+.Zan1Out {
+  cursor: default;
+  color: #333333;
 }
 #Loading {
   width:30%;
