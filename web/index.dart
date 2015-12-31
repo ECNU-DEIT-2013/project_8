@@ -208,14 +208,6 @@ void addButtons(){
     ..clear()
     ..add('Teacherselector');
 
-  DivElement submitselect = new DivElement();
-  submitselect.id = 'Submitselect';
-  submitselect.classes
-    ..clear()
-    ..add('Submitselect');
-  submitselect.text='查看评教';
-  selects.children.add(submitselect);
-  submitselect.onClick.listen(Checkclass);        ///点击查看评教按钮向左边容器中加入评教内容
 
   mystarcount = 0;    ///这个整形为个人对某课程的评分，初始未评分为0
   Loadmystar(mystarcount);           ///此处加载的是个人的评分星数
@@ -447,13 +439,24 @@ void ChangeTeachername(Event e){
   var index = classesselector.selectedIndex;
   teacherselector.options[index].selected = true;
   chooseclassCourse = classesselector.options[index].firstChild.nodeValue;  //这条语句可以获取到option的值，获取到两个option的值之后传到服务器写入/调出课程评价
-  //querySelector('#Myclassbt').text = chooseclassCourse;
+  var path = 'http://127.0.0.1:8008/showmes';
+  var httpRequest = new HttpRequest();
+  httpRequest
+    ..open('POST', path)
+    ..send(JSON.encode(chooseclassCourse))
+    ..onLoadEnd.listen((e) => requestMesComplete(httpRequest));
 }
 
 void ChangeClassname(Event e){
   var index = teacherselector.selectedIndex;
   classesselector.options[index].selected = true;
-  chooseclassTeacher = classesselector.options[index].firstChild.nodeValue;
+  chooseclassCourse = classesselector.options[index].firstChild.nodeValue;
+  var path = 'http://127.0.0.1:8008/showmes';
+  var httpRequest = new HttpRequest();
+  httpRequest
+    ..open('POST', path)
+    ..send(JSON.encode(chooseclassCourse))
+    ..onLoadEnd.listen((e) => requestMesComplete(httpRequest));
 }
 
 void Modeshift(MouseEvent event){               ///转换到标签模式
@@ -467,6 +470,12 @@ void Modeshift(MouseEvent event){               ///转换到标签模式
     ..clear()
     ..add('Tagtag');
   querySelector('#Tagtime').onClick.listen(Modeshift1);
+  var path = 'http://127.0.0.1:8008/showmes';
+  var httpRequest = new HttpRequest();
+  httpRequest
+    ..open('POST', path)
+    ..send(JSON.encode(chooseclassCourse))
+    ..onLoadEnd.listen((e) => requestMesComplete(httpRequest));
 }
 
 void Modeshift1(MouseEvent event){              ///转换到时间轴
@@ -480,6 +489,12 @@ void Modeshift1(MouseEvent event){              ///转换到时间轴
     ..clear()
     ..add('Tagtag1');
   querySelector('#Tagtag').onClick.listen(Modeshift);
+  var path = 'http://127.0.0.1:8008/showmes';
+  var httpRequest = new HttpRequest();
+  httpRequest
+    ..open('POST', path)
+    ..send(JSON.encode(chooseclassCourse))
+    ..onLoadEnd.listen((e) => requestMesComplete(httpRequest));
 }
 
 void Loadsaymywords(){
@@ -794,15 +809,7 @@ void Clickstar5(MouseEvent event){
   Loadsaymywords();
 }
 
-void Checkclass(Event event){
- // LoadingShow();
-  var path = 'http://127.0.0.1:8008/showmes';
-  var httpRequest = new HttpRequest();
-  httpRequest
-    ..open('POST', path)
-    ..send(JSON.encode(chooseclassCourse))
-    ..onLoadEnd.listen((e) => requestMesComplete(httpRequest));
-}
+
 
 
 void LoadCommentsTag(int j) {
