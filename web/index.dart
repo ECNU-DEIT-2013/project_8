@@ -447,13 +447,25 @@ void ChangeTeachername(Event e){
   var index = classesselector.selectedIndex;
   teacherselector.options[index].selected = true;
   chooseclassCourse = classesselector.options[index].firstChild.nodeValue;  //这条语句可以获取到option的值，获取到两个option的值之后传到服务器写入/调出课程评价
-  //querySelector('#Myclassbt').text = chooseclassCourse;
+  var path = 'http://127.0.0.1:8008/showmes';
+  var httpRequest = new HttpRequest();
+  httpRequest
+    ..open('POST', path)
+    ..send(JSON.encode(chooseclassCourse))
+    ..onLoadEnd.listen((e) => requestMesComplete(httpRequest));
 }
 
 void ChangeClassname(Event e){
   var index = teacherselector.selectedIndex;
   classesselector.options[index].selected = true;
   chooseclassTeacher = classesselector.options[index].firstChild.nodeValue;
+  chooseclassCourse = classesselector.options[index].firstChild.nodeValue;
+  var path = 'http://127.0.0.1:8008/showmes';
+  var httpRequest = new HttpRequest();
+  httpRequest
+    ..open('POST', path)
+    ..send(JSON.encode(chooseclassCourse))
+    ..onLoadEnd.listen((e) => requestMesComplete(httpRequest));
 }
 
 void Modeshift(MouseEvent event){               ///转换到标签模式
@@ -467,6 +479,12 @@ void Modeshift(MouseEvent event){               ///转换到标签模式
     ..clear()
     ..add('Tagtag');
   querySelector('#Tagtime').onClick.listen(Modeshift1);
+  var path = 'http://127.0.0.1:8008/showmes';
+  var httpRequest = new HttpRequest();
+  httpRequest
+    ..open('POST', path)
+    ..send(JSON.encode(chooseclassCourse))
+    ..onLoadEnd.listen((e) => requestMesComplete(httpRequest));
 }
 
 void Modeshift1(MouseEvent event){              ///转换到时间轴
@@ -480,6 +498,12 @@ void Modeshift1(MouseEvent event){              ///转换到时间轴
     ..clear()
     ..add('Tagtag1');
   querySelector('#Tagtag').onClick.listen(Modeshift);
+  var path = 'http://127.0.0.1:8008/showmes';
+  var httpRequest = new HttpRequest();
+  httpRequest
+    ..open('POST', path)
+    ..send(JSON.encode(chooseclassCourse))
+    ..onLoadEnd.listen((e) => requestMesComplete(httpRequest));
 }
 
 void Loadsaymywords(){
@@ -796,12 +820,6 @@ void Clickstar5(MouseEvent event){
 
 void Checkclass(Event event){
  // LoadingShow();
-  var path = 'http://127.0.0.1:8008/showmes';
-  var httpRequest = new HttpRequest();
-  httpRequest
-    ..open('POST', path)
-    ..send(JSON.encode(chooseclassCourse))
-    ..onLoadEnd.listen((e) => requestMesComplete(httpRequest));
 }
 
 
