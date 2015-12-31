@@ -5,9 +5,9 @@
   <meta charset="utf-8">
   <title>I have something to say!</title>
   <link rel="stylesheet" href="index.css">
-  <link rel="import" href="packages/paper_elements/paper_input.html">
+
 </head>
-<body>
+<body unresolved>
 
 <div id="MainCon">
   <div id="Background">
@@ -17,10 +17,20 @@
   </div>
   <div id="Form">
     <input id="User" style="width:400px; height:40px;">
-    <input id="Password" style="width:400px; height:40px;">
+    <input id="Password" style="width:400px; height:40px;" type="password">
     <div id="Buttons">
       <div id="Commit">确认</div>
       <div id="Clear">清空</div>
+    </div>
+    <div id="Loading">
+      <div id="info">
+        <p>加载中 请稍后~</p>
+        <div id="bar">
+        <span id="bar-unfill">
+            <span id="bar-fill"></span>
+        </span>
+        </div>
+      </div>
     </div>
   </div>
 </div>
