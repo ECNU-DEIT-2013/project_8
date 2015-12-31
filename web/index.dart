@@ -294,14 +294,26 @@ requestMesComplete(HttpRequest request){
    // String thelatesttime='2015-12-01 20:24:15';///这个字符串存放最后评论的时间（要先转换成字符串！！）
     //String theearliesttime='2015-11-25 13:40:15';///这个字符串存放最早评论的时间（要先转换成字符串！！）
     String thelatesttime=decoded[0];
-
     // List<String> comments = ["2015-12-01 20:24:15","The class is very good!","15","2015-11-28 21:12:08","The teacher is fun!","8","2015-11-28 20:12:08","The teacher is nice!","5","2015-11-25 22:12:08","The teacher is cute!","6","2015-11-25 13:40:15","The lesson is great!","3"];
     List<String> comments = decoded;
     var a = decoded.length;
-    commentcount = a/3;
-    String theearliesttime=decoded[a-3];
-    ///comments这个LIST存放的是某个课程的评论数据，格式是时间+评论内容+赞数
-    List<String> colors=["#6CBFEE","#00EEB1","#FF9BA1","#FFF9A4"];
+    commentcount = (a-1)/3;
+    String theearliesttime=decoded[a-4];
+
+    querySelector('#Stars').remove();
+    querySelector('#RightBack').children.remove(querySelector('#Saymywords'));
+    if(myorall)
+    {mystarcount = 0;}
+    else
+    {mystarcount = int.parse(decoded[a-1]);}
+    Loadmystar(mystarcount);
+    querySelector('#Starstext').text='全部评分';
+    if(myorall){
+      querySelector('#Starstext').text='我的评分';
+      Loadsaymywords();}
+    querySelector('#Leftmain').children.clear();
+
+    List<String> colors=["#6CBFEE","#FF9BA1","#FFF9A4"];
 
     if(timeortag==true){
       DivElement latesttime=new DivElement();     ///latesttime顾名思义为存放最后一条评论的时间，作为时间轴的头
@@ -313,7 +325,7 @@ requestMesComplete(HttpRequest request){
       querySelector('#Leftmain').children.add(latesttime);
 
 
-      for(int i=1;i<commentcount;i++){         ///该循环向时间轴上加入各个节点
+      for(int i=1;i<=commentcount;i++){         ///该循环向时间轴上加入各个节点
         DivElement commentcon=new DivElement();     ///每个节点的底容器
         commentcon.id = 'Commentcon'+i.toString();
         commentcon.classes
@@ -416,6 +428,7 @@ requestMesComplete(HttpRequest request){
         var msgcolorID = random.nextInt(4);
         String msgcolor=colors[msgcolorID];
         Message msg=new Message(commenttext,zan,j,msgcolor,'Leftmain');
+        //querySelector('#Myclassbt').text = '!';
         ///querySelector('#Leftmain').children.add(msg.MesContain);
       }
     }
@@ -463,7 +476,7 @@ void ChangeTeachername(Event e){
     ..open('POST', path)
     ..send(JSON.encode(chooseclassCourse))
     ..onLoadEnd.listen((e) => requestMesComplete(httpRequest));
-}
+  }
 
 void ChangeClassname(Event e){
   var index = teacherselector.selectedIndex;
@@ -475,6 +488,7 @@ void ChangeClassname(Event e){
     ..open('POST', path)
     ..send(JSON.encode(chooseclassCourse))
     ..onLoadEnd.listen((e) => requestMesComplete(httpRequest));
+  ///这个整形为个人对某课程的评分，初始未评分为0
 }
 
 void Modeshift(MouseEvent event){               ///转换到标签模式

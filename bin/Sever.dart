@@ -187,6 +187,11 @@ getMessage(HttpRequest request) async {//获取所有留言
     messageList.add('"${row[2]}"');
    // print(messageList);
   });
+  var resultStar = await pool.query('select curriculumstar from curriculum where curriculumname = "${curriName}"');
+  await resultStar.forEach((row) {
+    messageList.add('"${row[0]}"');
+  });
+
 }
 getAllclass(HttpRequest request) async{   //获取所有课程列表
   var pool=new ConnectionPool(host: '52.8.67.180', port: 3306, user: 'dec2013stu', password: 'dec2013stu', db: 'stu_10130340211');
