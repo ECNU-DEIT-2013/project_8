@@ -450,7 +450,6 @@ void ChangeTeachername(Event e){
 void ChangeClassname(Event e){
   var index = teacherselector.selectedIndex;
   classesselector.options[index].selected = true;
-  chooseclassTeacher = classesselector.options[index].firstChild.nodeValue;
   chooseclassCourse = classesselector.options[index].firstChild.nodeValue;
   var path = 'http://127.0.0.1:8008/showmes';
   var httpRequest = new HttpRequest();
