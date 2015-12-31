@@ -293,8 +293,8 @@ requestMesComplete(HttpRequest request){
     commentcount=30;                              ///以而是条为例
    // String thelatesttime='2015-12-01 20:24:15';///这个字符串存放最后评论的时间（要先转换成字符串！！）
     //String theearliesttime='2015-11-25 13:40:15';///这个字符串存放最早评论的时间（要先转换成字符串！！）
-    String thelatesttime='2015-12-01 20:24:15';
-    String theearliesttime=decoded[0];
+   // String thelatesttime='2015-12-01 20:24:15';
+    //String theearliesttime=decoded[0];
     // List<String> comments = ["2015-12-01 20:24:15","The class is very good!","15","2015-11-28 21:12:08","The teacher is fun!","8","2015-11-28 20:12:08","The teacher is nice!","5","2015-11-25 22:12:08","The teacher is cute!","6","2015-11-25 13:40:15","The lesson is great!","3"];
     List<String> comments = decoded;
 
@@ -328,9 +328,15 @@ requestMesComplete(HttpRequest request){
 
         DivElement timepoint=new DivElement();      ///timepoint是时间轴图案上的节点图案，同样不用理它~
         timepoint.id='Timepoint'+i.toString();
-        timepoint.classes
-          ..clear()
-          ..add('Timepoint');
+        if(i%2==1){
+          timepoint.classes
+            ..clear()
+            ..add('Timepoint');
+        }else{
+          timepoint.classes
+            ..clear()
+            ..add('Timepoint1');
+        }
         querySelector('#Commentcon'+i.toString()).children.add(timepoint);
 
         DivElement thecommentborder = new DivElement();   ///装饰用，不用管
@@ -374,6 +380,16 @@ requestMesComplete(HttpRequest request){
           ..clear()
           ..add('Timeofcomment');
         thecomment.children.add(timeofcomment);
+
+        DivElement jubao= new DivElement();
+        jubao.id='Jubao'+i.toString();
+        jubao.text='举报！';
+        jubao.classes
+          ..clear()
+          ..add('Jubao');
+        thecomment.children.add(jubao);
+        jubao.onClick.listen((MouseEvent e)=>Jubao(i,e));
+
         DivElement zan= new DivElement();
         zan.id='Zan'+i.toString();
         zan.text='赞（'+comments[(i-1)*3+2]+')';
@@ -822,6 +838,9 @@ void LoadCommentsTag(int j) {
 }
 
 void Dianzan(int i,e){
+
+}
+void Jubao(int i,e){
 
 }
 void LoadingShow(){//进度条在CSS里的初始设置为不可见，如需显示进度条就要调用此函数
