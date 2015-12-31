@@ -208,14 +208,14 @@ void addButtons(){
     ..clear()
     ..add('Teacherselector');
 
-  DivElement submitselect = new DivElement();
+ /* DivElement submitselect = new DivElement();
   submitselect.id = 'Submitselect';
   submitselect.classes
     ..clear()
     ..add('Submitselect');
   submitselect.text='查看评教';
   selects.children.add(submitselect);
-  submitselect.onClick.listen(Checkclass);        ///点击查看评教按钮向左边容器中加入评教内容
+  submitselect.onClick.listen(Checkclass);        ///点击查看评教按钮向左边容器中加入评教内容*/
 
   mystarcount = 0;    ///这个整形为个人对某课程的评分，初始未评分为0
   Loadmystar(mystarcount);           ///此处加载的是个人的评分星数
@@ -818,9 +818,9 @@ void Clickstar5(MouseEvent event){
   Loadsaymywords();
 }
 
-void Checkclass(Event event){
+/*void Checkclass(Event event){
  // LoadingShow();
-}
+}*/
 
 
 void LoadCommentsTag(int j) {
