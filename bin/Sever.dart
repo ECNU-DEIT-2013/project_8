@@ -46,7 +46,7 @@ Future<String> getLogin() async{//登录实现，连接数据库
   List b = JSON.decode(decoded);//对客户端传过来的信息解码
   var Username = b[0];
   var Password = b[1];
-  var pool = new ConnectionPool(host: '52.8.67.180',port: 3306, user: 'dec2013stu', password: 'dec2013stu', db: 'stu_10130340211', max: 5);
+  var pool = new ConnectionPool(host: '52.193.39.90',port: 3306, user: 'dec2013stu', password: 'dec2013stu', db: 'stu_10130340211', max: 5);
   var results = await pool.query('SELECT * FROM user where studentID = "${Username}"and password ="${Password}" ');//查找匹配输入的用户信息
   await results.forEach((row) {
     print('${row.studentID},${row.password}');
@@ -63,7 +63,7 @@ Future<String> getLogin() async{//登录实现，连接数据库
 
 
 postAddMessage( )async{//添加留言的函数
-  var pool = new ConnectionPool(host: '52.8.67.180', port: 3306, user: 'dec2013stu', password: 'dec2013stu', db: 'stu_10130340211');
+  var pool = new ConnectionPool(host: '52.193.39.90', port: 3306, user: 'dec2013stu', password: 'dec2013stu', db: 'stu_10130340211');
   //print('adding...');
   var curriculumID;
   print(decoded[3]);
@@ -161,7 +161,7 @@ listenForRequests(HttpServer requests) async {
 }
 
 getMyclass(HttpRequest request) async{   //获取我的课程列表
-  var pool=new ConnectionPool(host: '52.8.67.180', port: 3306, user: 'dec2013stu', password: 'dec2013stu', db: 'stu_10130340211');
+  var pool=new ConnectionPool(host: '52.193.39.90', port: 3306, user: 'dec2013stu', password: 'dec2013stu', db: 'stu_10130340211');
   var results = await pool.query('select curriculumname from curriculum where curriculumID in (select curriculumID from xuanke where studentID = "${stuID}")');
   var tearesults = await pool.query('select teachername from teacher where teacherID in(select teacherID from curriculum where curriculumID in (select curriculumID from xuanke where studentID = "${stuID}"))');
   //需把登陆页面获得的学号替换掉select里的101
@@ -178,7 +178,7 @@ getMyclass(HttpRequest request) async{   //获取我的课程列表
 getMessage(HttpRequest request) async {//获取所有留言
   var curriName = JSON.decode(decoded);//对客户端传过来的信息解码
   print(curriName);
-  var pool=new ConnectionPool(host: '52.8.67.180', port: 3306, user: 'dec2013stu', password: 'dec2013stu', db: 'stu_10130340211');
+  var pool=new ConnectionPool(host: '52.193.39.90', port: 3306, user: 'dec2013stu', password: 'dec2013stu', db: 'stu_10130340211');
   //var resultsMes = await pool.query('select time,comment,supportnumber,commentID from comment order by commentID desc where curriculumID = "${curriID}")');
   var resultsMes = await pool.query('select time,comment,supportnumber,commentID from comment where curriculumID in(select curriculumID from curriculum where curriculumname = "${curriName}") order by commentID desc');
   await resultsMes.forEach((row) {
@@ -194,7 +194,7 @@ getMessage(HttpRequest request) async {//获取所有留言
 
 }
 getAllclass(HttpRequest request) async{   //获取所有课程列表
-  var pool=new ConnectionPool(host: '52.8.67.180', port: 3306, user: 'dec2013stu', password: 'dec2013stu', db: 'stu_10130340211');
+  var pool=new ConnectionPool(host: '52.193.39.90', port: 3306, user: 'dec2013stu', password: 'dec2013stu', db: 'stu_10130340211');
   var results = await pool.query('select curriculumname from curriculum');
   var tearesults = await pool.query('select teachername from teacher where teacherID in(select teacherID from curriculum)');
   print('connect2!');
