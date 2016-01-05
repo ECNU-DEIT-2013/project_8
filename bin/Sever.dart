@@ -37,7 +37,7 @@ main() async{
 
 String getStock() {
   return "[rest_test ：) get stock]";
-  //你可以在这里添加各种数据操作，然后以json返回
+  //你可以在这里添加各种数据操作，然后以json返回..此函数用于测试
 }
 
 Future<String> getLogin() async{//登录实现，连接数据库

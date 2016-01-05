@@ -160,7 +160,7 @@ html, body {
   padding: 0px;
   font-weight: bold;
   font-family:SimHei;
-  font-size: 20px;
+  font-size: 14px;
   line-height:60px;
 }
 
@@ -181,7 +181,7 @@ html, body {
   padding: 0px;
   font-weight: bold;
   font-family:SimHei;
-  font-size: 20px;
+  font-size: 14px;
   line-height:60px;
 }
 
@@ -407,12 +407,14 @@ html, body {
 }
 
 .User {
+  margin-top: 60px;
+  margin-left: 40px;
   float: left;
   background: #ffffff;
   opacity: 0.6;
   border:none;
   font-family: SimHei;
-  font-size: 20px;
+  font-size: 14px;
   font-weight: bold;
   color: #333333;
 }
@@ -430,14 +432,17 @@ html, body {
 
 
 #Password {
+
   float: left;
+  margin-left: 40px;
   background: #ffffff;
   opacity: 0.6;
   border:none;
   margin-top: 30px;
   color: #333333;
   font-family: SimHei;
-  font-size: 20px;
+  font-size: 14px;
+  font-size: 14px;
   font-weight: bold;
 }
 #Password:hover{
@@ -447,16 +452,20 @@ html, body {
 
 
 #Form {
+  height:300px;
+  width:480px;
+  background-color:#999999;
+  opacity: 0.7;
   position: absolute;
-  top:35%;
-  height: 200px;
-  left:calc(50% - 200px);
-  width: 404px;
+  top:25%;
+  left:calc(50% - 240px);
+  border-radius: 10px;
 }
 
 #Buttons {
   float: left;
-  margin-top:20px;
+  margin-top:30px;
+  margin-left: 40px;
   width: 404px;
 }
 
@@ -464,13 +473,13 @@ html, body {
   float: left;
   width:160px;
   height:40px;
-  margin-left: 20px;
+  margin-left: 14px;
   background-color: #F8F8F8;
   opacity: 1;
   line-height:40px;
   text-align: center;
   font-family: SimHei;
-  font-size:28px;
+  font-size:20px;
   font-weight: bold;
   color: #FFF080;
 }
@@ -490,7 +499,7 @@ html, body {
   line-height:40px;
   text-align: center;
   font-family: SimHei;
-  font-size:28px;
+  font-size:20px;
   font-weight: bold;
   color: #ADCACF;
 }
@@ -715,3 +724,5 @@ html, body {
     width:100%
   }
 }
+
+

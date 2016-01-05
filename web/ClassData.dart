@@ -169,8 +169,10 @@ Future<String> addMessageDialog([String message = "", String value = ""]) async 
     });
   });
   input.onKeyDown.listen((e) {
-    if (e.keyCode == KeyCode.ENTER) {      e.preventDefault(); c.complete(input.value);  addMessageDialog.closeDialog();    }
-    else if (e.keyCode == KeyCode.ESC) {      c.complete(null);addMessageDialog.closeDialog();    }
+    if (e.keyCode == KeyCode.ENTER) {      e.preventDefault(); c.complete(input.value);
+    addMessageDialog.closeDialog();    }
+    else if (e.keyCode == KeyCode.ESC) {      c.complete(null);
+    addMessageDialog.closeDialog();    }
   });
   return c.future;
 }//重新写了一个dialog类，代码来源是prompt，添加留言就会调用它
