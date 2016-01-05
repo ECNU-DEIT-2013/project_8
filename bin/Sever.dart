@@ -157,7 +157,18 @@ listenForRequests(HttpServer requests) async {
       messageList = [];
 
     }
+    else if(request.uri.path=="/jubao"){
+      decoded = await request.transform(UTF8.decoder).join();
+      print('jubao');
+      await jubao(request);
+    }
     else print("Can't find");}
+}
+
+jubao (HttpRequest request) async{
+  var pool = new ConnectionPool(host: '52.193.39.90', port: 3306, user: 'dec2013stu', password: 'dec2013stu', db: 'stu_10130340211');
+  var addAdd = await pool.prepare('Insert into jubao (MesID,StuID,JubaoMes) values (?,?,?)');
+  await addAdd.execute([decoded[0],decoded[1],decoded[2]]);
 }
 
 getMyclass(HttpRequest request) async{   //获取我的课程列表
